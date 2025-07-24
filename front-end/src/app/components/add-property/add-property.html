@@ -163,7 +163,7 @@
             name="Category"
             [(ngModel)]="property.propertyType"
           >
-            <option value="" disabled selected>Select your option</option>
+            <option value="0" disabled selected>Select your option</option>
             @for (category of propertyType; track $index) {
             <option [value]="category.id">{{ category.name }}</option>
             }

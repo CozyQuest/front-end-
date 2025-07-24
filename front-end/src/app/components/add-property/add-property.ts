@@ -14,7 +14,20 @@ import { IpropertyType } from '../../core/interfaces/iproperty-type';
   styleUrl: './add-property.css'
 })
 export class AddProperty {
-  property!: IAddProperty;
+  property: IAddProperty = {
+    id: '',
+    name: '',
+    images: [],
+    mainImage: '',
+    rentPerDay: 100,
+    area: 100,
+    bathrooms: 1,
+    bedrooms: 1,
+    location: '',
+    propertyType: { id: '0', name: 'Select your option' }
+  };
+  images: Image[] = [];
+  selectedImage: string = '';
   propertyType:IpropertyType[] = [
     { id: '1', name: 'Apartment' },
     { id: '2', name: 'House' },
@@ -27,7 +40,13 @@ export class AddProperty {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e: any) => {
+        // Initialize images array if it doesn't exist
+        if (!this.property.images) {
+          this.property.images = [];
+        }
+        // Add to both the property.images and local images array
         this.property.images.push(e.target.result);
+        this.images.push(e.target.result);
       };
       reader.readAsDataURL(file);
     }
