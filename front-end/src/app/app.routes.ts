@@ -5,8 +5,21 @@ import { LoginButton } from './components/Auth Components/login-button/login-but
 import { RegisterButton } from './components/Auth Components/register-button/register-button';
 
 export const routes: Routes = [
-    {path: 'checkout/:id', component: PropertyCheckout},
-    {path:'rent',component:PropertyList},
-    {path:'login', component:LoginButton},
-    {path:'register', component:RegisterButton}
+    { path: 'checkout/:id', component: PropertyCheckout },
+    { path: 'rent', component: PropertyList },
+    { path: 'login', component: LoginButton },
+    { path: 'register', component: RegisterButton },
+    {
+        path: '',
+        redirectTo: 'home',
+        pathMatch: 'full'
+    },
+    {
+        path: 'home',
+        loadComponent: () => import('./components/home/home/home').then(m => m.Home),
+    },
+    {
+        path: 'add-property',
+        loadComponent: () => import('./components/add-property/add-property').then(m => m.AddProperty),
+    }
 ];

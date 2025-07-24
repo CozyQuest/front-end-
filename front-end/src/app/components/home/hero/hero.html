@@ -1,0 +1,225 @@
+<header
+  class="relative w-full h-screen overflow-hidden justify-center shrink-0 md:h-[120vh]"
+>
+  <!-- YouTube Video Background -->
+  <div class="absolute inset-0 -z-10">
+    <iframe
+      src="https://www.youtube.com/embed/IX_Z7i8Ne2o?autoplay=1&mute=1&loop=1&playlist=IX_Z7i8Ne2o&controls=0&disablekb=1&modestbranding=1"
+      frameborder="0"
+      allow="autoplay; encrypted-media"
+      allowfullscreen
+      class="w-[177.75vh] h-[100vh] object-cover md:h-[175vh] md:w-[350vh] md:-translate-[15%]"
+    ></iframe>
+    <div class="absolute inset-0 bg-black opacity-55"></div>
+  </div>
+  <div class="flex flex-col justify-center items-center md:mt-20">
+    <h1
+      class="text-white text-3xl text-center font-bold mx-4 my-2 mt-40 md:px-90 md:text-5xl"
+    >
+      Easy way to find your dream property
+    </h1>
+    <h3 class="text-white text-center mx-4 text-[1.2rem] md:px-105 md:mt-6 ">
+      A great plateform to rent properties without any agent
+      or commisions.
+    </h3>
+    <app-card class="my-10 md:mx-6">
+      <form action="" class="flex flex-col md:flex-row md:flex-wrap md:justify-center md:px-4">
+        <div class="my-4 md:w-1/4">
+          <label for="search" class="block mb-2 font-semibold text-gray-900">
+            Search : <span class="text-red-700">*</span>
+          </label>
+          <div class="flex bg-gray-100 rounded-md p-2 items-center md:rounded-r-none">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6"
+            >
+              <path
+                d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
+                stroke="#000000"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="stroke-blue-500"
+              />
+            </svg>
+            <input
+              type="text"
+              id="search"
+              class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-3xs md:border-r-2 md:border-gray-200 md:pr-1"
+              name="search"
+              placeholder="Search your key words"
+              required
+            />
+          </div>
+        </div>
+        <div class="my-4 md:w-1/4">
+          <label for="Category" class="block mb-2 font-semibold text-gray-900">
+            Select Category :
+          </label>
+          <div class="flex bg-gray-100 rounded-md p-2 items-center md:rounded-none">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6"
+            >
+              <path
+                d="M22 22L2 22"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                class="stroke-blue-500"
+              />
+              <path
+                d="M2 11L6.06296 7.74968M22 11L13.8741 4.49931C12.7784 3.62279 11.2216 3.62279 10.1259 4.49931L9.34398 5.12486"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                class="stroke-blue-500"
+              />
+              <path
+                d="M15.5 5.5V3.5C15.5 3.22386 15.7239 3 16 3H18.5C18.7761 3 19 3.22386 19 3.5V8.5"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                class="stroke-blue-500"
+              />
+              <path
+                d="M4 22V9.5"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                class="stroke-blue-500"
+              />
+              <path
+                d="M20 9.5V13.5M20 22V17.5"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                class="stroke-blue-500"
+              />
+              <path
+                d="M15 22V17C15 15.5858 15 14.8787 14.5607 14.4393C14.1213 14 13.4142 14 12 14C10.5858 14 9.87868 14 9.43934 14.4393M9 22V17"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="stroke-blue-500"
+              />
+              <path
+                d="M14 9.5C14 10.6046 13.1046 11.5 12 11.5C10.8954 11.5 10 10.6046 10 9.5C10 8.39543 10.8954 7.5 12 7.5C13.1046 7.5 14 8.39543 14 9.5Z"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                class="stroke-blue-500"
+              />
+            </svg>
+            <select
+              name="Category"
+              id="Category"
+              class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-3xs md:border-r-2 md:border-gray-200 md:pr-1 "
+            >
+              <option value="" disabled selected>Select your option</option>
+            </select>
+          </div>
+        </div>
+        <div class="my-4 md:w-1/4">
+          <label for="MinPrice" class="block mb-2 font-semibold text-gray-900">
+            Min Price :
+          </label>
+          <div class="flex bg-gray-100 rounded-md p-2 items-center md:rounded-none">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6"
+            >
+              <circle
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                class="stroke-blue-500"
+              />
+              <path
+                d="M12 6V18"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                class="stroke-blue-500"
+              />
+              <path
+                d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5"
+                stroke="#1C274C"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                class="stroke-blue-500"
+              />
+            </svg>
+            <input
+              type="number"
+              id="MinPrice"
+              class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-3xs md:border-r-2 md:border-gray-200 md:pr-1"
+              name="MinPrice"
+              placeholder="Minimum Price"
+            />
+          </div>
+        </div>
+        <div class="my-4 md:w-1/4">
+            <label
+              for="MaxPrice"
+              class="block mb-2 font-semibold text-gray-900"
+            >
+              Max Price :
+            </label>
+            <div class="flex bg-gray-100 rounded-md p-2 items-center md:rounded-l-none">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6"
+              >
+                <circle
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="#1C274C"
+                  stroke-width="1.5"
+                  class="stroke-blue-500"
+                />
+                <path
+                  d="M12 6V18"
+                  stroke="#1C274C"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  class="stroke-blue-500"
+                />
+                <path
+                  d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5"
+                  stroke="#1C274C"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  class="stroke-blue-500"
+                />
+              </svg>
+              <input
+                type="number"
+                id="MaxPrice"
+                class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-3xs"
+                name="MaxPrice"
+                placeholder="Maximum Price"
+              />
+            </div>
+          </div>
+        <button
+          type="submit"
+          class="bg-blue-500 w-1/1 p-2 text-white text-xl rounded-2xl hover:bg-blue-600 transition-colors delay-200 md:w-[25%]"
+        >
+          Search
+        </button>
+      </form>
+    </app-card>
+  </div>
+</header>
