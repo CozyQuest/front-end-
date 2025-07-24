@@ -2,8 +2,6 @@
   "plugins": {
     "@tailwindcss/postcss": {}
   }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 253df75ba9429e27246e2806f62f522b8ea75552
+

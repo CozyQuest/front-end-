@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Navbar } from "../navbar/navbar";
 import { CommonModule } from '@angular/common';
 import { RouterModule,Router } from '@angular/router';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
