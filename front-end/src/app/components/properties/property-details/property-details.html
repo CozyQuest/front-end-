@@ -1,0 +1,187 @@
+<section class="relative pt-24 pb-16 md:py-24 bg-white text-gray-800 transition-all duration-500">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+      
+      <!-- Main Content -->
+      <div class="md:col-span-7 lg:col-span-8">
+
+        <!-- Image Slider -->
+        <div class="relative w-full mx-auto">
+          <p-carousel
+            *ngIf="property?.images?.length"
+            [value]="property?.images ?? []"
+            [numVisible]="1"
+            [numScroll]="1"
+            [circular]="true"
+            [autoplayInterval]="4000"
+            [showIndicators]="false"
+            [showNavigators]="true"
+            [responsiveOptions]="[]"
+            class="custom-carousel"
+          >
+            <ng-template pTemplate="item" let-image>
+              <div class="relative w-full h-[300px] md:h-[550px]">
+                <img
+                  [src]="image.url"
+                  alt="Property image"
+                  class="absolute top-0 left-0 w-full h-full object-cover"
+                />
+              </div>
+            </ng-template>
+          </p-carousel>
+        </div>
+
+        <!-- Title & Address -->
+        <h4 class="text-2xl font-medium mt-6 mb-3 ml-0 md:ml-10">{{ property?.title }}</h4>
+        <p class="text-slate-400 flex items-center mt-4 ml-0 md:ml-10">
+          <i class="pi pi-map-marker text-lg mr-2 text-blue-500"></i>
+          {{ property?.buildingNo }} {{ property?.district }}, {{ property?.city }}, {{ property?.country }}
+        </p>
+
+        <!-- Property Features -->
+        <ul class="py-6 flex flex-wrap items-center gap-x-6 gap-y-4 ml-0 md:ml-10">
+          <li class="flex items-center">
+            <i class="uil uil-compress-arrows text-2xl md:text-3xl text-blue-500 mr-2"></i>
+            <span class="text-lg md:text-xl">8000 sqf</span>
+          </li>
+          <li class="flex items-center">
+            <i class="uil uil-bed-double text-2xl md:text-3xl text-blue-500 mr-2"></i> 
+            <span class="text-lg md:text-xl">{{ property?.roomCount }} Beds</span>
+          </li>
+          <li class="flex items-center">
+            <i class="uil uil-bath text-2xl md:text-3xl text-blue-500 mr-2"></i>
+            <span class="text-lg md:text-xl">{{ property?.bathroomCount }} Baths</span>
+          </li>
+        </ul>
+
+        <!-- Owner Info -->
+        <div class="flex items-start gap-4 ml-0 md:ml-10 mt-4">
+          <img [src]="property?.owner?.profilePicUrl" class="w-14 h-14 md:w-16 md:h-16 rounded-full" />
+          <div>
+            <p class="font-semibold text-base md:text-lg">Hosted by {{ property?.owner?.fname }} {{ property?.owner?.lname }}</p>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">{{ property?.owner?.email }}</p>
+            <p class="text-gray-600 dark:text-gray-400 text-sm">{{ property?.owner?.phone }}</p>
+            <p *ngIf="property?.owner?.bio" class="text-gray-500 dark:text-gray-400 text-sm mt-2 italic">
+              "{{ property?.owner?.bio }}"
+            </p>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="text-gray-600 space-y-4 mt-6 ml-0 md:ml-10">
+          <p class="text-slate-400">{{ property?.description }}</p>
+        </div>
+
+        <!-- Services List -->
+        <div *ngIf="property?.services?.length" class="mt-10 mb-10 ml-0 md:ml-10">
+          <h2 class="text-2xl font-semibold mb-6 text-black dark:text-white">What This Place Offers</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div
+              *ngFor="let service of property?.services"
+              class="flex items-center gap-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-pink-500 dark:hover:border-pink-400 transition duration-300"
+            >
+              <div class="text-pink-600 dark:text-pink-400 text-xl flex-shrink-0">
+                <i [ngClass]="getServiceIcon(service.name)"></i>
+              </div>
+              <span class="text-sm text-black dark:text-white font-medium">{{ service.name }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rating Overview -->
+        <div *ngIf="averageRating > 0"
+             class="bg-white dark:bg-gray-900 shadow-xl border border-gray-200 dark:border-gray-700 rounded-2xl p-6 w-full mx-auto mt-10 transition-all duration-500 animate-fade-in mb-6">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div class="flex items-center gap-6">
+              <div class="bg-yellow-400 text-white w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-2xl md:text-3xl font-bold shadow-md">
+                {{ averageRating.toFixed(1) }}
+              </div>
+              <div>
+                <div class="flex items-center gap-1">
+                  <ng-container *ngFor="let star of getFilledStars(); let i = index">
+                    <i class="uil uil-star text-yellow-400 text-xl"></i>
+                  </ng-container>
+                  <ng-container *ngFor="let star of getEmptyStars(); let i = index">
+                    <i class="uil uil-star text-gray-300 dark:text-gray-600 text-xl"></i>
+                  </ng-container>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Based on {{ ratingCount }} {{ ratingCount === 1 ? 'review' : 'reviews' }}
+                </p>
+              </div>
+            </div>
+
+            <div class="flex-1">
+              <p class="text-gray-700 dark:text-gray-300 italic text-base">"{{ getRatingText() }}"</p>
+              <div class="mt-4">
+                <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-yellow-400 transition-all duration-500"
+                       [style.width.%]="(averageRating / 5) * 100">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews -->
+        <app-reviews-list [reviews]="reviews"></app-reviews-list>
+
+        <!-- Map -->
+        <div class="w-full mt-6 rounded-xl overflow-hidden shadow-md ml-0 md:ml-5">
+          <iframe
+            class="w-full h-[300px] md:h-[500px] border-0"
+            [src]="mapUrl"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="md:col-span-5 lg:col-span-4 ml-0 md:ml-5">
+        <div class="sticky top-20 space-y-12">
+          
+          <!-- Price Card -->
+          <div class="rounded-xl bg-gray-50 p-6 shadow-md">
+            <h5 class="text-xl font-semibold">Price:</h5>
+            <div class="flex justify-between items-center mt-4">
+              <span class="text-2xl font-bold text-gray-800">${{ property?.rentPerDay }}</span>
+              <span class="bg-blue-100 text-blue-600 text-xs font-medium px-2.5 py-0.5 rounded">Per Day</span>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="space-y-4 mt-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1">Check-in</label>
+                <p-datepicker [(ngModel)]="checkInDate" inputStyleClass="w-full" dateFormat="yy-mm-dd" showIcon styleClass="w-full" [minDate]="minDate"></p-datepicker>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-500 mb-1">Check-out</label>
+                <p-datepicker [(ngModel)]="checkOutDate" inputStyleClass="w-full" dateFormat="yy-mm-dd" showIcon styleClass="w-full" [minDate]="checkInDate || minDate"></p-datepicker>
+              </div>
+              <button
+                (click)="reserveProperty()"
+                class="w-full py-3 px-4 bg-primary hover:bg-primary-dark text-white font-semibold rounded-lg transition bg-blue-500"
+              >
+                Reserve Now
+              </button>
+            </div>
+          </div>
+
+          <!-- Contact Section -->
+          <div class="text-center mt-8">
+            <h3 class="mb-4 text-xl font-semibold text-black">Have Questions? Get in touch!</h3>
+            <a href="/contact"
+             class="inline-flex items-center justify-center px-5 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-medium rounded-md transition-colors duration-300">
+             <i class="pi pi-phone mr-2"></i> Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
