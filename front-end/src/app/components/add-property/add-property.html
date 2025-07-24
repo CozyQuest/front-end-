@@ -1,0 +1,365 @@
+<div class="mx-auto p-4 bg-gray-100 w-full h-full md:p-20">
+  <h1 class="text-xl font-semibold mb-6">Add Property</h1>
+  <form (ngSubmit)="addProperty()" class="md:flex md:items-center">
+    <app-card class="m-10 md:w-[50%] ">
+      <p class="my-10 font-semibold">
+        Upload your property image here, Please click "Upload Image" Button.
+      </p>
+      @if(property != null && property.images && property.images.length > 0) {
+      <p-carousel
+        [value]="property.images"
+        [numVisible]="1"
+        [numScroll]="1"
+        orientation="horizontal"
+        verticalViewPortHeight="330px"
+        [circular]="true"
+      >
+        <ng-template let-image #item>
+          <div class="relative">
+            <img [src]="image" alt="Property Image" class="mb-4 -z-10" />
+            <a
+              class="p-1 rounded-full absolute top-3 right-3 bg-white dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors"
+              (click)="toggleFavorite(image)"
+            >
+              <svg
+                fill="none"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                class="w-5 h-5 transition-colors duration-300"
+                [ngClass]="{
+                  'fill-red-600': property.mainImage == image,
+                  'fill-gray-300': property.mainImage != image
+                }"
+              >
+                <path
+                  d="M20.808,11.079C19.829,16.132,12,20.5,12,20.5s-7.829-4.368-8.808-9.421C2.227,6.1,5.066,3.5,8,3.5a4.444,4.444,0,0,1,4,2,4.444,4.444,0,0,1,4-2C18.934,3.5,21.773,6.1,20.808,11.079Z"
+                />
+              </svg>
+            </a>
+          </div>
+        </ng-template>
+      </p-carousel>
+      } @else {
+      <img
+        src="https://placehold.co/400x330?text=Supports JPG and PNG. Max file size : 10MB."
+        alt="placeholder"
+        class="m-10 -z-10 mx-auto w-full h-[330px] object-cover rounded-lg"
+      />
+      }
+      <div class="flex justify-center mt-4">
+        <input
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="image/*"
+          class="hidden"
+          id="fileInput"
+        />
+        <label
+          for="fileInput"
+          class="bg-blue-500 text-white px-4 py-2 rounded-xl cursor-pointer"
+          >Upload Image</label
+        >
+      </div>
+    </app-card>
+    <app-card class="m-10 md:w-[50%]">
+      <div class="my-4">
+        <label for="search" class="block mb-2 font-semibold text-gray-900">
+          Title : <span class="text-red-700">*</span>
+        </label>
+        <div
+          class="flex bg-gray-100 rounded-md p-2 items-center"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6"
+          >
+            <path
+              d="M11 6C13.7614 6 16 8.23858 16 11M16.6588 16.6549L21 21M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
+              stroke="#000000"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="stroke-blue-500"
+            />
+          </svg>
+          <input
+            type="text"
+            id="search"
+            class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-[100%]"
+            name="search"
+            placeholder="Title of your property"
+            [(ngModel)]="property.name"
+            required
+          />
+        </div>
+      </div>
+      <div class="my-4">
+        <label for="Category" class="block mb-2 font-semibold text-gray-900">
+          Select Category : <span class="text-red-700">*</span>
+        </label>
+        <div class="flex bg-gray-100 rounded-md p-2 items-center">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6"
+          >
+            <path
+              d="M22 22L2 22"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              class="stroke-blue-500"
+            />
+            <path
+              d="M2 11L6.06296 7.74968M22 11L13.8741 4.49931C12.7784 3.62279 11.2216 3.62279 10.1259 4.49931L9.34398 5.12486"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              class="stroke-blue-500"
+            />
+            <path
+              d="M15.5 5.5V3.5C15.5 3.22386 15.7239 3 16 3H18.5C18.7761 3 19 3.22386 19 3.5V8.5"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              class="stroke-blue-500"
+            />
+            <path
+              d="M4 22V9.5"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              class="stroke-blue-500"
+            />
+            <path
+              d="M20 9.5V13.5M20 22V17.5"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              class="stroke-blue-500"
+            />
+            <path
+              d="M15 22V17C15 15.5858 15 14.8787 14.5607 14.4393C14.1213 14 13.4142 14 12 14C10.5858 14 9.87868 14 9.43934 14.4393M9 22V17"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="stroke-blue-500"
+            />
+            <path
+              d="M14 9.5C14 10.6046 13.1046 11.5 12 11.5C10.8954 11.5 10 10.6046 10 9.5C10 8.39543 10.8954 7.5 12 7.5C13.1046 7.5 14 8.39543 14 9.5Z"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              class="stroke-blue-500"
+            />
+          </svg>
+          <select
+            name="Category"
+            id="Category"
+            class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-[100%]"
+            name="Category"
+            [(ngModel)]="property.propertyType"
+          >
+            <option value="" disabled selected>Select your option</option>
+            @for (category of propertyType; track $index) {
+            <option [value]="category.id">{{ category.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="my-4">
+        <label for="location" class="block mb-2 font-semibold text-gray-900">
+          location : <span class="text-red-700">*</span>
+        </label>
+        <div
+          class="flex bg-gray-100 rounded-md p-2 items-center"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6"
+          >
+            <path
+              d="M12 21C15.5 17.4 19 14.1764 19 10.2C19 6.22355 15.866 3 12 3C8.13401 3 5 6.22355 5 10.2C5 14.1764 8.5 17.4 12 21Z"
+              stroke="none"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="stroke-blue-500"
+            />
+            <path
+              d="M12 12C13.1046 12 14 11.1046 14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12Z"
+              stroke="none"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="stroke-blue-500"
+            />
+          </svg>
+          <input
+            type="text"
+            id="location"
+            class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-[100%]"
+            name="location"
+            placeholder="location of your property"
+            [(ngModel)]="property.location"
+            (click)="openMap()"
+            required
+          />
+        </div>
+      </div>
+      <div class="my-4">
+        <label for="Area" class="block mb-2 font-semibold text-gray-900">
+          Area : <span class="text-red-700">*</span>
+        </label>
+        <div class="flex bg-gray-100 rounded-md p-2 items-center">
+          <svg
+            fill="none"
+            viewBox="0 0 32 32"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 fill-blue-500"
+          >
+            <path
+              d="M11.975 10.838l-0.021-7.219c-0.009-0.404-0.344-0.644-0.748-0.654l-0.513-0.001c-0.405-0.009-0.725 0.343-0.716 0.747l0.028 4.851-8.321-8.242c-0.391-0.391-1.024-0.391-1.414 0s-0.391 1.024 0 1.414l8.285 8.207-4.721 0.012c-0.404-0.009-0.779 0.27-0.84 0.746l0.001 0.513c0.010 0.405 0.344 0.739 0.748 0.748l7.172-0.031c0.008 0.001 0.013 0.003 0.020 0.003l0.366 0.008c0.201 0.005 0.383-0.074 0.512-0.205 0.132-0.13 0.178-0.311 0.175-0.514l-0.040-0.366c0.001-0.007 0.027-0.012 0.027-0.019zM20.187 11.736c0.129 0.13 0.311 0.21 0.512 0.205l0.366-0.008c0.007 0 0.012-0.002 0.020-0.004l7.172 0.031c0.404-0.009 0.738-0.344 0.747-0.748l0.001-0.513c-0.061-0.476-0.436-0.755-0.84-0.746l-4.721-0.012 8.285-8.207c0.391-0.391 0.391-1.024 0-1.414s-1.023-0.391-1.414 0l-8.32 8.241 0.027-4.851c0.009-0.404-0.311-0.756-0.715-0.747l-0.513 0.001c-0.405 0.010-0.739 0.25-0.748 0.654l-0.021 7.219c0 0.007 0.027 0.012 0.027 0.020l-0.040 0.366c-0.005 0.203 0.043 0.384 0.174 0.514zM11.813 20.232c-0.13-0.131-0.311-0.21-0.512-0.205l-0.366 0.009c-0.007 0-0.012 0.003-0.020 0.003l-7.173-0.032c-0.404 0.009-0.738 0.343-0.748 0.747l-0.001 0.514c0.062 0.476 0.436 0.755 0.84 0.745l4.727 0.012-8.29 8.238c-0.391 0.39-0.391 1.023 0 1.414s1.024 0.39 1.414 0l8.321-8.268-0.028 4.878c-0.009 0.404 0.312 0.756 0.716 0.747l0.513-0.001c0.405-0.010 0.739-0.25 0.748-0.654l0.021-7.219c0-0.007-0.027-0.011-0.027-0.019l0.040-0.397c0.005-0.203-0.043-0.384-0.174-0.514zM23.439 22.028l4.727-0.012c0.404 0.009 0.779-0.27 0.84-0.745l-0.001-0.514c-0.010-0.404-0.344-0.739-0.748-0.748h-7.172c-0.008-0-0.013-0.003-0.020-0.003l-0.428-0.009c-0.201-0.006-0.384 0.136-0.512 0.267-0.131 0.13-0.178 0.311-0.174 0.514l0.040 0.366c0 0.008-0.027 0.012-0.027 0.019l0.021 7.219c0.009 0.404 0.343 0.644 0.748 0.654l0.544 0.001c0.404 0.009 0.725-0.343 0.715-0.747l-0.027-4.829 8.352 8.22c0.39 0.391 1.023 0.391 1.414 0s0.391-1.023 0-1.414z"
+            ></path>
+          </svg>
+          <input
+            type="number"
+            id="Area"
+            class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-[100%]"
+            [(ngModel)]="property.area"
+            required
+            name="Area"
+            placeholder="property area"
+          />
+        </div>
+      </div>
+      <div class="my-4">
+        <label for="Beds" class="block mb-2 font-semibold text-gray-900">
+          Beds : <span class="text-red-700">*</span>
+        </label>
+        <div class="flex bg-gray-100 rounded-md p-2 items-center">
+          <svg
+            fill="none"
+            version="1.1"
+            id="Layer_1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 512 512"
+            xml:space="preserve"
+            class="h-6 fill-blue-500"
+          >
+            <g>
+              <g>
+                <path
+                  d="M478.609,225.48v-86.35c0-46.03-37.448-83.478-83.478-83.478H116.87c-46.03,0-83.478,37.448-83.478,83.478v86.35
+			C13.959,232.372,0,250.93,0,272.696c0,12.589,0,89.885,0,100.174c0,9.22,7.475,16.696,16.696,16.696h16.696v50.087
+			c0,9.22,7.475,16.696,16.696,16.696h66.783c9.22,0,16.696-7.475,16.696-16.696v-50.087h244.87v50.087
+			c0,9.22,7.475,16.696,16.696,16.696h66.783c9.22,0,16.696-7.475,16.696-16.696v-50.087h16.696c9.22,0,16.696-7.475,16.696-16.696
+			c0-9.493,0-86.461,0-100.174C512,250.93,498.041,232.372,478.609,225.48z M66.783,139.13c0-27.618,22.469-50.087,50.087-50.087
+			H395.13c27.618,0,50.087,22.469,50.087,50.087v83.478h-33.391v-16.696c0-27.618-22.469-50.087-50.087-50.087h-72.348
+			c-12.819,0-24.523,4.846-33.391,12.794c-8.869-7.948-20.572-12.794-33.391-12.794h-72.348c-27.618,0-50.087,22.469-50.087,50.087
+			v16.696H66.783V139.13z M378.435,205.913v16.696H272.696v-16.696c0-9.206,7.49-16.696,16.696-16.696h72.348
+			C370.945,189.217,378.435,196.707,378.435,205.913z M239.304,205.913v16.696H133.565v-16.696c0-9.206,7.49-16.696,16.696-16.696
+			h72.348C231.815,189.217,239.304,196.707,239.304,205.913z M100.174,422.957H66.783v-33.391h33.391V422.957z M445.217,422.957
+			h-33.391v-33.391h33.391V422.957z M478.609,356.174c-14.401,0-412.865,0-445.217,0v-33.391h445.217V356.174z M478.609,289.391
+			H33.391v-16.696c0-9.206,7.49-16.696,16.696-16.696c12.832,0,401.17,0,411.826,0c9.206,0,16.696,7.49,16.696,16.696V289.391z"
+                />
+              </g>
+            </g>
+          </svg>
+          <input
+            type="number"
+            id="Beds"
+            class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-[100%]"
+            [(ngModel)]="property.bedrooms"
+            required
+            name="Beds"
+            placeholder="number of Beds"
+          />
+        </div>
+      </div>
+      <div class="my-4">
+        <label for="bath" class="block mb-2 font-semibold text-gray-900">
+          bathrooms : <span class="text-red-700">*</span>
+        </label>
+        <div class="flex bg-gray-100 rounded-md p-2 items-center">
+          <svg
+            fill="none"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 fill-blue-500"
+          >
+            <path
+              d="M22,12H5V5A2,2,0,0,1,7,3H9a2,2,0,0,1,1.838,1.214A3.5,3.5,0,0,0,8.5,7.5V9a1,1,0,0,0,1,1h5a1,1,0,0,0,1-1V7.5a3.5,3.5,0,0,0-2.6-3.368A4,4,0,0,0,9,1H7A4,4,0,0,0,3,5v7H2a1,1,0,0,0,0,2H3v4a3,3,0,0,0,2,2.816V22a1,1,0,0,0,2,0V21H17v1a1,1,0,0,0,2,0V20.816A3,3,0,0,0,21,18V14h1a1,1,0,0,0,0-2ZM13.5,7.5V8h-3V7.5a1.5,1.5,0,0,1,3,0ZM19,18a1,1,0,0,1-1,1H6a1,1,0,0,1-1-1V14H19Z"
+            />
+          </svg>
+          <input
+            type="number"
+            id="bath"
+            class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-[100%]"
+            [(ngModel)]="property.bathrooms"
+            required
+            name="bath"
+            placeholder="number of bathrooms"
+          />
+        </div>
+      </div>
+      <div class="my-4">
+        <label for="rentPerDay" class="block mb-2 font-semibold text-gray-900">
+          rent per day : <span class="text-red-700">*</span>
+        </label>
+        <div class="flex bg-gray-100 rounded-md p-2 items-center">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6"
+          >
+            <circle
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              class="stroke-blue-500"
+            />
+            <path
+              d="M12 6V18"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              class="stroke-blue-500"
+            />
+            <path
+              d="M15 9.5C15 8.11929 13.6569 7 12 7C10.3431 7 9 8.11929 9 9.5C9 10.8807 10.3431 12 12 12C13.6569 12 15 13.1193 15 14.5C15 15.8807 13.6569 17 12 17C10.3431 17 9 15.8807 9 14.5"
+              stroke="#1C274C"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              class="stroke-blue-500"
+            />
+          </svg>
+          <input
+            type="number"
+            id="rentPerDay"
+            class="h-8 w-xs text-gray-400 border-0 ml-1.5 md:w-[100%]"
+            name="rentPerDay"
+            [(ngModel)]="property.rentPerDay"
+            placeholder="rentPerDay"
+          />
+        </div>
+      </div>
+      <button
+        type="submit"
+        class="bg-blue-500 w-1/1 p-2 text-white text-xl rounded-2xl hover:bg-blue-600 transition-colors delay-200 md:w-[25%]"
+      >
+        Search
+      </button>
+    </app-card>
+  </form>
+</div>
