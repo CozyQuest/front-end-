@@ -1,17 +1,22 @@
 <div class="shadow-sm dark:shadow-gray-700 p-6 rounded-xl bg-white dark:bg-slate-900 sticky top-20">
     <form (ngSubmit)="applyFilter()">
-        <div class="grid grid-cols-1 gap-3">
+        <div class="grid grid-cols-1 gap-4">
+            <!-- Search Field -->
             <div>
-                <label for="searchname" class="font-medium">Search Properties</label>
+                <label for="searchname" class="font-semibold text-sm text-gray-900 dark:text-white">Search Properties</label>
                 <div class="relative mt-2">
-                    <i class="uil uil-search text-lg absolute top-[8px] start-3"></i>
-                    <input name="search" id="searchname" type="text" class="form-input border !border-gray-200 dark:!border-gray-800 !ps-10" placeholder="Search">
+                    <i class="uil uil-search text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
+                    <input name="search" id="searchname" type="text"
+                        class="w-full ps-10 py-2.5 px-3 border border-gray-200 dark:border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm dark:bg-slate-800 dark:text-white"
+                        placeholder="Search">
                 </div>
             </div>
-            
+
+            <!-- Categories Dropdown -->
             <div>
-                <label class="font-medium">Categories</label>
-                <select class="form-select form-input border !border-gray-200 dark:!border-gray-800 block w-full mt-1">
+                <label class="font-semibold text-sm text-gray-900 dark:text-white">Categories</label>
+                <select
+                    class="w-full mt-2 py-2.5 px-3 border border-gray-200 dark:border-gray-800 rounded-md bg-white dark:bg-slate-800 text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="re">Residential</option>
                     <option value="la">Land</option>
                     <option value="co">Commercial</option>
@@ -20,17 +25,21 @@
                 </select>
             </div>
 
+            <!-- Location Dropdown -->
             <div>
-                <label class="font-medium">Location</label>
-                <select class="form-select form-input border !border-gray-200 dark:!border-gray-800 block w-full mt-1">
+                <label class="font-semibold text-sm text-gray-900 dark:text-white">Location</label>
+                <select
+                    class="w-full mt-2 py-2.5 px-3 border border-gray-200 dark:border-gray-800 rounded-md bg-white dark:bg-slate-800 text-sm dark:text-white focus:outline-none focus:ring-2 focus:ring-primary">
                     <option value="NY">New York</option>
                     <option value="MC">North Carolina</option>
                     <option value="SC">South Carolina</option>
                 </select>
             </div>
 
+            <!-- Apply Filter Button -->
             <div>
-                <button type="submit" class="btn bg-primary hover:bg-primary-dark border-primary hover:border-primary-dark text-white !rounded-md w-full">
+                <button type="submit"
+                    class="w-full py-2.5 text-center text-white font-semibold bg-primary hover:bg-primary rounded-md transition duration-300">
                     Apply Filter
                 </button>
             </div>
