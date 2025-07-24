@@ -1,8 +1,12 @@
 import { Routes } from '@angular/router';
 import { PropertyCheckout } from './components/property-checkout/property-checkout';
 import { PropertyList } from './components/properties/property-list/property-list';
+import { LoginButton } from './components/Auth Components/login-button/login-button';
+import { RegisterButton } from './components/Auth Components/register-button/register-button';
 
 export const routes: Routes = [
     {path: 'checkout/:id', component: PropertyCheckout},
-    {path:'',component:PropertyList}
+    {path:'rent',component:PropertyList},
+    {path:'login', component:LoginButton},
+    {path:'register', component:RegisterButton}
 ];
