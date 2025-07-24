@@ -1,0 +1,55 @@
+<div class="w-full max-w-4xl max-h-[80vh] overflow-hidden bg-white dark:bg-slate-900 rounded-xl p-6 flex flex-col">
+ <!-- Close Button -->
+  <div class="flex justify-end">
+    <button (click)="closeDialog()" class="text-gray-500 hover:text-gray-800 dark:hover:text-white text-xl font-bold">
+      &times;
+    </button>
+  </div>
+  
+  <!-- Title with count -->
+  <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
+    {{ filteredReviews.length }} Review{{ filteredReviews.length !== 1 ? 's' : '' }}
+  </h2>
+
+  <!-- Search bar -->
+  <input
+    [(ngModel)]="searchText"
+    type="text"
+    placeholder="Search by name or review..."
+    class="mb-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
+  />
+
+  <!-- Scrollable reviews section -->
+  <div class="overflow-y-auto flex-1 pr-1 space-y-6">
+    <div
+      *ngFor="let review of filteredReviews"
+      class="space-y-2 border-b border-gray-200 dark:border-gray-700 pb-4"
+    >
+      <div class="flex items-center gap-4">
+        <img
+          [src]="review.user?.profilePicUrl || 'assets/images/avatar.png'"
+          alt="{{ review.user?.fname }}"
+          class="w-12 h-12 rounded-full object-cover"
+        />
+        <div>
+          <p class="font-semibold text-gray-900 dark:text-white">
+            {{ review.user?.fname }}
+          </p>
+          <p class="text-sm text-gray-600 dark:text-gray-400">
+            {{ review.user?.email }}
+          </p>
+        </div>
+      </div>
+
+      <p class="text-sm text-gray-700 dark:text-gray-300">
+        ★★★★★
+        <span class="font-medium text-black dark:text-white">· {{ review.date | date: 'MMMM y' }}</span>
+      </p>
+
+      <p class="text-sm text-gray-700 dark:text-gray-200">
+        {{ review.review.length > 140 ? (review.review | slice: 0:140) + '...' : review.review }}
+      </p>
+    </div>
+  </div>
+</div>
+
