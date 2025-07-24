@@ -1,0 +1,54 @@
+<section class="relative lg:py-24 py-16">
+  <div class="container relative">
+    <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
+
+      <!-- Filter Component -->
+      <div class="lg:col-span-4 md:col-span-6">
+        <app-filter></app-filter>
+      </div>
+
+      <!-- Apartments List -->
+      <div class="lg:col-span-8 md:col-span-6">
+        <div class="grid grid-cols-1 gap-[30px]">
+          <app-property-card
+            *ngFor="let apartment of apartments"
+            [apartment]="apartment">
+          </app-property-card>
+        </div>
+
+        <!-- Pagination -->
+        <div class="grid md:grid-cols-12 grid-cols-1 mt-8">
+          <div class="md:col-span-12 text-center">
+            <nav>
+              <ul class="inline-flex items-center -space-x-px">
+                <li>
+                  <a href="#" class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 bg-white dark:bg-slate-900 hover:text-white shadow-xs dark:shadow-gray-700 hover:border-primary dark:hover:border-primary hover:bg-primary dark:hover:bg-primary">
+                    <i class="uil uil-angle-left text-[20px]"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 hover:text-white bg-white dark:bg-slate-900 shadow-xs dark:shadow-gray-700 hover:border-primary dark:hover:border-primary hover:bg-primary dark:hover:bg-primary">1</a>
+                </li>
+                <li>
+                  <a href="#" class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 hover:text-white bg-white dark:bg-slate-900 shadow-xs dark:shadow-gray-700 hover:border-primary dark:hover:border-primary hover:bg-primary dark:hover:bg-primary">2</a>
+                </li>
+                <li>
+                  <a href="#" aria-current="page" class="z-10 size-10 inline-flex justify-center items-center mx-1 rounded-full text-white bg-primary shadow-xs dark:shadow-gray-700">3</a>
+                </li>
+                <li>
+                  <a href="#" class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 hover:text-white bg-white dark:bg-slate-900 shadow-xs dark:shadow-gray-700 hover:border-primary dark:hover:border-primary hover:bg-primary dark:hover:bg-primary">4</a>
+                </li>
+                <li>
+                  <a href="#" class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 bg-white dark:bg-slate-900 hover:text-white shadow-xs dark:shadow-gray-700 hover:border-primary dark:hover:border-primary hover:bg-primary dark:hover:bg-primary">
+                    <i class="uil uil-angle-right text-[20px]"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

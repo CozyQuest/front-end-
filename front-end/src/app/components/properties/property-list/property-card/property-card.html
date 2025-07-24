@@ -1,0 +1,51 @@
+<div class="group rounded-xl bg-white dark:bg-slate-900 shadow-sm hover:shadow-xl dark:hover:shadow-xl dark:shadow-gray-700 dark:hover:shadow-gray-700 overflow-hidden ease-in-out duration-500 w-full mx-auto">
+    <div class="lg:flex">
+        <div class="relative md:shrink-0">
+            <img class="size-full object-cover lg:w-64" [src]="apartment.imageUrl" [alt]="apartment.title">
+            <div class="absolute top-4 end-4">
+                <button (click)="toggleFavorite()" class="btn btn-icon bg-white dark:bg-slate-900 shadow-sm dark:shadow-gray-700 !rounded-full text-slate-100 dark:text-slate-700 focus:text-red dark:focus:text-red hover:text-red dark:hover:text-red">
+                    <i class="mdi mdi-heart text-[20px]"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-6">
+            <div class="md:pb-4 pb-6">
+                <a [routerLink]="['/property-detail', apartment.id]" class="text-lg hover:text-primary font-medium ease-in-out duration-500">{{ apartment.title }}</a>
+            </div>
+
+            <ul class="md:py-4 py-6 border-y border-slate-100 dark:border-gray-800 flex items-center list-none">
+                <li class="flex items-center me-4">
+                    <i class="uil uil-compress-arrows text-2xl me-2 text-blue"></i>
+                    <span>{{ apartment.area }}sqf</span>
+                </li>
+
+                <li class="flex items-center me-4">
+                    <i class="uil uil-bed-double text-2xl me-2 text-primary"></i>
+                    <span>{{ apartment.beds }} Beds</span>
+                </li>
+
+                <li class="flex items-center">
+                    <i class="uil uil-bath text-2xl me-2 text-primary"></i>
+                    <span>{{ apartment.baths }} Baths</span>
+                </li>
+            </ul>
+
+            <ul class="md:pt-4 pt-6 flex justify-between items-center list-none">
+                <li>
+                    <span class="text-slate-400">Price</span>
+                    <p class="text-lg font-medium">{{ apartment.price | currency }}</p>
+                </li>
+
+                <li>
+                    <span class="text-slate-400">Rating</span>
+                    <ul class="text-lg font-medium text-amber-400 list-none">
+                        <li *ngFor="let star of [1,2,3,4,5]" class="inline">
+                            <i class="mdi" [class.mdi-star]="star <= apartment.rating" [class.mdi-star-outline]="star > apartment.rating"></i>
+                        </li>
+                        <li class="inline text-slate-900 dark:text-white">{{ apartment.rating }}({{ apartment.reviewCount }})</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
