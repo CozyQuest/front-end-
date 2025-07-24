@@ -1,0 +1,22 @@
+<div class="container py-10 w-[100%] md:w-[80%] mx-auto" #featuredProperties>
+  <h1 class="text-2xl font-bold mb-6 text-center md:text-4xl">
+    Featured Properties
+  </h1>
+  <p class="text-center mb-8 text-gray-400 mt-5 pb-10 md:text-lg">
+    A great plateform to buy, sell and rent your properties without any agent or
+    commisions.
+  </p>
+  @defer (on viewport(featuredProperties)) {
+  <app-carousel-grid [Properties]="Properties"></app-carousel-grid>
+  }@loading (after 500ms; minimum 1s){
+  <div class="flex justify-center items-center h-96">
+    <p-progress-spinner
+      strokeWidth="8"
+      fill="transparent"
+      animationDuration=".5s"
+      [style]="{ width: '50px', height: '50px' }"
+      aria-label="Loading"
+    />
+  </div>
+  }
+</div>
