@@ -25,12 +25,19 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css",
+              "https://unicons.iconscout.com/release/v4.0.8/css/line.css"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
+            },
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules"
+              ]
             }
           },
           "configurations": {
@@ -88,10 +95,18 @@
             ],
             "styles": [
               "src/styles.css"
-            ]
+            ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules"
+              ]
+            }
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
