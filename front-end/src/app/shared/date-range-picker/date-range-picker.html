@@ -1,0 +1,49 @@
+<!-- range-picker.component.html -->
+<div class="flex flex-col items-center p-4 sm:p-6 space-y-4 w-full">
+  <!-- Selected dates on top -->
+  @if (startDate && endDate) {
+    <div class="text-lg font-semibold text-green-700 text-center">
+      Selected: {{ startDate | date: 'MMM d, y' }} - {{ endDate | date: 'MMM d, y' }}
+    </div>
+  }
+
+  <!-- Navigation and calendars -->
+  <div class="flex items-start justify-between w-full max-w-5xl flex-col sm:flex-row sm:items-center">
+    <button (click)="prevMonth()" class="mb-4 sm:mb-0 px-4 py-2 bg-gray-200 rounded">←</button>
+
+    <div class="flex flex-col sm:flex-row sm:space-x-8 w-full justify-center items-center">
+      @for (monthOffset of [0,1]; track $index) {
+        <div class="mb-4 sm:mb-0">
+          <h2 class="text-center text-base sm:text-lg font-semibold mb-2">
+            {{ getMonthName(currentMonth, monthOffset) }}
+          </h2>
+          <div class="grid grid-cols-7 gap-1 text-sm text-center text-gray-600">
+             @for (d of daysShort; track $index) {
+              <div>
+                {{ d }}
+              </div>
+             }
+            @for (date of getCalendarDates(monthOffset); track $index) {
+              <button
+                [ngClass]="{
+                  'opacity-50 cursor-not-allowed bg-gray-100 text-gray-400': isDateDisabled(date),
+                  'bg-green-700 text-white': (isStart(date) || isEnd(date)) && !isDateDisabled(date),
+                  'bg-green-500 text-white': isInRange(date) && !isStart(date) && !isEnd(date) && !isDateDisabled(date),
+                  'font-bold border border-green-400': isToday(date) && !isDateDisabled(date) && !isInRange(date) && !isStart(date) && !isEnd(date),
+                  'text-gray-400': !isDateInCurrentDisplayedMonth(date, monthOffset) && !isDateDisabled(date) && !isInRange(date) && !isStart(date) && !isEnd(date)
+                }"
+                (click)="selectDate(date)"
+                [disabled]="isDateDisabled(date)"
+                class="w-10 h-10 rounded hover:bg-green-200"
+              >
+                {{ date.getDate() }}
+              </button>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <button (click)="nextMonth()" class="mt-4 sm:mt-0 px-4 py-2 bg-gray-200 rounded">→</button>
+  </div>
+</div>
