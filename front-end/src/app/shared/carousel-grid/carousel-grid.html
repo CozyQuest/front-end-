@@ -1,0 +1,16 @@
+<section #carousel class="pb-10">
+  <p-carousel
+    [value]="Properties"
+    [numVisible]="3"
+    [numScroll]="1"
+    [circular]="true"
+    [responsiveOptions]="responsiveOptions"
+    autoplayInterval="3000"
+    [showIndicators]="false"
+    [showNavigators]="true"
+  >
+    <ng-template let-Property #item>
+      <app-prop-card-cer [Property]="Property"></app-prop-card-cer>
+    </ng-template>
+  </p-carousel>
+</section>
