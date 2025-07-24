@@ -1,0 +1,77 @@
+<!-- Navbar -->
+<nav class="flex items-center justify-between h-16 sticky top-0 z-50 bg-white px-10 py-5 md:px-10">
+
+  <!-- Logo -->
+  <div class="flex items-center">
+    <a routerLink="/">
+      <img src="images/logo-light.png" alt="Logo" class="h-10 w-auto">
+    </a>
+  </div>
+
+  <!-- Centered Nav Links (only on md and up) -->
+  <div class="hidden md:flex gap-10 items-center">
+    <a routerLink="/" routerLinkActive="text-blue-500" class="hover:text-blue-500">Home</a>
+    <a routerLink="/rent" routerLinkActive="text-blue-500" class="hover:text-blue-500">Rent</a>
+    <a routerLink="/host" routerLinkActive="text-blue-500" class="hover:text-blue-500">Host</a>
+    <div class="relative group">
+      <span (click)="toggleDropdown()" class="cursor-pointer flex items-center hover:text-blue-500">
+        More
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </span>
+      <ul *ngIf="dropdownOpen" class="absolute bg-white shadow-lg rounded mt-2 w-32">
+        <li class="p-2 hover:bg-gray-100 cursor-pointer"><a routerLink="/about">About Us</a></li>
+        <li class="p-2 hover:bg-gray-100 cursor-pointer"><a routerLink="/contact">Contact</a></li>
+        <li class="p-2 hover:bg-gray-100 cursor-pointer"><a routerLink="/support">Support</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Right Buttons -->
+  <div class="flex items-center gap-4">
+    <!-- Login -->
+    <button routerLink="/login"
+      class="bg-blue-600 hover:bg-green-700 text-white p-2 rounded-full flex items-center justify-center transition w-10 h-10">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M5.121 17.804A4 4 0 019 16h6a4 4 0 013.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    </button>
+
+    <!-- Signup -->
+    <button routerLink="/register"
+      class="bg-blue-600 hover:bg-green-700 text-white px-4 py-2 rounded-full font-semibold transition text-sm">
+      Signup
+    </button>
+
+    <!-- Hamburger (Mobile only) -->
+    <button (click)="toggleMenu()" class="md:hidden text-gray-800 focus:outline-none">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+        viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu (below navbar) -->
+<div *ngIf="menuOpen" class="md:hidden bg-white shadow-md z-40 px-4 py-4 space-y-4">
+  <a routerLink="/" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Home</a>
+  <a routerLink="/rent" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Rent</a>
+  <a routerLink="/host" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Host</a>
+  <div class="relative">
+    <div (click)="toggleDropdown()" class="flex items-center justify-between cursor-pointer hover:text-blue-500">
+      More
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+    <ul *ngIf="dropdownOpen" class="mt-2 space-y-2 pl-4">
+      <li><a routerLink="/about" class="block hover:text-blue-500">About Us</a></li>
+      <li><a routerLink="/contact" class="block hover:text-blue-500">Contact</a></li>
+      <li><a routerLink="/support" class="block hover:text-blue-500">Support</a></li>
+    </ul>
+  </div>
+</div>
