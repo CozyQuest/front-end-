@@ -3,11 +3,12 @@ import { FilterComponent } from "./filter-card/filter-card";
 import { PropertyCard } from "./property-card/property-card";
 import { Apartment } from '../../../core/interfaces/apartment.model';
 import { CommonModule } from '@angular/common';
+import { Navbar } from "../../../shared/navbar/navbar";
 
 @Component({
   selector: 'app-property-list',
   standalone: true,
-  imports: [FilterComponent, PropertyCard, CommonModule],
+  imports: [FilterComponent, PropertyCard, CommonModule, Navbar],
   templateUrl: './property-list.html'
 })
 export class PropertyList {
