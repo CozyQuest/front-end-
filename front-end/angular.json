@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "front-end": {
+    "dashboard": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -19,19 +19,23 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
+              "src/assets/libs/jsvectormap/jsvectormap.min.css",
+              "src/assets/libs/simplebar/simplebar.min.css",
+              "src/assets/libs/@mdi/font/css/materialdesignicons.min.css",
+              "src/assets/css/tailwind.min.css",
               "src/styles.css"
             ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+            "scripts": [
+              "src/assets/libs/jsvectormap/jsvectormap.min.js",
+              "src/assets/libs/jsvectormap/maps/world.js",
+              "src/assets/libs/apexcharts/apexcharts.min.js",
+              "src/assets/libs/feather-icons/feather.min.js",
+              "src/assets/libs/simplebar/simplebar.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -55,16 +59,16 @@
               "sourceMap": true
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "development"
         },
         "serve": {
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "front-end:build:production"
+              "buildTarget": "dashboard:build:production"
             },
             "development": {
-              "buildTarget": "front-end:build:development"
+              "buildTarget": "dashboard:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,12 +85,14 @@
             ],
             "tsConfig": "tsconfig.spec.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
+              "src/favicon.ico",
+              "src/assets"
             ],
             "styles": [
+              "src/assets/libs/jsvectormap/jsvectormap.min.css",
+              "src/assets/libs/simplebar/simplebar.min.css",
+              "src/assets/libs/@mdi/font/css/materialdesignicons.min.css",
+              "src/assets/css/tailwind.min.css",
               "src/styles.css"
             ]
           }
