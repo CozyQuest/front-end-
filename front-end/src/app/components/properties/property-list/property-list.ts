@@ -3,7 +3,6 @@ import { FilterComponent } from "./filter-card/filter-card";
 import { PropertyCard } from "./property-card/property-card";
 import { Apartment } from '../../../core/interfaces/apartment.model';
 import { CommonModule } from '@angular/common';
-import { Navbar } from "../../../shared/navbar/navbar";
 
 @Component({
   selector: 'app-property-list',
