@@ -1,6 +1,6 @@
 import { Component, AfterViewInit } from '@angular/core';
 
-declare const ApexCharts: any; // Declare ApexCharts to avoid TS errors
+import ApexCharts from 'apexcharts';
 
 @Component({
     selector: 'app-revenue-chart',

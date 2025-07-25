@@ -14,16 +14,23 @@ export class ThemeSwitcher implements AfterViewInit {
     }
 
     private setupThemeToggle(): void {
-        const themeBtn = document.getElementById('theme-mode');
-        const chk = document.getElementById('chk') as HTMLInputElement;
-        const html = document.documentElement;
+        try {
+            const htmlTag = document.documentElement;
+            const themeBtn = document.getElementById('theme-mode');
+            const chk = document.getElementById('chk') as HTMLInputElement | null;
 
-        const toggleTheme = () => {
-            html.className = html.classList.contains('dark') ? 'light' : 'dark';
-        };
+            const toggleTheme = (e?: Event) => {
+                e?.preventDefault();
+                htmlTag.classList.toggle('dark');
+                htmlTag.classList.toggle('light');
+                if (chk) chk.checked = htmlTag.classList.contains('dark');
+            };
 
-        themeBtn?.addEventListener('click', toggleTheme);
-        chk?.addEventListener('change', toggleTheme);
+            themeBtn?.addEventListener('click', toggleTheme);
+            chk?.addEventListener('change', toggleTheme);
+        } catch (err) {
+            console.error('Theme switch error:', err);
+        }
     }
 
     private setupDirectionToggle(): void {

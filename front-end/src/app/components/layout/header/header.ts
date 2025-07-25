@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, OnInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit, OnDestroy } from '@angular/core';
 // @ts-ignore
 import feather from 'feather-icons';
 
@@ -9,13 +9,9 @@ import feather from 'feather-icons';
     templateUrl: './header.html',
     styleUrl: './header.css'
 })
-export class Header implements AfterViewInit, OnInit, OnDestroy {
+export class Header implements AfterViewInit, OnDestroy {
 
     private handleWindowClick = () => this.dismissDropdownMenu();
-
-    ngOnInit(): void {
-        this.highlightActiveLinks();
-    }
 
     ngAfterViewInit(): void {
         feather.replace();
@@ -63,44 +59,5 @@ export class Header implements AfterViewInit, OnInit, OnDestroy {
         document.querySelectorAll(".dropdown-toggle").forEach((item) => {
             item.classList.remove("block");
         });
-    }
-
-    highlightActiveLinks(): void {
-        const menuItems = document.getElementsByClassName('sub-menu-item') as HTMLCollectionOf<HTMLAnchorElement>;
-        let matchingMenuItem: HTMLAnchorElement | null = null;
-
-        for (let i = 0; i < menuItems.length; i++) {
-            if (menuItems[i].href === window.location.href) {
-                matchingMenuItem = menuItems[i];
-                break;
-            }
-        }
-
-        if (matchingMenuItem) {
-            matchingMenuItem.classList.add('active');
-            const immediateParent = this.getClosest(matchingMenuItem, 'li');
-            immediateParent?.classList.add('active');
-
-            const parent = this.getClosest(matchingMenuItem, '.parent-menu-item');
-            if (parent) {
-                parent.classList.add('active');
-                const parentMenuitem = parent.querySelector('.menu-item');
-                parentMenuitem?.classList.add('active');
-
-                const parentOfParent = this.getClosest(parent, '.parent-parent-menu-item');
-                parentOfParent?.classList.add('active');
-            } else {
-                const parentOfParent = this.getClosest(matchingMenuItem, '.parent-parent-menu-item');
-                parentOfParent?.classList.add('active');
-            }
-        }
-    }
-
-    getClosest(elem: HTMLElement | null, selector: string): HTMLElement | null {
-        while (elem && elem !== document.documentElement) {
-            if (elem.matches(selector)) return elem;
-            elem = elem.parentElement;
-        }
-        return null;
     }
 }

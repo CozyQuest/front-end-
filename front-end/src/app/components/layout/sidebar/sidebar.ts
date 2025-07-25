@@ -1,7 +1,5 @@
 import { Component, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-// @ts-ignore
-import feather from 'feather-icons';
 
 @Component({
     selector: 'app-sidebar',
@@ -26,24 +24,41 @@ export class Sidebar implements AfterViewInit {
     }
 
     activateSidebarMenu(): void {
-        const current = this.router.url.split('/').pop();
-        const sidebar = document.getElementById('sidebar');
+        const currentPath = this.router.url;
 
-        if (sidebar && current !== '') {
-            const menuItems = sidebar.querySelectorAll('a');
-            menuItems.forEach((link) => {
-                const href = link.getAttribute('href');
-                if (href && current && href.includes(current)) {
-                    link.parentElement?.classList.add('active');
+        const sidebarLinks = document.querySelectorAll("#sidebar a");
 
-                    const submenu = link.closest('.sidebar-submenu');
-                    const dropdown = link.closest('.sidebar-dropdown');
+        sidebarLinks.forEach((link) => {
+            const href = link.getAttribute("href");
 
-                    if (submenu) submenu.classList.add('block');
-                    if (dropdown) dropdown.classList.add('active');
+            // Handle the default root path ("/") as "index.html"
+            const isRoot = currentPath === '/' || currentPath === '';
+
+            if (
+                (isRoot && href === 'index.html') ||
+                (!isRoot && href && currentPath.includes(href))
+            ) {
+                // Activate parent <li>
+                link.classList.add("active");
+                const parent = link.closest("li");
+                if (parent) {
+                    parent.classList.add("active");
                 }
-            });
-        }
+
+                // If inside a dropdown, open it
+                let parentEl = link.parentElement;
+                while (parentEl) {
+                    if (parentEl.classList.contains("submenu")) {
+                        parentEl.classList.add("block");
+                        const parentLi = parentEl.closest("li");
+                        if (parentLi) {
+                            parentLi.classList.add("active");
+                        }
+                    }
+                    parentEl = parentEl.parentElement;
+                }
+            }
+        });
     }
 
     initSidebarDropdownClicks(): void {

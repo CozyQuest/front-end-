@@ -1,7 +1,5 @@
 import { Component, Input, AfterViewInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// @ts-ignore
-import feather from 'feather-icons';
 
 @Component({
     selector: 'app-stat-card',
@@ -19,7 +17,6 @@ export class StatCard implements AfterViewInit {
     constructor(private el: ElementRef) { }
 
     ngAfterViewInit(): void {
-        feather.replace();
         this.animateCounter();
     }
 
