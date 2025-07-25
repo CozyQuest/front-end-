@@ -28,8 +28,9 @@
            "styles": [
               "src/styles.css",
               "https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css",
-              "https://unicons.iconscout.com/release/v4.0.8/css/line.css"
-              ],
+              "https://unicons.iconscout.com/release/v4.0.8/css/line.css",
+              "src/custom-theme.scss"
+            ],
             "server": "src/main.server.ts",
             "outputMode": "server",
             "ssr": {
@@ -95,7 +96,12 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/@iconscout/unicons/css/line.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/@mdi/font/css/materialdesignicons.min.css"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

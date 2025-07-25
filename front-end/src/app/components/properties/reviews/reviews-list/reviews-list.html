@@ -1,0 +1,28 @@
+<div class="max-w-7xl mx-auto p-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <ng-container *ngFor="let review of reviews.slice(0, 6)">
+      <div class="space-y-2">
+        <div class="flex items-center gap-4">
+          <img [src]="review.user?.profilePicUrl" alt="{{ review.user?.fname }}" class="w-12 h-12 rounded-full object-cover">
+          <div>
+            <p class="font-semibold">{{ review.user?.fname }}</p>
+            <p class="text-sm text-gray-600">{{ review.user?.email }}</p>
+          </div>
+        </div>
+        <p class="text-sm text-gray-700">★★★★★ <span class="font-medium text-black">· {{ review.date | date: 'MMMM y' }}</span></p>
+        <p class="text-sm text-gray-700">{{ review.review | slice:0:140 }}...</p>
+        <a class="text-black cursor-pointer underline" (click)="openDialog()">Show more</a>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Footer -->
+  <div class="mt-10 flex justify-between items-center">
+    <button (click)="openDialog()" class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg font-medium">
+      Show all {{ reviews.length }} reviews
+    </button>
+    <a href="#" class="text-sm text-gray-600 underline hover:text-gray-800">
+      Learn how reviews work
+    </a>
+  </div>
+</div>

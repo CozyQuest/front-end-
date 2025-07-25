@@ -23,5 +23,13 @@ export const routes: Routes = [
     {
         path: 'add-property',
         loadComponent: () => import('./components/add-property/add-property').then(m => m.AddProperty),
-    }
+    },
+    {
+    path: 'properties/details/:id',
+    loadComponent: () => import('./components/properties/property-details/property-details').then(m => m.PropertyDetails)
+  },
+  {
+    path: 'profile/details/:id',
+    loadComponent: () => import('./components/profile/profile-details/profile-details').then(m => m.ProfileDetails)
+  },
 ];
