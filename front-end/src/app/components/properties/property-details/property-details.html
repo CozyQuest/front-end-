@@ -61,9 +61,6 @@
             <p class="font-semibold text-base md:text-lg">Hosted by {{ property?.owner?.fname }} {{ property?.owner?.lname }}</p>
             <p class="text-gray-600 dark:text-gray-400 text-sm">{{ property?.owner?.email }}</p>
             <p class="text-gray-600 dark:text-gray-400 text-sm">{{ property?.owner?.phone }}</p>
-            <p *ngIf="property?.owner?.bio" class="text-gray-500 dark:text-gray-400 text-sm mt-2 italic">
-              "{{ property?.owner?.bio }}"
-            </p>
           </div>
         </div>
 

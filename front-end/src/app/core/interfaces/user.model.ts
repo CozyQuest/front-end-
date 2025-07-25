@@ -4,7 +4,5 @@ export interface User {
   lname: string;
   email: string;
   phone: string;
-  profilePicUrl: string;
-  coverPicture?: string; 
-  bio?: string;
+  profilePicUrl: string
 }

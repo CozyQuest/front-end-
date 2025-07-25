@@ -50,8 +50,6 @@ This home blends comfort, style, and location for the perfect lifestyle.`,
         email: 'owner@example.com',
         phone: '+123456789',
         profilePicUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
-        bio: 'Passionate real estate owner with 10+ years of experience.',
-        coverPicture: 'https://images.unsplash.com/photo-1503264116251-35a269479413'
       }
     }
   ];
