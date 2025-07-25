@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './property-list.html'
 })
 export class PropertyList {
-  heroBackgroundImage = 'url(assets/images/01.jpg)';
+  heroBackgroundImage = 'url(assets/images/bg/01.jpg)';
   apartments: Apartment[] = [
     {
       id: 1,
