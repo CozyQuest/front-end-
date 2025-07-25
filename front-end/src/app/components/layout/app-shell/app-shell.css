@@ -1,4 +1,4 @@
-/* .page-wrapper {
+.page-wrapper {
     display: flex;
     min-height: 100vh;
 }
@@ -6,4 +6,4 @@
 .page-content {
     flex-grow: 1;
     padding-top: 64px;
-} */
+}
