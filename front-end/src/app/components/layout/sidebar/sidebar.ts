@@ -12,14 +12,6 @@ export class Sidebar implements AfterViewInit {
 
     ngAfterViewInit(): void {
         this.activateSidebarMenu();
-
-        const sidebarToggleBtn = document.getElementById('close-sidebar');
-        if (sidebarToggleBtn) {
-            sidebarToggleBtn.addEventListener('click', () => {
-                document.getElementsByClassName('page-wrapper')[0]?.classList.toggle('toggled');
-            });
-        }
-
         this.initSidebarDropdownClicks();
     }
 
