@@ -1,13 +1,5 @@
 /* src/styles.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* Custom scrollbar if needed (optional) */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: rgba(100, 100, 100, 0.3);
-  border-radius: 4px;
-}
+/* @import "tailwindcss/preflight";
+@import "tailwindcss/utilities"; */
