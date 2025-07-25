@@ -14,27 +14,19 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/assets/libs/jsvectormap/jsvectormap.min.css",
-              "src/assets/libs/simplebar/simplebar.min.css",
-              "src/assets/libs/@mdi/font/css/materialdesignicons.min.css",
-              "src/assets/css/tailwind.min.css",
+              "node_modules/simplebar/dist/simplebar.min.css",
+              "node_modules/@mdi/font/css/materialdesignicons.min.css",
+              "node_modules/jsvectormap/dist/jsvectormap.min.css",
               "src/styles.css"
             ],
             "scripts": [
-              "src/assets/libs/jsvectormap/jsvectormap.min.js",
-              "src/assets/libs/jsvectormap/maps/world.js",
-              "src/assets/libs/apexcharts/apexcharts.min.js",
-              "src/assets/libs/feather-icons/feather.min.js",
-              "src/assets/libs/simplebar/simplebar.min.js"
+              "node_modules/simplebar/dist/simplebar.min.js",
+              "node_modules/jsvectormap/dist/jsvectormap.min.js",
+              "node_modules/jsvectormap/dist/maps/world.js"
             ]
           },
           "configurations": {
@@ -79,21 +71,19 @@
         "test": {
           "builder": "@angular/build:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": ["zone.js", "zone.js/testing"],
             "tsConfig": "tsconfig.spec.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
-              "src/assets/libs/jsvectormap/jsvectormap.min.css",
-              "src/assets/libs/simplebar/simplebar.min.css",
-              "src/assets/libs/@mdi/font/css/materialdesignicons.min.css",
-              "src/assets/css/tailwind.min.css",
+              "node_modules/simplebar/dist/simplebar.min.css",
+              "node_modules/@mdi/font/css/materialdesignicons.min.css",
+              "node_modules/jsvectormap/dist/jsvectormap.min.css",
               "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/simplebar/dist/simplebar.min.js",
+              "node_modules/jsvectormap/dist/jsvectormap.min.js",
+              "node_modules/jsvectormap/dist/maps/world.js"
             ]
           }
         }
