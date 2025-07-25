@@ -1,0 +1,10 @@
+/* footer.css (if not using Tailwind full classes in HTML) */
+@import 'tailwindcss/tailwind.css';
+
+.btn {
+  @apply px-4 py-2 rounded-full font-medium text-sm;
+}
+
+.btn-primary {
+  @apply bg-primary text-white hover:bg-primary-dark transition;
+}

@@ -1,0 +1,41 @@
+<div class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('assets/images/bg/02.jpg');">
+  <form [formGroup]="loginForm" (ngSubmit)="login()" class="bg-white bg-opacity-90 p-8 rounded-xl shadow-lg w-full max-w-md space-y-4">
+
+    <h2 class="text-2xl font-bold text-center text-gray-800">Login</h2>
+
+    <!-- Email -->
+    <div>
+      <input formControlName="email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded" />
+      <p class="text-red-500 text-sm mt-1" *ngIf="f['email'].invalid && f['email'].touched">
+        Enter a valid email
+      </p>
+    </div>
+
+    <!-- Password -->
+    <div>
+      <input formControlName="password" type="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded" />
+      <p class="text-red-500 text-sm mt-1" *ngIf="f['password'].invalid && f['password'].touched">
+        Min 8 chars, 1 letter & 1 number
+      </p>
+    </div>
+
+    <!-- Login Button -->
+    <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition">
+      Login
+    </button>
+
+    <!-- OR Divider -->
+    <div class="text-center text-gray-500 my-2">OR</div>
+
+    <!-- Google Button -->
+    <button type="button" (click)="loginWithGoogle()" class="w-full border border-gray-400 text-black p-3 rounded hover:bg-gray-100 transition">
+      Continue with Google
+    </button>
+
+    <!-- Redirect to Register -->
+    <p class="text-center text-sm mt-4">
+      Don't have an account?
+      <a (click)="goToRegister()" class="text-blue-600 hover:underline cursor-pointer">Sign up</a>
+    </p>
+  </form>
+</div>
