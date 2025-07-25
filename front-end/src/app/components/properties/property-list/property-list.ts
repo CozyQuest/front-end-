@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-property-list',
   standalone: true,
-  imports: [FilterComponent, PropertyCard, CommonModule, Navbar],
+  imports: [FilterComponent, PropertyCard, CommonModule],
   templateUrl: './property-list.html'
 })
 export class PropertyList {
