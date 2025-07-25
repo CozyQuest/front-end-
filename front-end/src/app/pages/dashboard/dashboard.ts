@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StatCard } from '../../components/dashboard/stat-card/stat-card';
 import { MapCard } from '../../components/dashboard/map-card/map-card';
@@ -23,6 +23,8 @@ import { TopProperties } from '../../components/dashboard/top-properties/top-pro
     styleUrls: ['./dashboard.css']
 })
 export class Dashboard {
+    @HostBinding('class') class = 'container-fluid relative px-3';
+    
     cards = [
         { title: 'Total Revenue', value: 45890, currency: '$', icon: 'currency-usd' },
         { title: 'Total Visitor', value: 2456, icon: 'account-group-outline' },
