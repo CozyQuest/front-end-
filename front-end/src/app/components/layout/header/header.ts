@@ -15,6 +15,14 @@ export class Header implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         feather.replace();
+
+        const sidebarToggleBtn = document.getElementById('close-sidebar');
+        if (sidebarToggleBtn) {
+            sidebarToggleBtn.addEventListener('click', () => {
+                document.getElementsByClassName('page-wrapper')[0]?.classList.toggle('toggled');
+            });
+        }
+
         this.setupDropdownListeners();
         window.addEventListener('click', this.handleWindowClick);
     }
