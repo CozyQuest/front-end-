@@ -5,9 +5,12 @@ import { PropertyService } from '../../../core/services/property.service';
 import { UserService } from '../../../core/services/user.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import feather from 'feather-icons';
-import { isPlatformBrowser } from '@angular/common';
+// import feather from 'feather-icons';
+// import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
+
+// import { CarouselGrid } from '../../../shared/carousel-grid/carousel-grid';
+// import { ProgressSpinner } from 'primeng/progressspinner';
 
 
 @Component({
@@ -16,7 +19,7 @@ import { Inject, PLATFORM_ID } from '@angular/core';
   templateUrl: './profile-details.html',
   styleUrl: './profile-details.css'
 })
-export class ProfileDetails {
+export class ProfileDetails  {
  user!: User;
   properties: Property[] = [];
   fullName: string = '';
@@ -60,11 +63,11 @@ export class ProfileDetails {
    //feather.replace();
   }
 
-  ngAfterViewInit(): void {
-     if (isPlatformBrowser(this.platformId)) {
-    feather.replace();
-  }
-  }
+  // ngAfterViewInit(): void {
+  //    document.addEventListener('DOMContentLoaded', function () {
+  //   feather.replace();
+  // });
+  // }
 
   getRatingAverage(ratings: { rating: number }[]): string {
     if (!ratings.length) return '0.0(0)';
