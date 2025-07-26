@@ -1,0 +1,16 @@
+<div class="p-5 flex items-center justify-between">
+    <span class="me-3">
+        <span class="text-slate-400 block">{{ title }}</span>
+        <span class="flex items-center justify-between mt-1">
+            <span class="text-2xl font-medium">
+                <ng-container *ngIf="currency">{{ currency }} </ng-container>
+                <span class="counter-value" [attr.data-target]="value">0</span>
+            </span>
+        </span>
+    </span>
+
+    <span
+        class="flex justify-center items-center rounded-md size-12 min-w-[48px] bg-slate-50 shadow-sm shadow-gray-100 text-primary">
+        <i [ngClass]="'mdi mdi-' + icon + ' text-[28px]'"></i>
+    </span>
+</div>
