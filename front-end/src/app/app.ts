@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AppShell } from './components/layout/app-shell/app-shell';
+import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
 
 @Component({
     selector: 'app-root',
-    imports: [AppShell],
+    imports: [DashboardShell],
     templateUrl: './app.html',
     styleUrl: './app.css'
 })
