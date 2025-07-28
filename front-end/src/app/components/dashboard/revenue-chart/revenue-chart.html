@@ -1,0 +1,25 @@
+<div class="relative overflow-hidden rounded-md shadow-sm bg-white">
+    <div class="p-6 flex items-center justify-between border-b border-gray-100">
+        <h6 class="text-lg font-semibold">Revenue Analytics</h6>
+        
+        <div class="position-relative">
+            <select
+                class="form-select form-input w-full py-2 h-10 bg-white rounded outline-none border !border-gray-200 focus:ring-0"
+                id="yearchart">
+                <option value="Y" selected>Yearly</option>
+                <option value="M">Monthly</option>
+                <option value="W">Weekly</option>
+                <option value="T">Today</option>
+            </select>
+        </div>
+    </div>
+<div class="card">
+  <p-chart
+    type="line"
+    [data]="chartData"
+    [options]="chartOptions"
+    style="height: 360px"
+  ></p-chart>
+</div>
+    <!-- <div id="mainchart" class="apex-chart px-4 pb-6"></div> -->
+</div>
