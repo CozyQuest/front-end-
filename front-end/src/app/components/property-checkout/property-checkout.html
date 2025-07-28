@@ -63,12 +63,12 @@
               </li>
             </ul>
           </div>
+          <!-- app.component.html (or any parent component) -->
+          <app-date-range-picker
+            [disabledDates]="myDisabledDates"
+            (dateRangeSelected)="onDateRangeSelected($event)"
+          ></app-date-range-picker>
         }
-        <!-- app.component.html (or any parent component) -->
-        <app-date-range-picker
-          [disabledDates]="myDisabledDates"
-          (dateRangeSelected)="onDateRangeSelected($event)"
-        ></app-date-range-picker>
       </div>
     </div>
     <div class="w-full md:w-3/12 mt-6 md:mt-0">

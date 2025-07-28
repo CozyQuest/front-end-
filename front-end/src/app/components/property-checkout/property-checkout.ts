@@ -23,13 +23,7 @@ export class PropertyCheckout implements OnInit {
     dailyRate: number = 0; // Assuming a daily rate of $5000 from your HTML
     totalPrice: number = 0;
     
-    myDisabledDates: Date[] = [
-    new Date(2025, 6, 20), // July 20, 2025
-    new Date(2025, 6, 25), // July 25, 2025
-    new Date(2025, 7, 1),  // August 1, 2025
-    new Date(2025, 7, 5),  // August 5, 2025
-    new Date(2025, 7, 10) // August 10,
-  ];
+    myDisabledDates: Date[] = []; // Array to hold disabled dates
 
   constructor(
     private route: ActivatedRoute,
@@ -48,8 +42,13 @@ export class PropertyCheckout implements OnInit {
      next: (data) => {
        this.property = data;
        this.dailyRate = data.price;
+       this.myDisabledDates = (this.property.rentedDates || []).map(dateStr => {
+          console.log('Original date string:', dateStr);
+          const date = new Date(dateStr);
+          date.setHours(0, 0, 0, 0);
+          return date;
+        });
        this.flag = true;
-       console.log('Property fetched successfully:', this.property);
      },
      error: (err) => console.error('Failed to fetch property:', err),
     });

@@ -9,5 +9,5 @@ export interface PropertyCheckoutInterface {
     price: number;
     rating: number;
     ratingCount: number;
-    RentedDates: string[];
+    rentedDates: Date[];
 }
