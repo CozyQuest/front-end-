@@ -53,12 +53,13 @@
               <li>
                 <span class="text-slate-400">Rating</span>
                 <ul class="text-lg font-medium text-amber-400 list-none flex items-center gap-1">
-                  <li><i class="mdi mdi-star"></i></li>
-                  <li><i class="mdi mdi-star"></i></li>
-                  <li><i class="mdi mdi-star"></i></li>
-                  <li><i class="mdi mdi-star"></i></li>
-                  <li><i class="mdi mdi-star"></i></li>
-                  <li class="text-slate-900">{{property.rating}}({{property.ratingCount}})</li>
+                  <li *ngFor="let star of [1,2,3,4,5]; let i = index">
+                    <i class="mdi" 
+                      [class.mdi-star]="property.rating > i"
+                      [class.mdi-star-outline]="property.rating <= i"
+                      [class.text-slate-300]="property.rating <= i"></i>
+                  </li>
+                  <li class="text-slate-900">{{property.rating}} ({{property.ratingCount}} reviews)</li>
                 </ul>
               </li>
             </ul>
