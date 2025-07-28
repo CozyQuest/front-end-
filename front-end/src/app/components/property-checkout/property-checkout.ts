@@ -20,7 +20,7 @@ export class PropertyCheckout implements OnInit {
 
     // Properties for booking summary calculations
     numberOfDays: number = 0;
-    dailyRate: number = 5000; // Assuming a daily rate of $5000 from your HTML
+    dailyRate: number = 0; // Assuming a daily rate of $5000 from your HTML
     totalPrice: number = 0;
     
     myDisabledDates: Date[] = [
@@ -49,6 +49,7 @@ export class PropertyCheckout implements OnInit {
        this.property = data;
        this.dailyRate = data.price;
        this.flag = true;
+       console.log('Property fetched successfully:', this.property);
      },
      error: (err) => console.error('Failed to fetch property:', err),
     });
