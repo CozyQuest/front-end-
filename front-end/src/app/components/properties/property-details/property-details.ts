@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PropertyService } from '../../../core/services/property.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -11,6 +11,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ReviewsList } from '../reviews/reviews-list/reviews-list';
+
 
 @Component({
   selector: 'app-property-details',

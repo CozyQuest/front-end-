@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes,RouterModule } from '@angular/router';
 import { PropertyCheckout } from './components/property-checkout/property-checkout';
 import { PropertyList } from './components/properties/property-list/property-list';
 import { LoginButton } from './components/Auth Components/login-button/login-button';
@@ -25,11 +25,11 @@ export const routes: Routes = [
         loadComponent: () => import('./components/add-property/add-property').then(m => m.AddProperty),
     },
     {
-    path: 'properties/details/:id',
+    path: 'properties/:id',
     loadComponent: () => import('./components/properties/property-details/property-details').then(m => m.PropertyDetails)
   },
   {
-    path: 'profile/details/:id',
-    loadComponent: () => import('./components/profile/profile-details/profile-details').then(m => m.ProfileDetails)
-  },
+    path: 'profile/:id',
+     loadComponent: () => import('./components/profile/profile-details/profile-details').then(m => m.ProfileDetails),
+   },
 ];

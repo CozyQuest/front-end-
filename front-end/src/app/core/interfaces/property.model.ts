@@ -18,4 +18,6 @@ export interface Property {
   ratings: { rating: number }[];
   services: { id: number; name: string }[];
   owner: User;
+  Guests: number;
+  Area: number;
 }

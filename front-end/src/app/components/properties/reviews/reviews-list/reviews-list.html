@@ -6,7 +6,7 @@
           <img [src]="review.user?.profilePicUrl" alt="{{ review.user?.fname }}" class="w-12 h-12 rounded-full object-cover">
           <div>
             <p class="font-semibold">{{ review.user?.fname }}</p>
-            <p class="text-sm text-gray-600">{{ review.user?.email }}</p>
+            <p class="text-sm text-gray-600">{{ review.user?.location}}</p>
           </div>
         </div>
         <p class="text-sm text-gray-700">★★★★★ <span class="font-medium text-black">· {{ review.date | date: 'MMMM y' }}</span></p>

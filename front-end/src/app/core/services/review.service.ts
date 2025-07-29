@@ -20,7 +20,8 @@ export class ReviewService {
           lname: 'Connor',
           email: 'sarah@example.com',
           phone: '123-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=1'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=1',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -36,7 +37,8 @@ export class ReviewService {
           lname: 'Doe',
           email: 'john@example.com',
           phone: '987-654-3210',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=2'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=2',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -52,7 +54,8 @@ export class ReviewService {
           lname: 'Brown',
           email: 'emma@example.com',
           phone: '321-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=3'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=3',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -68,7 +71,8 @@ export class ReviewService {
           lname: 'Wilson',
           email: 'mike@example.com',
           phone: '111-222-3333',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=4'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=4',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -84,7 +88,8 @@ export class ReviewService {
           lname: 'White',
           email: 'lisa@example.com',
           phone: '444-555-6666',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=5'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=5',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -100,7 +105,8 @@ export class ReviewService {
           lname: 'Connor',
           email: 'sarah@example.com',
           phone: '123-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=1'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=1',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -116,7 +122,8 @@ export class ReviewService {
           lname: 'Doe',
           email: 'john@example.com',
           phone: '987-654-3210',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=2'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=2',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -132,7 +139,8 @@ export class ReviewService {
           lname: 'Brown',
           email: 'emma@example.com',
           phone: '321-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=3'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=3',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -148,7 +156,8 @@ export class ReviewService {
           lname: 'Wilson',
           email: 'mike@example.com',
           phone: '111-222-3333',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=4'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=4',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -164,7 +173,8 @@ export class ReviewService {
           lname: 'White',
           email: 'lisa@example.com',
           phone: '444-555-6666',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=5'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=5',
+          location: 'Alexandria, Egypt'
         }
       },
       // Add reviews 11 to 25 below using the same format...
@@ -181,7 +191,8 @@ export class ReviewService {
           lname: 'Connor',
           email: 'sarah@example.com',
           phone: '123-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=1'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=1',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -197,7 +208,8 @@ export class ReviewService {
           lname: 'Doe',
           email: 'john@example.com',
           phone: '987-654-3210',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=2'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=2',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -213,9 +225,10 @@ export class ReviewService {
           lname: 'Brown',
           email: 'emma@example.com',
           phone: '321-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=3'
-        }
-      },
+          profilePicUrl: 'https://i.pravatar.cc/100?img=3',
+          location: 'Alexandria, Egypt'
+      }
+    },
       {
         id: 14,
         userId: 4,
@@ -229,7 +242,8 @@ export class ReviewService {
           lname: 'Wilson',
           email: 'mike@example.com',
           phone: '111-222-3333',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=4'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=4',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -245,7 +259,8 @@ export class ReviewService {
           lname: 'White',
           email: 'lisa@example.com',
           phone: '444-555-6666',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=5'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=5',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -261,7 +276,8 @@ export class ReviewService {
           lname: 'Connor',
           email: 'sarah@example.com',
           phone: '123-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=1'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=1',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -277,7 +293,8 @@ export class ReviewService {
           lname: 'Doe',
           email: 'john@example.com',
           phone: '987-654-3210',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=2'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=2',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -293,7 +310,8 @@ export class ReviewService {
           lname: 'Brown',
           email: 'emma@example.com',
           phone: '321-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=3'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=3',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -309,7 +327,8 @@ export class ReviewService {
           lname: 'Wilson',
           email: 'mike@example.com',
           phone: '111-222-3333',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=4'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=4',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -325,7 +344,8 @@ export class ReviewService {
           lname: 'White',
           email: 'lisa@example.com',
           phone: '444-555-6666',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=5'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=5',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -341,7 +361,8 @@ export class ReviewService {
           lname: 'Connor',
           email: 'sarah@example.com',
           phone: '123-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=1'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=1',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -357,7 +378,8 @@ export class ReviewService {
           lname: 'Doe',
           email: 'john@example.com',
           phone: '987-654-3210',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=2'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=2',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -373,7 +395,8 @@ export class ReviewService {
           lname: 'Brown',
           email: 'emma@example.com',
           phone: '321-456-7890',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=3'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=3',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -389,7 +412,8 @@ export class ReviewService {
           lname: 'Wilson',
           email: 'mike@example.com',
           phone: '111-222-3333',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=4'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=4',
+          location: 'Alexandria, Egypt'
         }
       },
       {
@@ -405,7 +429,8 @@ export class ReviewService {
           lname: 'White',
           email: 'lisa@example.com',
           phone: '444-555-6666',
-          profilePicUrl: 'https://i.pravatar.cc/100?img=5'
+          profilePicUrl: 'https://i.pravatar.cc/100?img=5',
+          location: 'Alexandria, Egypt'
         }
       }
     ];

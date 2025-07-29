@@ -2,7 +2,7 @@ import { User } from "./user.model";
 
 export interface Review {
   id: number;
-  userId: number;
+  userId: number; 
   propertyId: number;
   review: string;
   rating: number;

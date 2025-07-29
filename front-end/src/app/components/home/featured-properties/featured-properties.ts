@@ -1,4 +1,4 @@
-import { RecomendedProperty } from './../../../core/interfaces/recomendedProperty';
+import { IPropertyCard } from './../../../core/interfaces/recomendedProperty';
 import { CarouselGrid } from './../../../shared/carousel-grid/carousel-grid';
 import { Component } from '@angular/core';
 import { ProgressSpinner } from 'primeng/progressspinner';
@@ -9,7 +9,7 @@ import { ProgressSpinner } from 'primeng/progressspinner';
   styleUrl: './featured-properties.css'
 })
 export class FeaturedProperties {
-  Properties: RecomendedProperty[] = [
+  Properties: IPropertyCard[] = [
     {
       id: '1',
       name: 'Apartment in Downtown',

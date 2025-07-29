@@ -40,27 +40,29 @@
 
         <!-- Property Features -->
         <ul class="py-6 flex flex-wrap items-center gap-x-6 gap-y-4 ml-0 md:ml-10">
-          <li class="flex items-center">
-            <i class="uil uil-compress-arrows text-2xl md:text-3xl text-blue-500 mr-2"></i>
-            <span class="text-lg md:text-xl">8000 sqf</span>
-          </li>
-          <li class="flex items-center">
-            <i class="uil uil-bed-double text-2xl md:text-3xl text-blue-500 mr-2"></i> 
-            <span class="text-lg md:text-xl">{{ property?.roomCount }} Beds</span>
-          </li>
-          <li class="flex items-center">
-            <i class="uil uil-bath text-2xl md:text-3xl text-blue-500 mr-2"></i>
-            <span class="text-lg md:text-xl">{{ property?.bathroomCount }} Baths</span>
-          </li>
-        </ul>
-
+       <li class="flex items-center">
+        <i class="uil uil-compress-arrows text-2xl md:text-3xl text-blue-500 mr-2"></i>
+        <span class="text-lg md:text-xl">{{ property?.Area }} m³</span>
+       </li>
+       <li class="flex items-center">
+        <i class="uil uil-bed-double text-2xl md:text-3xl text-blue-500 mr-2"></i> 
+        <span class="text-lg md:text-xl">{{ property?.roomCount }} Beds</span>
+       </li>
+       <li class="flex items-center">
+        <i class="uil uil-bath text-2xl md:text-3xl text-blue-500 mr-2"></i>
+        <span class="text-lg md:text-xl">{{ property?.bathroomCount }} Baths</span>
+       </li>
+       <li class="flex items-center">
+        <i class="uil uil-users-alt text-2xl md:text-3xl text-blue-500 mr-2"></i>
+        <span class="text-lg md:text-xl">{{ property?.Guests }} Guests</span>
+      </li>
+     </ul>
         <!-- Owner Info -->
         <div class="flex items-start gap-4 ml-0 md:ml-10 mt-4">
           <img [src]="property?.owner?.profilePicUrl" class="w-14 h-14 md:w-16 md:h-16 rounded-full" />
           <div>
             <p class="font-semibold text-base md:text-lg">Hosted by {{ property?.owner?.fname }} {{ property?.owner?.lname }}</p>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">{{ property?.owner?.email }}</p>
-            <p class="text-gray-600 dark:text-gray-400 text-sm">{{ property?.owner?.phone }}</p>
+             <p class="text-gray-600 dark:text-gray-400 text-sm">{{ property?.owner?.location }}</p>
           </div>
         </div>
 

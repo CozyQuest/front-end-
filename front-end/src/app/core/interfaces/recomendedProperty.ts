@@ -1,4 +1,4 @@
-export interface RecomendedProperty {
+export interface IPropertyCard {
   id: string;
   name: string;
   image: string;
