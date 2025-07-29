@@ -4,6 +4,7 @@ import { PropertyList } from './components/properties/property-list/property-lis
 import { LoginButton } from './components/Auth Components/login-button/login-button';
 import { RegisterButton } from './components/Auth Components/register-button/register-button';
 import { EditProfile } from './components/profile/edit-profile/edit-profile';
+import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
 
 export const routes: Routes = [
     { path: 'checkout/:id', component: PropertyCheckout },
@@ -11,6 +12,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginButton },
     { path: 'register', component: RegisterButton },
     {path: 'edit-profile', component: EditProfile},
+    {path:'dashboard', component: DashboardShell},
     {
         path: '',
         redirectTo: 'home',

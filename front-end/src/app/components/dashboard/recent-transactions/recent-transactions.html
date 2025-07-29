@@ -1,0 +1,49 @@
+<div class="relative overflow-hidden rounded-md shadow-sm bg-white">
+    <div class="p-6 flex items-center justify-between border-b border-gray-100">
+        <h6 class="text-lg font-semibold">Recent Transactions</h6>
+        <a href=""
+            class="btn btn-link font-normal text-slate-400 hover:text-primary after:bg-primary transition duration-500">View
+            orders <i class="mdi mdi-arrow-right ms-1"></i></a>
+    </div>
+
+    <div class="relative overflow-x-auto block w-full xl:max-h-[284px] max-h-[350px]" data-simplebar>
+        <table class="w-full text-start">
+            <thead class="text-base">
+                <tr>
+                    <th class="text-start font-semibold text-[15px] px-4 py-3"></th>
+                    <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[140px]">Date</th>
+                    <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[120px]">Name</th>
+                    <th class="text-start font-semibold text-[15px] px-4 py-3">Price</th>
+                    <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[40px]">Type</th>
+                    <th class="text-end font-semibold text-[15px] px-4 py-3 min-w-[70px]">Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let txn of transactions">
+                    <th class="text-start border-t border-gray-100 px-4 py-3 font-semibold">
+                        <div class="relative md:shrink-0">
+                            <img [src]="txn.img" class="object-cover size-12 min-w-[48px] rounded-md shadow-sm" alt="">
+                        </div>
+                    </th>
+                    <td class="text-start border-t border-gray-100 px-4 py-3">
+                        <span class="text-slate-400">{{ txn.date }}</span>
+                    </td>
+                    <th class="text-start border-t border-gray-100 px-4 py-3 font-semibold">{{
+                        txn.name }}</th>
+                    <td class="text-start border-t border-gray-100 px-4 py-3">
+                        <span class="text-slate-400">{{ txn.price }}</span>
+                    </td>
+                    <th class="text-start border-t border-gray-100 px-4 py-3 font-semibold">{{
+                        txn.type }}</th>
+                    <td class="text-end border-t border-gray-100 px-4 py-3">
+                        <span [ngClass]="getStatusClass(txn.status)"
+                            class="text-[15px] font-medium px-2.5 py-0.5 rounded h-5 ms-1 border">
+                            {{ txn.status }}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
