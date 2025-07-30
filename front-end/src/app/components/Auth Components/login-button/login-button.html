@@ -3,6 +3,11 @@
 
     <h2 class="text-2xl font-bold text-center text-gray-800">Login</h2>
 
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      {{ errorMessage }}
+    </div>
+
     <!-- Email -->
     <div>
       <input formControlName="email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded" />
@@ -19,9 +24,18 @@
       </p>
     </div>
 
+    <!-- Remember Me -->
+    <div class="flex items-center">
+      <input type="checkbox" formControlName="rememberMe" id="rememberMe" class="mr-2">
+      <label for="rememberMe" class="text-sm text-gray-700">Remember Me</label>
+    </div>
+
     <!-- Login Button -->
-    <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition">
-      Login
+    <button 
+      type="submit" 
+      [disabled]="isLoading"
+      class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition disabled:opacity-50">
+      {{ isLoading ? 'Logging in...' : 'Login' }}
     </button>
 
     <!-- OR Divider -->

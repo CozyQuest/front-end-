@@ -5,14 +5,39 @@ import { LoginButton } from './components/Auth Components/login-button/login-but
 import { RegisterButton } from './components/Auth Components/register-button/register-button';
 import { EditProfile } from './components/profile/edit-profile/edit-profile';
 import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
+import { AuthGuard } from './core/guards/auth.guard';
+import { RoleGuard } from './core/guards/role.guard';
 
 export const routes: Routes = [
-    { path: 'checkout/:id', component: PropertyCheckout },
+    // Protected route - requires login
+    {
+      path: 'checkout/:id',
+      component: PropertyCheckout,
+      canActivate: [AuthGuard]
+    },
+
+    // Public route
     { path: 'rent', component: PropertyList },
+
+    // Auth routes
     { path: 'login', component: LoginButton },
     { path: 'register', component: RegisterButton },
-    {path: 'edit-profile', component: EditProfile},
-    {path:'dashboard', component: DashboardShell},
+
+    // Protected route - requires login
+    {
+      path: 'edit-profile',
+      component: EditProfile,
+      canActivate: [AuthGuard]
+    },
+
+    // Protected route - requires login AND Host role
+    {
+      path: 'dashboard',
+      component: DashboardShell,
+      canActivate: [AuthGuard, RoleGuard],
+      data: { role: 'Host' }
+    },
+
     {
         path: '',
         redirectTo: 'home',
@@ -22,16 +47,25 @@ export const routes: Routes = [
         path: 'home',
         loadComponent: () => import('./components/home/home/home').then(m => m.Home),
     },
+
+    // Protected route - requires login AND Host role
     {
         path: 'add-property',
         loadComponent: () => import('./components/add-property/add-property').then(m => m.AddProperty),
+        canActivate: [AuthGuard, RoleGuard],
+        data: { role: 'Host' }
     },
+
+    // Public route
     {
-    path: 'properties/:id',
-    loadComponent: () => import('./components/properties/property-details/property-details').then(m => m.PropertyDetails)
-  },
-  {
-    path: 'profile/:id',
-     loadComponent: () => import('./components/profile/profile-details/profile-details').then(m => m.ProfileDetails),
-   },
+      path: 'properties/:id',
+      loadComponent: () => import('./components/properties/property-details/property-details').then(m => m.PropertyDetails)
+    },
+
+    // Protected route - requires login
+    {
+      path: 'profile/:id',
+      loadComponent: () => import('./components/profile/profile-details/profile-details').then(m => m.ProfileDetails),
+      canActivate: [AuthGuard]
+    },
 ];
