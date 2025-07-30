@@ -1,0 +1,15 @@
+<div class="max-w-3xl mx-auto p-4 space-y-4 mb-20">
+  <input
+    #searchInput
+    type="text"
+    placeholder="Type address here"
+    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+
+  <div #mapElement id="map" class="w-full h-[450px] rounded-lg shadow-md border"></div>
+
+  <div
+    class="p-4 bg-gray-100 rounded-lg text-sm leading-relaxed"
+    [innerHTML]="result"
+  ></div>
+</div>
