@@ -1,10 +1,11 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CarouselModule } from 'primeng/carousel';
-import { User } from '../../../core/interfaces/user.model';
 import { UserService } from '../../../core/services/user.service';
 import { OwnedProperties } from '../owned-properties/owned-properties';
 import { RentedProperties } from '../rented-properties/rented-properties';
+import { UserPublicProfile } from '../../../core/interfaces/UserPublicProfile';
+import { UserProfile } from '../../../core/interfaces/UserProfile';
 
 @Component({
   selector: 'app-profile-details',
@@ -16,10 +17,13 @@ import { RentedProperties } from '../rented-properties/rented-properties';
 })
 
 export class ProfileDetails {
-  user!: User;
+  user!: UserProfile | UserPublicProfile;
   fullName: string = '';
+
+  loggedInUserId = 2;
   userId = 1;
 
+  isOwnProfile = false;
   activeTab = signal<'my' | 'rented'>('my');
 
   userSkills: string = 'html, css, js, mysql';
@@ -30,8 +34,25 @@ export class ProfileDetails {
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
-    this.user = this.userService.getUserById(this.userId)!;
-    this.fullName = `${this.user.fname} ${this.user.lname}`;
+    this.isOwnProfile = this.userId === this.loggedInUserId;
+
+    if (this.isOwnProfile) {
+      const full = this.userService.getFullUserById(this.userId);
+      if (full) {
+        this.user = full;
+        this.fullName = `${full.fname} ${full.lname}`;
+      }
+    } else {
+      const publicUser = this.userService.getPublicUserById(this.userId);
+      if (publicUser) {
+        this.user = publicUser;
+        this.fullName = `${publicUser.fname} ${publicUser.lname}`;
+      }
+    }
+  }
+
+  get fullUser(): UserProfile | null {
+    return this.isOwnProfile ? this.user as UserProfile : null;
   }
 
   showMyProperties() {
