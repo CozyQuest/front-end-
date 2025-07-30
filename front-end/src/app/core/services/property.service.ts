@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Property } from '../interfaces/property.model';
+import { Property } from '../interfaces/Property';
 
 @Injectable({
   providedIn: 'root'

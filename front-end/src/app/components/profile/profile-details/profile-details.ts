@@ -5,7 +5,7 @@ import { UserService } from '../../../core/services/user.service';
 import { OwnedProperties } from '../owned-properties/owned-properties';
 import { RentedProperties } from '../rented-properties/rented-properties';
 import { UserPublicProfile } from '../../../core/interfaces/UserPublicProfile';
-import { UserProfile } from '../../../core/interfaces/UserProfile';
+import { User } from '../../../core/interfaces/User';
 
 @Component({
   selector: 'app-profile-details',
@@ -17,7 +17,7 @@ import { UserProfile } from '../../../core/interfaces/UserProfile';
 })
 
 export class ProfileDetails {
-  user!: UserProfile | UserPublicProfile;
+  user!: User | UserPublicProfile;
   fullName: string = '';
 
   loggedInUserId = 2;
@@ -51,8 +51,8 @@ export class ProfileDetails {
     }
   }
 
-  get fullUser(): UserProfile | null {
-    return this.isOwnProfile ? this.user as UserProfile : null;
+  get fullUser(): User | null {
+    return this.isOwnProfile ? this.user as User : null;
   }
 
   showMyProperties() {

@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { PropertyService } from '../../../core/services/property.service';
-import { Property } from '../../../core/interfaces/property.model';
+import { Property } from '../../../core/interfaces/Property';
 import { CarouselModule } from 'primeng/carousel';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
