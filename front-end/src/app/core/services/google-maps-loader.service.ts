@@ -5,7 +5,7 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class GoogleMapsLoaderService {
-  private apiKey = '';
+  private apiKey = 'AIzaSyCDac716jNFCSoCOXXOJY4kd-LOqJWZW3s';
   private mapsLoaded = false;
   private loadPromise: Promise<void> | null = null;
 

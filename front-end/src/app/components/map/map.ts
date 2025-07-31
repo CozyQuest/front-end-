@@ -5,7 +5,9 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Inject,
-  PLATFORM_ID
+  PLATFORM_ID,
+  Output,
+  EventEmitter
 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
@@ -20,6 +22,10 @@ import { GoogleMapsLoaderService } from '../../core/services/google-maps-loader.
 export class Map implements OnInit, AfterViewInit {
   @ViewChild('mapElement') mapElement!: ElementRef;
   @ViewChild('searchInput') searchInput!: ElementRef;
+
+  @Output() locationSelected = new EventEmitter<LocationData>();
+
+  selectedLocation!: LocationData;
 
   map!: google.maps.Map;
   marker!: google.maps.Marker;
@@ -122,24 +128,34 @@ export class Map implements OnInit, AfterViewInit {
           getComponent('administrative_area_level_2') ||
           '';
         const country = getComponent('country');
+        const district = getComponent('administrative_area_level_3') || getComponent('administrative_area_level_2') || '';
 
-        const payload = {
+
+        const payload : LocationData = {
           latitude: lat,
           longitude: lng,
           street,
+          district,
           city,
           country,
         };
+        
+        this.selectedLocation = payload;
+        // this.locationSelected.emit(payload);
+        console.log('Selected Location:', this.selectedLocation);
 
         this.result = `
           <strong>Latitude:</strong> ${lat}<br>
           <strong>Longitude:</strong> ${lng}<br>
           <strong>Street:</strong> ${street}<br>
+          <strong>District:</strong> ${district}<br>
           <strong>City:</strong> ${city}<br>
           <strong>Country:</strong> ${country}
         `;
 
         this.cdr.detectChanges();
+
+
 
         // Logging the payload to console
         // console.log('Location payload:', payload);
@@ -158,4 +174,10 @@ export class Map implements OnInit, AfterViewInit {
       }
     });
   }
+
+  sendLocation(): void {
+  if (this.selectedLocation) {
+    this.locationSelected.emit(this.selectedLocation);
+  }
+}
 }
