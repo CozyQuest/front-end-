@@ -129,7 +129,7 @@ export class Map implements OnInit, AfterViewInit {
           '';
         const country = getComponent('country');
         const district = getComponent('administrative_area_level_3') || getComponent('administrative_area_level_2') || '';
-
+        const formattedAddress = results[0].formatted_address;
 
         const payload : LocationData = {
           latitude: lat,
@@ -138,6 +138,7 @@ export class Map implements OnInit, AfterViewInit {
           district,
           city,
           country,
+          formattedAddress
         };
         
         this.selectedLocation = payload;
@@ -150,7 +151,8 @@ export class Map implements OnInit, AfterViewInit {
           <strong>Street:</strong> ${street}<br>
           <strong>District:</strong> ${district}<br>
           <strong>City:</strong> ${city}<br>
-          <strong>Country:</strong> ${country}
+          <strong>Country:</strong> ${country}<br>
+          <strong>Address: </strong> ${formattedAddress}
         `;
 
         this.cdr.detectChanges();

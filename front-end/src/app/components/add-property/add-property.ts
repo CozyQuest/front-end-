@@ -6,10 +6,12 @@ import { Carousel } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IpropertyType } from '../../core/interfaces/iproperty-type';
+import { DialogModule } from 'primeng/dialog';
+import { Map } from '../map/map';
 
 @Component({
   selector: 'app-add-property',
-  imports: [Card , Carousel,CommonModule,FormsModule],
+  imports: [Card , Carousel,CommonModule,FormsModule,DialogModule,Map],
   templateUrl: './add-property.html',
   styleUrl: './add-property.css'
 })
@@ -58,8 +60,16 @@ export class AddProperty {
   toggleFavorite(Image: string) {
     this.property.mainImage = Image;
   }
-  openMap() {
-    // todo: Logic to open the map
-    console.log('Open map for location:', this.property.location);
-  }
+  // openMap() {
+  //   // todo: Logic to open the map
+  //   console.log('Open map for location:', this.property.location);
+  // }
+
+  mapVisible: boolean = false;
+
+onLocationSelected(location: LocationData) {
+  this.property.location = location.formattedAddress || `${location.city}, ${location.country}`;
+  this.mapVisible = false;
+}
+
 }
