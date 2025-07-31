@@ -5,4 +5,5 @@ interface LocationData {
   city: string;
   country: string;
   district: string;
+  formattedAddress: string;
 }
