@@ -1,0 +1,103 @@
+<div class="min-h-screen bg-gray-100 p-6">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold text-gray-800 mb-6">🧪 Interceptor Test Dashboard</h1>
+    
+    <!-- Auth Status Section -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4">🔐 Authentication Status</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p class="text-sm text-gray-600">Status:</p>
+          <p class="font-semibold" [class]="isAuthenticated ? 'text-green-600' : 'text-red-600'">
+            {{ isAuthenticated ? '✅ Authenticated' : '❌ Not Authenticated' }}
+          </p>
+        </div>
+        <div>
+          <p class="text-sm text-gray-600">Token:</p>
+          <p class="font-mono text-xs truncate" [class]="currentToken ? 'text-green-600' : 'text-red-600'">
+            {{ currentToken || 'No token available' }}
+          </p>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button (click)="mockLogin()" 
+                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition">
+          🔐 Mock Login
+        </button>
+        <button (click)="logout()" 
+                class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
+          🚪 Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Test Buttons Section -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <h2 class="text-xl font-semibold mb-4">🧪 Interceptor Tests</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        
+        <button (click)="testProtectedRequest()" 
+                class="p-4 bg-green-500 text-white rounded-lg hover:bg-green-600 transition text-left">
+          <div class="font-semibold">🛡️ Protected Request</div>
+          <div class="text-sm opacity-90">Should add Authorization header</div>
+        </button>
+
+        <button (click)="testLoginRequest()" 
+                class="p-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition text-left">
+          <div class="font-semibold">🔑 Login Request</div>
+          <div class="text-sm opacity-90">Should SKIP interceptor</div>
+        </button>
+
+        <button (click)="testUnauthorizedRequest()" 
+                class="p-4 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition text-left">
+          <div class="font-semibold">🚫 401 Test</div>
+          <div class="text-sm opacity-90">Test token refresh</div>
+        </button>
+
+        <button (click)="testMultipleRequests()" 
+                class="p-4 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition text-left">
+          <div class="font-semibold">🔄 Multiple Requests</div>
+          <div class="text-sm opacity-90">3 simultaneous calls</div>
+        </button>
+
+        <button (click)="testCustomHeaders()" 
+                class="p-4 bg-indigo-500 text-white rounded-lg hover:bg-indigo-600 transition text-left">
+          <div class="font-semibold">📋 Custom Headers</div>
+          <div class="text-sm opacity-90">Preserve existing headers</div>
+        </button>
+
+        <button (click)="clearLogs()" 
+                class="p-4 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition text-left">
+          <div class="font-semibold">🗑️ Clear Logs</div>
+          <div class="text-sm opacity-90">Reset log display</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Logs Section -->
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-xl font-semibold mb-4">📋 Request Logs</h2>
+      <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm max-h-96 overflow-y-auto">
+        <div *ngIf="logs.length === 0" class="text-gray-500">
+          No logs yet. Click a test button to see interceptor in action...
+        </div>
+        <div *ngFor="let log of logs" class="mb-1">
+          {{ log }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructions Section -->
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mt-6">
+      <h3 class="text-lg font-semibold text-blue-800 mb-2">📖 How to Test</h3>
+      <ol class="list-decimal list-inside text-blue-700 space-y-1">
+        <li>First click "Mock Login" to set a test token</li>
+        <li>Open browser DevTools → Network tab</li>
+        <li>Click "Protected Request" and check the request headers</li>
+        <li>You should see "Authorization: Bearer [token]" header added automatically</li>
+        <li>Try "Login Request" - no Authorization header should be added</li>
+        <li>Check the logs below for detailed information</li>
+      </ol>
+    </div>
+  </div>
+</div>
