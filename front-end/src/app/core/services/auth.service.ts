@@ -47,7 +47,7 @@ export class AuthService {
   private refreshTokenKey = 'refresh_token';
   private userKey = 'current_user';
   private baseUrl = 'https://localhost:7279'; // Your API base URL
-  
+
   // Observable streams for reactive UI updates
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   private currentUserSubject = new BehaviorSubject<DecodedToken | null>(null);
@@ -57,7 +57,7 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable();
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private router: Router,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -80,7 +80,7 @@ export class AuthService {
    * Creates a new user account
    */
   register(userData: RegisterRequest): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, userData);
+    return this.http.post(`${this.baseUrl}/register`, userData, { responseType: 'text' });
   }
 
   /**
@@ -94,11 +94,11 @@ export class AuthService {
           if (response.accessToken) {
             // Store tokens in localStorage
             this.setTokens(response);
-            
+
             // Decode the JWT token to get user info
             const decodedUser = this.decodeToken(response.accessToken);
             this.setCurrentUser(decodedUser);
-            
+
             // Update observable streams to notify UI
             this.isAuthenticatedSubject.next(true);
             this.currentUserSubject.next(decodedUser);
@@ -185,7 +185,7 @@ export class AuthService {
   hasValidToken(): boolean {
     const token = this.getAccessToken();
     if (!token) return false;
-    
+
     try {
       const decoded = this.decodeToken(token);
       const currentTime = Math.floor(Date.now() / 1000);
@@ -201,7 +201,7 @@ export class AuthService {
    */
   getCurrentUser(): DecodedToken | null {
     if (!this.isBrowser()) return null;
-    
+
     const userStr = localStorage.getItem(this.userKey);
     if (userStr) {
       try {
@@ -210,7 +210,7 @@ export class AuthService {
         return null;
       }
     }
-    
+
     // If no stored user but we have a valid token, decode it
     const token = this.getAccessToken();
     if (token && this.hasValidToken()) {
@@ -218,7 +218,7 @@ export class AuthService {
       this.setCurrentUser(decoded);
       return decoded;
     }
-    
+
     return null;
   }
 
@@ -239,10 +239,10 @@ export class AuthService {
     try {
       // JWT has 3 parts separated by dots: header.payload.signature
       const payload = token.split('.')[1];
-      
+
       // Decode base64 payload
       const decoded = JSON.parse(atob(payload));
-      
+
       // Map the Microsoft claims to a cleaner format
       return {
         name: decoded.name,

@@ -1,91 +1,92 @@
-import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Inject, Injectable, PLATFORM_ID, inject } from '@angular/core';
+import { HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError, BehaviorSubject } from 'rxjs';
 import { catchError, switchMap, filter, take } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
+import { isPlatformBrowser } from '@angular/common';
 
-@Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  // Prevents multiple simultaneous refresh attempts
-  private isRefreshing = false;
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+// Global state for refresh token handling
+let isRefreshing = false;
+let refreshTokenSubject = new BehaviorSubject<string | null>(null);
 
-  constructor(private authService: AuthService) {}
+export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
+  const authService = inject(AuthService);
+  const platformId = inject(PLATFORM_ID);
+  // Skip in non-browser or for auth endpoints
+  if (!isPlatformBrowser(platformId) ||
+      req.url.includes('/login') ||
+      req.url.includes('/register') ||
+      req.url.includes('/refresh')) {
+    return next(req);
+  }
 
-  /**
-   * INTERCEPT METHOD
-   * This runs on EVERY HTTP request your app makes
-   */
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    // Skip auth header for login, register and refresh endpoints
-    if (req.url.includes('/login') || req.url.includes('/register') || req.url.includes('/refresh')) {
-      return next.handle(req);
+  // // Special handling for dummy endpoint
+  // if (req.url.includes('/api/dummy')) {
+  //   const modifiedReq = req.clone({
+  //     headers: req.headers.set('Content-Type', 'application/json')
+  //   });
+  //   return executeRequest(modifiedReq, next, authService);
+  // }
+
+  // Default handling
+  return executeRequest(req, next, authService);
+};
+
+function executeRequest(req: HttpRequest<any>, next: HttpHandlerFn, authService: AuthService): Observable<HttpEvent<any>> {
+  const authReq = addTokenHeader(req, authService.getAccessToken());
+  return next(authReq).pipe(
+    catchError((error) => handleError(error, req, next, authService))
+  );
+}
+
+function addTokenHeader(request: HttpRequest<any>, token: string | null): HttpRequest<any> {
+  if (!token) return request;
+
+  const headers = request.headers.keys().reduce((acc, key) => {
+    acc[key] = request.headers.get(key);
+    return acc;
+  }, {} as { [key: string]: string | null });
+
+  return request.clone({
+    setHeaders: {
+      ...headers,
+      Authorization: `Bearer ${token}`
     }
+  });
+}
 
-    // Add auth header if we have a token
-    const authReq = this.addTokenHeader(req, this.authService.getAccessToken());
+function handleError(error: HttpErrorResponse, req: HttpRequest<any>, next: HttpHandlerFn, authService: AuthService): Observable<HttpEvent<any>> {
+  if (error.status === 401 && authService.getRefreshToken()) {
+    return handle401Error(req, next, authService);
+  }
+  if (error.status === 401) {
+    authService.logout();
+  }
+  return throwError(() => error);
+}
 
-    return next.handle(authReq).pipe(
-      catchError((error: HttpErrorResponse) => {
-        // Handle 401 Unauthorized errors
-        if (error.status === 401 && this.authService.getRefreshToken()) {
-          return this.handle401Error(authReq, next);
-        }
-        
-        // If 401 and no refresh token, logout
-        if (error.status === 401) {
-          this.authService.logout();
-        }
-        
-        return throwError(() => error);
+function handle401Error(request: HttpRequest<any>, next: HttpHandlerFn, authService: AuthService): Observable<HttpEvent<any>> {
+  if (!isRefreshing) {
+    isRefreshing = true;
+    refreshTokenSubject.next(null);
+
+    return authService.refreshToken().pipe(
+      switchMap(({ accessToken }) => {
+        isRefreshing = false;
+        refreshTokenSubject.next(accessToken);
+        return next(addTokenHeader(request, accessToken));
+      }),
+      catchError((err) => {
+        isRefreshing = false;
+        authService.logout();
+        return throwError(() => err);
       })
     );
   }
 
-  /**
-   * ADD TOKEN TO REQUEST HEADER
-   */
-  private addTokenHeader(request: HttpRequest<any>, token: string | null): HttpRequest<any> {
-    if (token) {
-      return request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-    }
-    return request;
-  }
-
-  /**
-   * HANDLE 401 ERRORS WITH TOKEN REFRESH
-   * This automatically tries to refresh the token when it expires
-   */
-  private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
-
-      return this.authService.refreshToken().pipe(
-        switchMap((response) => {
-          this.isRefreshing = false;
-          this.refreshTokenSubject.next(response.accessToken);
-          
-          // Retry the original request with new token
-          return next.handle(this.addTokenHeader(request, response.accessToken));
-        }),
-        catchError((error) => {
-          this.isRefreshing = false;
-          this.authService.logout(); // Refresh failed, logout user
-          return throwError(() => error);
-        })
-      );
-    }
-
-    // If already refreshing, wait for the refresh to complete
-    return this.refreshTokenSubject.pipe(
-      filter(token => token !== null),
-      take(1),
-      switchMap((token) => next.handle(this.addTokenHeader(request, token)))
-    );
-  }
+  return refreshTokenSubject.pipe(
+    filter(token => token !== null),
+    take(1),
+    switchMap((token) => next(addTokenHeader(request, token!)))
+  );
 }
