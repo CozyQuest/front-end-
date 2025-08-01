@@ -57,7 +57,7 @@ export class LoginButton {
 
         // Redirect based on user role
         const user = this.authService.getCurrentUser();
-        if (user?.role === 'Host') {
+        if (user?.role === 'Admin') {
           this.router.navigate(['/dashboard']);
         } else {
           this.router.navigate(['/home']);

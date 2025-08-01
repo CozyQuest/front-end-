@@ -35,7 +35,7 @@ export const routes: Routes = [
     path: 'dashboard',
     component: DashboardShell,
     canActivate: [AuthGuard, RoleGuard],
-    data: { role: 'Host' }
+    data: { role: 'Admin' }
   },
 
   {
