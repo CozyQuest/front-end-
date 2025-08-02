@@ -1,4 +1,6 @@
-import { Component, AfterViewInit, isDevMode } from '@angular/core';
+import { AfterViewInit, Component, inject, isDevMode } from '@angular/core';
+import { MapMarkerService } from '../../../core/services/map-marker.service';
+import { MapMarker } from '../../../core/interfaces/map-marker.model';
 
 declare const jsVectorMap: any;
 
@@ -10,8 +12,22 @@ declare const jsVectorMap: any;
   imports: []
 })
 export class MapCard implements AfterViewInit {
+  private mapMarkerService = inject(MapMarkerService);
+  private markers: MapMarker[] = [];
+
   ngAfterViewInit(): void {
-    // Ensure the global jsVectorMap is available
+    this.mapMarkerService.getMarkers().subscribe({
+      next: (data) => {
+        this.markers = data;
+        this.initMap(); // Call after data is loaded
+      },
+      error: (err) => {
+        if (isDevMode()) console.error('Error loading markers:', err);
+      }
+    });
+  }
+
+  private initMap(): void {
     if (typeof jsVectorMap !== 'undefined') {
       try {
         new jsVectorMap({
@@ -21,12 +37,7 @@ export class MapCard implements AfterViewInit {
           zoomButtons: false,
           selectedMarkers: [0, 1],
           markersSelectable: true,
-          markers: [
-            { name: 'Palestine', coords: [31.9474, 35.2272] },
-            { name: 'Russia', coords: [61.524, 105.3188] },
-            { name: 'Canada', coords: [56.1304, -106.3468] },
-            { name: 'Greenland', coords: [71.7069, -42.6043] }
-          ],
+          markers: this.markers,
           markerStyle: {
             initial: { fill: '#16a34a' },
             selected: { fill: '#94a3b8' }
