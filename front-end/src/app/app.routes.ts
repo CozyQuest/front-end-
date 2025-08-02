@@ -1,8 +1,8 @@
 import { Routes, RouterModule } from '@angular/router';
 import { PropertyCheckout } from './components/property-checkout/property-checkout';
 import { PropertyList } from './components/properties/property-list/property-list';
-import { LoginButton } from './components/Auth Components/login-button/login-button';
-import { RegisterButton } from './components/Auth Components/register-button/register-button';
+import { Login } from './components/Auth Components/login/login';
+import { Register } from './components/Auth Components/register/register';
 import { EditProfile } from './components/profile/edit-profile/edit-profile';
 import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
 import { AuthGuard } from './core/guards/auth.guard';
@@ -24,8 +24,8 @@ export const routes: Routes = [
     },
 
   // Auth routes
-  { path: 'login', component: LoginButton },
-  { path: 'register', component: RegisterButton },
+  { path: 'login', component: Login },
+  { path: 'register', component: Register },
 
   // Protected route - requires login
   {
