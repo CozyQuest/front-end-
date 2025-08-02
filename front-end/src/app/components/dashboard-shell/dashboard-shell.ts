@@ -20,7 +20,7 @@ import { Stat } from '../../core/interfaces/stat.model';
 export class DashboardShell implements OnInit {
     cards: Stat[] = [];
 
-    constructor(private statService: StatService) {}
+    constructor(private statService: StatService) { }
 
     ngOnInit(): void {
         this.loadStats();
@@ -31,5 +31,9 @@ export class DashboardShell implements OnInit {
             next: (stats) => (this.cards = stats),
             error: (err) => console.error('Error loading stat cards:', err)
         });
+    }
+
+    onPropertyApproved(): void {
+        this.loadStats();
     }
 }
