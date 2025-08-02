@@ -122,6 +122,29 @@
 
         </div>
       </div>
+
+      <div class="my-4">
+        <label class="block mb-2 font-semibold text-gray-900">Amenities:</label>
+        <div class="flex bg-gray-100 rounded-md p-2 items-center cursor-pointer" (click)="openAmenitiesDialog()">
+          <i class="fa-solid fa-list-check text-blue-500 mr-2"></i>
+          <span *ngIf="!property.amenities.length" class="text-gray-400">Select amenities</span>
+          <span *ngIf="property.amenities.length" class="text-gray-700">{{ property.amenities.join(', ') }}</span>
+        </div>
+
+        <p-dialog [(visible)]="amenitiesVisible" modal="true" header="Select Amenities"
+          [style]="{ width: '600px', maxWidth: '95vw' }" [breakpoints]="{ '960px': '90vw', '640px': '95vw' }"
+          [baseZIndex]="10000" [draggable]="false" [resizable]="false" [dismissableMask]="true">
+
+          <app-amenities (selectedAmenitiesChange)="onAmenitiesSelected($event)"></app-amenities>
+
+          <div class="mt-6 text-right">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+              (click)="amenitiesVisible = false">
+              Save
+            </button>
+          </div>
+        </p-dialog>
+      </div>
       <div class="my-4">
         <label for="Area" class="block mb-2 font-semibold text-gray-900">
           Area : <span class="text-red-700">*</span>
