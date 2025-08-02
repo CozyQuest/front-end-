@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-register-button',
+  selector: 'app-register',
   imports: [FormsModule, CommonModule, ReactiveFormsModule],
-  templateUrl: './register-button.html',
-  styleUrl: './register-button.css'
+  templateUrl: './register.html',
+  styleUrl: './register.css'
 })
-export class RegisterButton {
+export class Register {
   registerForm!: FormGroup;
   isLoading = false;
   errorMessage = '';
@@ -34,7 +34,7 @@ export class RegisterButton {
         Validators.pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)
       ]],
       confirmPassword: ['', Validators.required],
-    }, { validators: [RegisterButton.passwordMatchValidator] });
+    }, { validators: [Register.passwordMatchValidator] });
   }
 
   static passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -49,11 +49,11 @@ export class RegisterButton {
 
   submitForm() {
     if (this.registerForm.invalid) return;
-    
+
     this.isLoading = true;
     this.errorMessage = '';
     this.successMessage = '';
-    
+
     // Prepare data for API call (exclude confirmPassword)
     const registerData = {
       firstName: this.registerForm.value.firstName,
@@ -62,13 +62,13 @@ export class RegisterButton {
       password: this.registerForm.value.password,
       phoneNumber: this.registerForm.value.phoneNumber
     };
-    
+
     this.authService.register(registerData).subscribe({
       next: (response) => {
         this.isLoading = false;
         this.successMessage = 'Registration successful! Please login.';
         console.log('Registration successful:', response);
-        
+
         // Redirect to login after 2 seconds
         setTimeout(() => {
           this.router.navigate(['/login']);
