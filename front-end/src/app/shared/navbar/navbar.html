@@ -120,20 +120,59 @@ m115 -214 c0 -38 -23 -58 -66 -59 -31 0 -44 13 -44 45 0 25 31 45 71 45 37 0
 
   <!-- Right Buttons -->
   <div class="flex items-center gap-4">
-    <!-- Login -->
-    <button routerLink="/login"
-      class="bg-blue-600 hover:bg-blue-400 text-white p-2 rounded-full flex items-center justify-center transition w-10 h-10">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M5.121 17.804A4 4 0 019 16h6a4 4 0 013.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    </button>
+    
+    <!-- Show different content based on authentication status -->
+    <!-- When user is NOT authenticated -->
+    <div *ngIf="!(isAuthenticated$ | async)" class="flex items-center gap-4">
+      <!-- Login -->
+      <button routerLink="/login"
+        class="bg-blue-600 hover:bg-blue-400 text-white p-2 rounded-full flex items-center justify-center transition w-10 h-10">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M5.121 17.804A4 4 0 019 16h6a4 4 0 013.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+      </button>
 
-    <!-- Signup -->
-    <button routerLink="/register"
-      class="bg-blue-600 hover:bg-blue-400 text-white px-4 py-2 rounded-full font-semibold transition text-sm">
-      Signup
-    </button>
+      <!-- Signup -->
+      <button routerLink="/register"
+        class="bg-blue-600 hover:bg-blue-400 text-white px-4 py-2 rounded-full font-semibold transition text-sm">
+        Signup
+      </button>
+    </div>
+
+    <!-- When user IS authenticated -->
+    <div *ngIf="isAuthenticated$ | async" class="flex items-center gap-4">
+      <!-- User Info -->
+      <div class="hidden md:flex items-center gap-2">
+        <span class="text-sm text-gray-700">Welcome, {{ (currentUser$ | async)?.name }}</span>
+        
+        <!-- Show dashboard link only for hosts -->
+        <a *ngIf="isHost()" routerLink="/dashboard" 
+           class="text-blue-600 hover:text-blue-800 text-sm">Dashboard</a>
+      </div>
+
+      <!-- User Menu Dropdown -->
+      <div class="relative">
+        <button (click)="toggleDropdown()" 
+                class="bg-gray-200 hover:bg-gray-300 text-gray-800 p-2 rounded-full flex items-center justify-center transition w-10 h-10">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+        </button>
+        
+        <!-- Dropdown Menu -->
+        <div *ngIf="dropdownOpen" class="absolute right-0 bg-white shadow-lg rounded mt-2 w-48 z-50">
+          <a routerLink="/profile/1" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
+          <a routerLink="/edit-profile" class="block px-4 py-2 hover:bg-gray-100">Edit Profile</a>
+          <a *ngIf="isHost()" routerLink="/add-property" class="block px-4 py-2 hover:bg-gray-100">Add Property</a>
+          <hr class="my-1">
+          <button (click)="logout()" class="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600">
+            Logout
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Hamburger (Mobile only) -->
     <button (click)="toggleMenu()" class="md:hidden text-gray-800 focus:outline-none">
