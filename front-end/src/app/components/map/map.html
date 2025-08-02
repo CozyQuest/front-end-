@@ -1,0 +1,25 @@
+<div class="max-w-3xl mx-auto p-4 space-y-4 mb-20">
+  <input
+    #searchInput
+    type="text"
+    placeholder="Type address here"
+    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+  />
+
+  <div #mapElement id="map" class="w-full h-[450px] rounded-lg shadow-md border"></div>
+
+  <div
+    class="p-4 bg-gray-100 rounded-lg text-sm leading-relaxed"
+    [innerHTML]="result"
+  ></div>
+
+  <div class="text-right pb-2">
+    <button
+      (click)="sendLocation()"
+      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition cursor-pointer disabled:opacity-50"
+      [disabled]="!selectedLocation"
+    >
+      Select Location
+    </button>
+  </div>
+</div>

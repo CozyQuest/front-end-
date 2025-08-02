@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('assets/images/bg/01.jpg');">
+<div class="bg-cover bg-center flex items-center justify-center min-h-[120vh]" style="background-image: url('assets/images/bg/01.jpg');">
   <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="bg-white bg-opacity-90 p-10 rounded-xl shadow-lg w-full max-w-md space-y-4">
 
     <h2 class="text-2xl font-bold text-center text-gray-800">Register</h2>
@@ -56,12 +56,13 @@
       </p>
     </div>
 
-    <button 
-      type="submit" 
+    <button
+      type="submit"
       [disabled]="isLoading"
       class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition disabled:opacity-50">
       {{ isLoading ? 'Registering...' : 'Register' }}
     </button>
+   
 
     <!-- Redirect to Login -->
     <p class="text-center text-sm mt-4">

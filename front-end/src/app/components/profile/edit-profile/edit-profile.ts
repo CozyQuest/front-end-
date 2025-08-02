@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { UserProfile, UserService } from '../../../core/services/edit-user-profile.service';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-profile',
@@ -10,6 +11,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './edit-profile.html',
 })
 export class EditProfile implements OnInit {
+
   profileImage: string = '';
   firstName: string = '';
   lastName: string = '';
@@ -25,7 +27,7 @@ export class EditProfile implements OnInit {
   birthday: string = '';
   language: string = '';
 
-  constructor(private userService: UserService) {}
+  constructor( private router: Router, private userService: UserService) {}
 
   ngOnInit(): void {
     this.userService.getUserProfile().subscribe((data: UserProfile) => {
@@ -85,10 +87,9 @@ export class EditProfile implements OnInit {
     }
   }
 
-  addContact(): void {
-    // Already handled in saveChanges since phone & website are part of the profile
-    this.saveChanges();
-  }
+changePassword(): void{
+  this.router.navigate(['/change-pass']);
+}
 }
 
 

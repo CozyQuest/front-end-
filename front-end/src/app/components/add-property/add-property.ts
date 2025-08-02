@@ -6,10 +6,13 @@ import { Carousel } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IpropertyType } from '../../core/interfaces/iproperty-type';
+import { DialogModule } from 'primeng/dialog';
+import { Map } from '../map/map';
+import { Amenities } from '../amenities/amenities';
 
 @Component({
   selector: 'app-add-property',
-  imports: [Card , Carousel,CommonModule,FormsModule],
+  imports: [Card, Carousel, CommonModule, FormsModule, DialogModule, Map, Amenities],
   templateUrl: './add-property.html',
   styleUrl: './add-property.css'
 })
@@ -24,17 +27,23 @@ export class AddProperty {
     bathrooms: 1,
     bedrooms: 1,
     location: '',
-    propertyType: { id: '0', name: 'Select your option' }
+    propertyType: { id: '0', name: 'Select your option' },
+    amenities: []
   };
   images: Image[] = [];
   selectedImage: string = '';
-  propertyType:IpropertyType[] = [
+
+
+  propertyType: IpropertyType[] = [
     { id: '1', name: 'Apartment' },
     { id: '2', name: 'House' },
     { id: '3', name: 'Villa' },
     { id: '4', name: 'Studio' },
     { id: '5', name: 'Penthouse' }
   ];
+
+  amenitiesVisible = false;
+  tempSelectedAmenities: string[] = [];
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (file) {
@@ -58,8 +67,40 @@ export class AddProperty {
   toggleFavorite(Image: string) {
     this.property.mainImage = Image;
   }
-  openMap() {
-    // todo: Logic to open the map
-    console.log('Open map for location:', this.property.location);
+  // openMap() {
+  //   // todo: Logic to open the map
+  //   console.log('Open map for location:', this.property.location);
+  // }
+
+  mapVisible: boolean = false;
+
+  onLocationSelected(location: LocationData) {
+    this.property.location = location.formattedAddress || `${location.city}, ${location.country}`;
+    this.mapVisible = false;
+  }
+
+  openAmenitiesDialog() {
+    this.tempSelectedAmenities = [...this.property.amenities];
+    this.amenitiesVisible = true;
+  }
+
+  toggleAmenity(amenity: string) {
+    if (this.tempSelectedAmenities.includes(amenity)) {
+      this.tempSelectedAmenities = this.tempSelectedAmenities.filter(a => a !== amenity);
+    } else {
+      this.tempSelectedAmenities.push(amenity);
+    }
+  }
+
+  isSelected(amenity: string) {
+    return this.tempSelectedAmenities.includes(amenity);
+  }
+
+  saveAmenities() {
+    this.property.amenities = [...this.tempSelectedAmenities];
+    this.amenitiesVisible = false;
+  }
+  onAmenitiesSelected(selected: string[]) {
+    this.property.amenities = selected;
   }
 }

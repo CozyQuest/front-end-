@@ -1,4 +1,4 @@
-<div class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('assets/images/bg/02.jpg');">
+<div class="min-h-[120vh] bg-cover bg-center flex items-center justify-center" style="background-image: url('assets/images/bg/02.jpg');">
   <form [formGroup]="loginForm" (ngSubmit)="login()" class="bg-white bg-opacity-90 p-8 rounded-xl shadow-lg w-full max-w-md space-y-4">
 
     <h2 class="text-2xl font-bold text-center text-gray-800">Login</h2>
@@ -30,9 +30,15 @@
       <label for="rememberMe" class="text-sm text-gray-700">Remember Me</label>
     </div>
 
+     <a (click)="forgetPass()"
+   class="mt-4 inline-block text-blue-600 hover:underline text-sm">
+  Forgot Password?
+</a>
+
+
     <!-- Login Button -->
-    <button 
-      type="submit" 
+    <button
+      type="submit"
       [disabled]="isLoading"
       class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition disabled:opacity-50">
       {{ isLoading ? 'Logging in...' : 'Login' }}

@@ -1,0 +1,11 @@
+<div class="mx-4 mb-16">
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <div *ngFor="let amenity of amenities" (click)="toggleAmenity(amenity.name)" [ngClass]="isSelected(amenity.name) 
+        ? 'border-blue-500 bg-blue-50' 
+        : 'border-gray-300 bg-white'"
+            class="flex flex-col items-center justify-center p-4 border-2 rounded-lg cursor-pointer hover:border-blue-400 hover:bg-blue-50 transition">
+            <i [class]="amenity.icon + ' text-xl mb-2 text-gray-700'"></i>
+            <span class="text-sm font-medium text-center">{{ amenity.name }}</span>
+        </div>
+    </div>
+</div>
