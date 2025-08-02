@@ -1,0 +1,43 @@
+<div class="pt-10 px-6 lg:px-16 bg-gray-50 min-h-screen">
+  <div class="max-w-6xl mx-auto px-6 lg:px-16 py-20 bg-white rounded-xl shadow relative"
+       style="box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.06), 0 10px 20px rgba(0, 0, 0, 0.08);">
+
+    <div class="max-w-md mx-auto space-y-5">
+      <h2 class="text-xl font-semibold mb-4">Change Password</h2>
+
+      <!-- Conditionally render Old Password or Email -->
+      <div *ngIf="isLoggedIn; else showEmail">
+        <label class="block font-medium mb-1">Old Password</label>
+        <input [(ngModel)]="oldPassword" name="oldPassword" type="password"
+               class="w-full border rounded px-3 py-2" />
+      </div>
+
+      <ng-template #showEmail>
+        <label class="block font-medium mb-1">Email</label>
+        <input [(ngModel)]="email" name="email" type="email"
+               class="w-full border rounded px-3 py-2" />
+      </ng-template>
+
+      <!-- New Password -->
+      <div>
+        <label class="block font-medium mb-1">New Password</label>
+        <input [(ngModel)]="newPassword" name="newPassword" type="password"
+               class="w-full border rounded px-3 py-2" />
+      </div>
+
+      <!-- Confirm Password -->
+      <div>
+        <label class="block font-medium mb-1">Confirm New Password</label>
+        <input [(ngModel)]="confirmPassword" name="confirmPassword" type="password"
+               class="w-full border rounded px-3 py-2" />
+      </div>
+
+      <button type="button"
+              (click)="updatePassword()"
+              class="mt-4 bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition">
+        Update Password
+      </button>
+    </div>
+
+  </div>
+</div>

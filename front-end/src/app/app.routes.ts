@@ -5,6 +5,7 @@ import { LoginButton } from './components/Auth Components/login-button/login-but
 import { RegisterButton } from './components/Auth Components/register-button/register-button';
 import { EditProfile } from './components/profile/edit-profile/edit-profile';
 import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
+import { changePassword } from './components/profile/change-pass/change-pass';
 
 export const routes: Routes = [
     { path: 'checkout/:id', component: PropertyCheckout },
@@ -13,6 +14,7 @@ export const routes: Routes = [
     { path: 'register', component: RegisterButton },
     {path: 'edit-profile', component: EditProfile},
     {path:'dashboard', component: DashboardShell},
+    {path:'change-pass', component: changePassword},
     {
         path: '',
         redirectTo: 'home',
