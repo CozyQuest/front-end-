@@ -19,9 +19,9 @@ export const routes: Routes = [
 
   // Public route
   {
-      path: 'rent',
-      component: PropertyList,
-    },
+    path: 'rent',
+    component: PropertyList,
+  },
 
   // Auth routes
   { path: 'login', component: Login },
@@ -71,6 +71,10 @@ export const routes: Routes = [
     path: 'profile/:id',
     loadComponent: () => import('./components/profile/profile-details/profile-details').then(m => m.ProfileDetails),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'contact-us',
+    loadComponent: () => import('./components/contact-us/contact-us').then(m => m.ContactUs)
   },
   {
     path: 'test',
