@@ -1,13 +1,13 @@
 export interface PropertyCheckoutInterface {
     id: number;
     title: string;
-    imageUrl: string;
+    mainImageURL: string;
     description: string;
-    location: string;
-    area: number;
-    beds: number;
-    baths: number;
+    space: number;
+    RoomCount: number;
+    BathroomCount: number;
     price: number;
     rating: number;
     ratingCount: number;
+    rentedDates: Date[];
 }

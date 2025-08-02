@@ -1,4 +1,4 @@
-import { RecomendedProperty } from '../../core/interfaces/recomendedProperty';
+import { IPropertyCard } from '../../core/interfaces/recomendedProperty';
 import { Component, Input, OnInit } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
@@ -13,8 +13,8 @@ import { Rating } from 'primeng/rating';
   styleUrl: './carousel-card.css'
 })
 export class PropCardCer {
-  @Input() Property!: RecomendedProperty;
-    toggleFavorite(product: RecomendedProperty) {
+  @Input() Property!: IPropertyCard;
+    toggleFavorite(product: IPropertyCard) {
     product.isFavorite = !product.isFavorite;
   }
 }

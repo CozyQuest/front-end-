@@ -1,5 +1,5 @@
 import { Component,Inject } from '@angular/core';
-import { Review } from '../../../../core/interfaces/review.model';
+import { Review } from '../../../../core/interfaces/Review';
 import {  MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';

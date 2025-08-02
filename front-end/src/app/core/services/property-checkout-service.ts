@@ -6,7 +6,7 @@ import { PropertyCheckoutInterface } from '../interfaces/property-checkout';
   providedIn: 'root'
 })
 export class PropertyCheckoutService {
-  private apiUrl = 'https://localhost:7135/api/Checkout';
+  private apiUrl = 'https://localhost:7279/api/Checkout';
 
   constructor(private http: HttpClient) {}
 

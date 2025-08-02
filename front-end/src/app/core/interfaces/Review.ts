@@ -1,8 +1,8 @@
-import { User } from "./user.model";
+import { User } from "./User";
 
 export interface Review {
   id: number;
-  userId: number;
+  userId: number; 
   propertyId: number;
   review: string;
   rating: number;

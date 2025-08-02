@@ -4,5 +4,6 @@ export interface User {
   lname: string;
   email: string;
   phone: string;
-  profilePicUrl: string
+  profilePicUrl: string;
+  location: string;
 }

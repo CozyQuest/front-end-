@@ -1,0 +1,47 @@
+<p-carousel
+  [value]="rentedProperties"
+  [circular]="true"
+  [numVisible]="2"
+  [numScroll]="1"
+  [responsiveOptions]="carouselResponsiveOptions"
+  [autoplayInterval]="3000"
+  [showIndicators]="false"
+  [showNavigators]="true"
+>
+  <ng-template let-rent pTemplate="item">
+    <div class="p-4">
+      <div class="rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow hover:shadow-xl transition-shadow duration-300">
+        <img
+          [src]="rent.imageUrl"
+          alt="Rented Property Image"
+          class="w-full h-56 object-cover"
+        />
+        <div class="p-4 space-y-2">
+          <h6 class="text-lg font-medium">{{ rent.title }}</h6>
+          <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
+            <ul class="py-6 border-y border-slate-100 dark:border-gray-800 flex items-center list-none">
+              <li class="flex items-center me-4">
+                <i class="uil uil-star lg:text-3xl text-2xl me-2 text-blue-500"></i>
+                <span><span class="font-medium">Rating:</span> {{ rent.userRating }}/5</span>
+              </li>
+              <li class="flex items-center me-4">
+                <i class="uil uil-calendar-alt lg:text-3xl text-2xl me-2 text-blue-500"></i>
+                <span><span class="font-medium">Check-in:</span> {{ rent.checkinDate }}</span>
+              </li>
+              <li class="flex items-center">
+                <i class="uil uil-calendar-alt lg:text-3xl text-2xl me-2 text-blue-500"></i>
+                <span><span class="font-medium">Check-out:</span> {{ rent.checkoutDate }}</span>
+              </li>
+              </ul>
+            <ul class="pt-6 flex justify-between items-center list-none">
+              <li>
+                <span class="text-slate-400">Total Paid</span>
+                <p class="text-lg font-medium">${{ rent.totalPrice }}</p>
+              </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-carousel>

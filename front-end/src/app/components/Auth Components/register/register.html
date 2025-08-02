@@ -1,7 +1,17 @@
-<div class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('assets/images/bg/01.jpg');">
+<div class="bg-cover bg-center flex items-center justify-center min-h-[120vh]" style="background-image: url('assets/images/bg/01.jpg');">
   <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="bg-white bg-opacity-90 p-10 rounded-xl shadow-lg w-full max-w-md space-y-4">
 
     <h2 class="text-2xl font-bold text-center text-gray-800">Register</h2>
+
+    <!-- Success Message -->
+    <div *ngIf="successMessage" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+      {{ successMessage }}
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      {{ errorMessage }}
+    </div>
 
     <div class="flex gap-4">
       <div class="w-1/2">
@@ -26,6 +36,13 @@
     </div>
 
     <div>
+      <input formControlName="phoneNumber" placeholder="Phone Number (01XXXXXXXXX)" class="w-full p-3 border border-gray-300 rounded" />
+      <p class="text-red-500 text-sm mt-1" *ngIf="f['phoneNumber'].invalid && f['phoneNumber'].touched">
+        Must be a valid Egyptian phone number (01XXXXXXXXX)
+      </p>
+    </div>
+
+    <div>
       <input formControlName="password" type="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded" />
       <p class="text-red-500 text-sm mt-1" *ngIf="f['password'].invalid && f['password'].touched">
         Minimum 8 chars, at least 1 letter and 1 number
@@ -39,9 +56,18 @@
       </p>
     </div>
 
-    <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition">
-      Register
+    <button
+      type="submit"
+      [disabled]="isLoading"
+      class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition disabled:opacity-50">
+      {{ isLoading ? 'Registering...' : 'Register' }}
     </button>
+
+    <!-- Redirect to Login -->
+    <p class="text-center text-sm mt-4">
+      Already have an account?
+      <a (click)="goToLogin()" class="text-blue-600 hover:underline cursor-pointer">Sign in</a>
+    </p>
 
   </form>
 </div>

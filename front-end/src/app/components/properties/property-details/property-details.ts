@@ -1,16 +1,18 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PropertyService } from '../../../core/services/property.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ReviewService } from '../../../core/services/review.service';
-import { Property } from '../../../core/interfaces/property.model';
-import { Review } from '../../../core/interfaces/review.model';
+import { Property } from '../../../core/interfaces/Property';
+import { Review } from '../../../core/interfaces/Review';
 import { CommonModule } from '@angular/common';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CarouselModule } from 'primeng/carousel';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ReviewsList } from '../reviews/reviews-list/reviews-list';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-property-details',
@@ -20,6 +22,7 @@ import { ReviewsList } from '../reviews/reviews-list/reviews-list';
 })
 export class PropertyDetails {
   route = inject(ActivatedRoute);
+  router = inject(Router);
   propertyService = inject(PropertyService);
   sanitizer = inject(DomSanitizer);
   reviewService = inject(ReviewService);
@@ -29,9 +32,9 @@ export class PropertyDetails {
   mapUrl?: SafeResourceUrl;
   loadingImages = true;
 
-  checkInDate: Date | null = null;
-  checkOutDate: Date | null = null;
-  minDate: Date = new Date();
+  // checkInDate: Date | null = null;
+  // checkOutDate: Date | null = null;
+  // minDate: Date = new Date();
   averageRating: number = 0;
   ratingCount: number = 0;
 
@@ -50,10 +53,10 @@ export class PropertyDetails {
     return 'No ratings yet.';
   }
 
-  reserveProperty() {
-    if (!this.checkInDate || !this.checkOutDate) {
-      alert('Please select both check-in and check-out dates.');
-      return;
+ reserveProperty() {
+    if (this.property?.id) {
+      this.router.navigate(['/checkout', this.property.id], {
+      });
     }
   }
 

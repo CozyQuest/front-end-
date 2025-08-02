@@ -1,4 +1,4 @@
-import { RecomendedProperty } from './../../core/interfaces/recomendedProperty';
+import { IPropertyCard } from './../../core/interfaces/recomendedProperty';
 import { Component, Input, OnInit } from '@angular/core';
 import { CarouselModule } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { PropCardCer } from "../carousel-card/carousel-card";
 })
 export class CarouselGrid implements OnInit {
   responsiveOptions: any[] | undefined;
-  @Input() Properties!: RecomendedProperty[];
+  @Input() Properties!: IPropertyCard[];
   ngOnInit() {
     if (!this.Properties || this.Properties.length === 0) {
       this.Properties = [

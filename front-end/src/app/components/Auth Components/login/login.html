@@ -1,7 +1,12 @@
-<div class="min-h-screen bg-cover bg-center flex items-center justify-center" style="background-image: url('assets/images/bg/02.jpg');">
+<div class="min-h-[120vh] bg-cover bg-center flex items-center justify-center" style="background-image: url('assets/images/bg/02.jpg');">
   <form [formGroup]="loginForm" (ngSubmit)="login()" class="bg-white bg-opacity-90 p-8 rounded-xl shadow-lg w-full max-w-md space-y-4">
 
     <h2 class="text-2xl font-bold text-center text-gray-800">Login</h2>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+      {{ errorMessage }}
+    </div>
 
     <!-- Email -->
     <div>
@@ -19,9 +24,18 @@
       </p>
     </div>
 
+    <!-- Remember Me -->
+    <div class="flex items-center">
+      <input type="checkbox" formControlName="rememberMe" id="rememberMe" class="mr-2">
+      <label for="rememberMe" class="text-sm text-gray-700">Remember Me</label>
+    </div>
+
     <!-- Login Button -->
-    <button type="submit" class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition">
-      Login
+    <button
+      type="submit"
+      [disabled]="isLoading"
+      class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition disabled:opacity-50">
+      {{ isLoading ? 'Logging in...' : 'Login' }}
     </button>
 
     <!-- OR Divider -->

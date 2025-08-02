@@ -11,4 +11,5 @@ export interface IAddProperty {
   bedrooms: number;
   location: string;
   propertyType: IpropertyType;
+  amenities: string[];
 }

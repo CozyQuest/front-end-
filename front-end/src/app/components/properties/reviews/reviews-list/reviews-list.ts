@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Review } from '../../../../core/interfaces/review.model';
+import { Review } from '../../../../core/interfaces/Review';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewsDialog } from '../reviews-dialog/reviews-dialog';
 import { CommonModule } from '@angular/common';

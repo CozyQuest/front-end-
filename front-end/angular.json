@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "scripts": [
+              "node_modules/feather-icons/dist/feather.min.js"
+            ],
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -25,11 +28,8 @@
                 "input": "public"
               }
             ],
-           "styles": [
-              "src/styles.css",
-              "https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css",
-              "https://unicons.iconscout.com/release/v4.0.8/css/line.css",
-              "src/custom-theme.scss"
+            "styles": [
+              "src/styles.css"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",
