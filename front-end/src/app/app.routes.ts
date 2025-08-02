@@ -12,16 +12,15 @@ export const routes: Routes = [
   // Protected route - requires login
   {
     path: 'checkout/:id',
-    component: PropertyCheckout,
-    canActivate: [AuthGuard]
+      component: PropertyCheckout,
+      canActivate: [AuthGuard, RoleGuard],
+      data: { role: ['User','Host'] }
   },
 
   // Public route
   {
       path: 'rent',
       component: PropertyList,
-      canActivate: [AuthGuard, RoleGuard],
-      data: { role: 'User' }
     },
 
   // Auth routes

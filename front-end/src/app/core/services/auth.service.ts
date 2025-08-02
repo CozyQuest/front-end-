@@ -265,8 +265,8 @@ export class AuthService {
     return user?.role || null;
   }
 
-  hasRole(role: string): boolean {
+  hasRole(role: string[]|string): boolean {
     const userRole = this.getUserRole();
-    return userRole === role;
+    return Array.isArray(role) ? role.includes(userRole!) : userRole === role;
   }
 }
