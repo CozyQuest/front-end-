@@ -11,6 +11,9 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './login.css'
 })
 export class Login {
+forgetPass() {
+this.router.navigate(['/forget-pass']);
+}
   loginForm!: FormGroup;
   isLoading = false;
   errorMessage = '';

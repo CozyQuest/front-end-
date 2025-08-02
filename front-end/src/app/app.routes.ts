@@ -7,6 +7,8 @@ import { EditProfile } from './components/profile/edit-profile/edit-profile';
 import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
+import { changePassword } from './components/profile/change-pass/change-pass';
+import { ForgotPasswordComponent } from './components/Auth Components/forgot-pass/forget-pass';
 
 export const routes: Routes = [
   // Protected route - requires login
@@ -33,6 +35,16 @@ export const routes: Routes = [
     component: EditProfile,
     canActivate: [AuthGuard]
   },
+    {
+    path: 'change-pass',
+    component: changePassword,
+    canActivate: [AuthGuard]
+  },
+      {
+    path: 'forget-pass',
+    component: ForgotPasswordComponent,
+  },
+
 
   // Protected route - requires login AND Host role
   {
