@@ -21,10 +21,4 @@ export class RecentTransactions implements OnInit {
       error: (err) => console.error('Failed to load transactions:', err)
     });
   }
-
-  getStatusClass(status: string): string {
-    return status === 'Paid'
-      ? 'bg-emerald-600/10 dark:bg-emerald-600/20 text-emerald-600 border border-emerald-600/10 dark:border-emerald-600/20'
-      : 'bg-red-600/10 dark:bg-red-600/20 text-red-600 border border-red-600/10 dark:border-red-600/20';
-  }
 }

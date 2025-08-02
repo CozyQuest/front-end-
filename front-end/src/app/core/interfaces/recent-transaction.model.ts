@@ -1,8 +1,9 @@
 export interface RecentTransaction {
   img: string;
-  date: string;
-  name: string;
+  title: string;
+  location: string;
+  guestName: string;
+  hostName: string;
   price: string;
-  type: string;
-  status: string;
+  date: string;
 }
