@@ -14,10 +14,10 @@ export class PendingRequestsService {
   }
 
   approveRequest(id: number) {
-    return this.http.put(`${this.baseUrl}/${id}/approve`, {});
+    return this.http.put<void>(`${this.baseUrl}/${id}/approve`, {});
   }
 
   rejectRequest(id: number) {
-    return this.http.put(`${this.baseUrl}/${id}/reject`, {});
+    return this.http.put<void>(`${this.baseUrl}/${id}/reject`, {});
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PendingRequestsService } from '../../../core/services/pending-requests.service';
 import { PendingProperty } from '../../../core/interfaces/pending-property.model';
@@ -11,9 +11,11 @@ import { PendingProperty } from '../../../core/interfaces/pending-property.model
   styleUrl: './pending-requests.css'
 })
 export class PendingRequests implements OnInit {
+  @Output() propertyApproved = new EventEmitter<void>();
+
   pendingProperties: PendingProperty[] = [];
 
-  constructor(private pendingService: PendingRequestsService) { }
+  constructor(private pendingService: PendingRequestsService) {}
 
   ngOnInit(): void {
     this.pendingService.getPendingRequests().subscribe({
@@ -26,6 +28,7 @@ export class PendingRequests implements OnInit {
     this.pendingService.approveRequest(property.id).subscribe({
       next: () => {
         this.pendingProperties = this.pendingProperties.filter(p => p.id !== property.id);
+        this.propertyApproved.emit(); // notify parent
       },
       error: err => console.error('Approve failed:', err)
     });
