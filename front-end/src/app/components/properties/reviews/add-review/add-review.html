@@ -1,0 +1,68 @@
+<div class="max-w-xl w-full mx-auto bg-white rounded-3xl shadow-2xl p-8 space-y-8 animate-fadeInUp border border-gray-100">
+  <!-- Title -->
+  <div class="text-center space-y-1">
+    <h2 class="text-3xl font-bold text-neutral-800 tracking-tight">How was your stay?</h2>
+    <p class="text-gray-500 text-sm">Your feedback helps others feel at home</p>
+  </div>
+
+  <!-- Star Rating -->
+  <div class="flex justify-center gap-2">
+    @for (i of [1, 2, 3, 4, 5]; track i) {
+      <button
+        type="button"
+        class="focus:outline-none"
+        (mouseenter)="hoverRating = i"
+        (mouseleave)="hoverRating = 0"
+        (click)="setRating(i)"
+      >
+        <i
+          class="mdi mdi-star text-4xl transition-transform duration-300 ease-in-out"
+          [ngClass]="{
+            'text-yellow-500 scale-110': i <= (hoverRating || selectedRating),
+            'text-gray-300': i > (hoverRating || selectedRating)
+          }"
+        ></i>
+      </button>
+    }
+  </div>
+
+  <!-- Toggle Review -->
+  <div class="flex items-center justify-center gap-3">
+    <input
+      id="withReview"
+      type="checkbox"
+      class="accent-blue-500 w-5 h-5 border-gray-300 rounded focus:ring-blue-400"
+      [checked]="withReview()"
+      (change)="onToggleWithReview($event)"
+    />
+    <label for="withReview" class="text-sm text-gray-600 select-none">Add written review</label>
+  </div>
+
+  <!-- Review Field -->
+  @if (withReview()) {
+    <div class="relative">
+      <textarea
+        id="review"
+        rows="4"
+        formControlName="review"
+        class="peer w-full p-4 pt-6 text-sm border border-gray-300 rounded-xl resize-none text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
+        placeholder="Write your experience..."
+      ></textarea>
+      <label
+        for="review"
+        class="absolute top-3 left-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-500"
+      >
+        Share your experience
+      </label>
+    </div>
+  }
+
+  <!-- Submit -->
+  <button
+    (click)="onSubmit()"
+    [disabled]="!selectedRating"
+    class="w-full py-3 text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Submit Review
+  </button>
+</div>

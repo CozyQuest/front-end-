@@ -101,18 +101,18 @@
 
     <!-- Right Content -->
     <div class="w-full lg:w-[72%]">
-      <div class="rounded-xl shadow-md dark:shadow-gray-700 bg-white dark:bg-slate-900 p-6">
+      <div class="rounded-xl shadow-md bg-white p-6">
         <div class="mb-6">
           <button (click)="showMyProperties()" [ngClass]="{
               'bg-blue-600 hover:bg-blue-700 text-white': activeTab() === 'my',
-              'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600': activeTab() !== 'my'
+              'bg-gray-200 text-gray-800 hover:bg-gray-300': activeTab() !== 'my'
             }"
             class="px-5 py-2.5 text-sm rounded-lg font-semibold mr-3 transition-colors duration-200 ease-in-out">
             My Properties
           </button>
           <button (click)="showRentedProperties()" [ngClass]="{
               'bg-blue-600 hover:bg-blue-700 text-white': activeTab() === 'rented',
-              'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600': activeTab() !== 'rented'
+              'bg-gray-200 text-gray-800 hover:bg-gray-300': activeTab() !== 'rented'
             }"
             class="px-5 py-2.5 text-sm rounded-lg font-semibold transition-colors duration-200 ease-in-out">
             Rented Properties
