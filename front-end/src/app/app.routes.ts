@@ -57,7 +57,7 @@ export const routes: Routes = [
     path: 'add-property',
     loadComponent: () => import('./components/add-property/add-property').then(m => m.AddProperty),
     canActivate: [AuthGuard, RoleGuard],
-    data: { role: 'Host' }
+    data: { role: ['Host',"User"] }
   },
 
   // Public route

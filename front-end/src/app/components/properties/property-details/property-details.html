@@ -22,7 +22,7 @@
             <ng-template pTemplate="item" let-image>
               <div class="relative w-full h-[300px] md:h-[550px]">
                 <img
-                  [src]="image.url"
+                  [src]="image"
                   alt="Property image"
                   class="absolute top-0 left-0 w-full h-full object-cover"
                 />
@@ -40,29 +40,31 @@
 
         <!-- Property Features -->
         <ul class="py-6 flex flex-wrap items-center gap-x-6 gap-y-4 ml-0 md:ml-10">
-       <li class="flex items-center">
-        <i class="uil uil-compress-arrows text-2xl md:text-3xl text-blue-500 mr-2"></i>
-        <span class="text-lg md:text-xl">{{ property?.Area }} m³</span>
-       </li>
-       <li class="flex items-center">
-        <i class="uil uil-bed-double text-2xl md:text-3xl text-blue-500 mr-2"></i> 
-        <span class="text-lg md:text-xl">{{ property?.roomCount }} Beds</span>
-       </li>
-       <li class="flex items-center">
-        <i class="uil uil-bath text-2xl md:text-3xl text-blue-500 mr-2"></i>
-        <span class="text-lg md:text-xl">{{ property?.bathroomCount }} Baths</span>
-       </li>
-       <li class="flex items-center">
-        <i class="uil uil-users-alt text-2xl md:text-3xl text-blue-500 mr-2"></i>
-        <span class="text-lg md:text-xl">{{ property?.Guests }} Guests</span>
-      </li>
-     </ul>
+          <li class="flex items-center">
+            <i class="uil uil-compress-arrows text-2xl md:text-3xl text-blue-500 mr-2"></i>
+            <span class="text-lg md:text-xl">{{ property?.space }} m³</span>
+          </li>
+          <li class="flex items-center">
+            <i class="uil uil-bed-double text-2xl md:text-3xl text-blue-500 mr-2"></i> 
+            <span class="text-lg md:text-xl">{{ property?.roomCount }} Beds</span>
+          </li>
+          <li class="flex items-center">
+            <i class="uil uil-bath text-2xl md:text-3xl text-blue-500 mr-2"></i>
+            <span class="text-lg md:text-xl">{{ property?.bathroomCount }} Baths</span>
+          </li>
+          <li class="flex items-center">
+            <i class="uil uil-users-alt text-2xl md:text-3xl text-blue-500 mr-2"></i>
+            <span class="text-lg md:text-xl">{{ property?.peopleCapacity }} Guests</span>
+          </li>
+        </ul>
+
         <!-- Owner Info -->
         <div class="flex items-start gap-4 ml-0 md:ml-10 mt-4">
-          <img [src]="property?.owner?.profilePicUrl" class="w-14 h-14 md:w-16 md:h-16 rounded-full" />
+          <img [src]="property?.user?.urlProfilePicture" class="w-14 h-14 md:w-16 md:h-16 rounded-full" />
           <div>
-            <p class="font-semibold text-base md:text-lg">Hosted by {{ property?.owner?.fname }} {{ property?.owner?.lname }}</p>
-             <p class="text-gray-600 dark:text-gray-400 text-sm">{{ property?.owner?.location }}</p>
+            <p class="font-semibold text-base md:text-lg">
+              Hosted by {{ property?.user?.firstName }} {{ property?.user?.lastName }}
+            </p>
           </div>
         </div>
 
@@ -80,7 +82,7 @@
               class="flex items-center gap-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-400 transition duration-300"
             >
               <div class="text-blue-500 dark:text-pink-400 text-xl flex-shrink-0">
-                <i [ngClass]="getServiceIcon(service.name)"></i>
+                <i [ngClass]="getServiceIcon(service.icon)"></i>
               </div>
               <span class="text-sm text-black dark:text-white font-medium">{{ service.name }}</span>
             </div>
@@ -135,8 +137,8 @@
             allowfullscreen
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-       ></iframe>
-       </div>
+          ></iframe>
+        </div>
       </div>
 
       <!-- Sidebar -->
@@ -145,44 +147,34 @@
           <!-- Booking Card -->
           <div class="relative mt-12 p-8 rounded-3xl shadow-xl bg-gradient-to-br from-[#f0f8ff] via-[#ffffffcc] to-[#e0f2ff] border border-blue-200 max-w-md mx-auto backdrop-blur-md animate-fade-in hover:scale-[1.02] transition-transform duration-500">
 
-           <!--  Icon Container -->
-           <!-- <div class="flex justify-center">
-             <div class="w-16 h-16 bg-white/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl border border-white animate-bounce-slow"> -->
-             <!-- Icon -->
-             <!-- <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 10l9-7 9 7v10a2 2 0 01-2 2h-4a1 1 0 01-1-1v-4H9v4a1 1 0 01-1 1H4a2 2 0 01-2-2V10z" />
-             </svg>
-           </div>
-          </div> -->
+            <!-- Booking Heading -->
+            <div class="text-center mt-4">
+              <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">Your Stay Starts Here</h2>
+              <p class="text-md text-gray-500 mt-2 leading-relaxed">Book premium properties with comfort, convenience, and confidence.</p>
+            </div>
 
-         <!-- Booking Heading -->
-         <div class="text-center mt-4">
-          <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">Your Stay Starts Here</h2>
-          <p class="text-md text-gray-500 mt-2 leading-relaxed">Book premium properties with comfort, convenience, and confidence.</p>
-         </div>
+            <!-- Price Display -->
+            <div class="text-center mt-6">
+              <p class="text-4xl font-bold text-blue-600 drop-shadow-sm">${{ property?.price }}<span class="text-base font-medium text-gray-500"> / night</span></p>
+            </div>
 
-         <!-- Price Display -->
-         <div class="text-center mt-6">
-          <p class="text-4xl font-bold text-blue-600 drop-shadow-sm">${{ property?.rentPerDay }}<span class="text-base font-medium text-gray-500"> / night</span></p>
-        </div>
+            <!-- CTA Button -->
+            <div class="mt-6">
+              <button
+                (click)="reserveProperty()"
+                class="w-full py-3 px-5 text-white text-lg font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 shadow-lg transition duration-300 transform hover:scale-105 active:scale-95"
+              >
+                Reserve Now
+              </button>
+            </div>
+          </div>
 
-         <!-- CTA Button -->
-         <div class="mt-6">
-          <button
-            (click)="reserveProperty()"
-            class="w-full py-3 px-5 text-white text-lg font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 shadow-lg transition duration-300 transform hover:scale-105 active:scale-95"
-         >
-            Reserve Now
-         </button>
-        </div>
-      </div>
-
-             <!-- Contact Section -->
+          <!-- Contact Section -->
           <div class="text-center mt-8">
             <h3 class="mb-4 text-xl font-semibold text-black">Have Questions? Get in touch!</h3>
             <a href="/contact"
-             class="inline-flex items-center justify-center px-5 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-medium rounded-md transition-colors duration-300">
-             <i class="pi pi-phone mr-2"></i> Contact Us
+              class="inline-flex items-center justify-center px-5 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-medium rounded-md transition-colors duration-300">
+              <i class="pi pi-phone mr-2"></i> Contact Us
             </a>
           </div>
         </div>
