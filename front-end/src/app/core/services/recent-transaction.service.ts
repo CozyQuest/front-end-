@@ -9,9 +9,14 @@ import { Observable } from 'rxjs';
 export class RecentTransactionService {
   private baseUrl = 'https://localhost:7279/api/dashboard/recenttransactions';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
-  getRecentTransactions(): Observable<RecentTransaction[]> {
-    return this.http.get<RecentTransaction[]>(`${this.baseUrl}`);
+  getRecentTransactions(hostId?: string): Observable<RecentTransaction[]> {
+    const url = hostId
+      ? `${this.baseUrl}?hostId=${hostId}`
+      : this.baseUrl;
+
+    return this.http.get<RecentTransaction[]>(url);
   }
+
 }
