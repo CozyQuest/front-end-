@@ -85,8 +85,14 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'contact-us',
+    path: 'contact',
     loadComponent: () => import('./components/contact-us/contact-us').then(m => m.ContactUs)
+  },
+  {
+    path: 'BecomeHost',
+    loadComponent: () => import('./components/become-host/become-host').then(m => m.BecomeHost),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'User' }
   },
   {
     path: 'test',

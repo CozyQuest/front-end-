@@ -31,7 +31,12 @@
     <a routerLink="/home" routerLinkActive="text-blue-500" class="hover:text-blue-500">Home</a>
     <a routerLink="/rent" routerLinkActive="text-blue-500" class="hover:text-blue-500">Rent</a>
     <a routerLink="/contact" routerLinkActive="text-blue-500" class="hover:text-blue-500">contacts us</a>
-    <a routerLink="/host" routerLinkActive="text-blue-500" class="hover:text-blue-500">Host</a>
+    @if(isHost()) {
+      <a routerLink="/host" routerLinkActive="text-blue-500" class="hover:text-blue-500">Host</a>
+    }
+    @else {
+      <a routerLink="/BecomeHost" routerLinkActive="text-blue-500" class="hover:text-blue-500">Become A Host</a>
+    }
 
   </div>
 
