@@ -1,10 +1,24 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { Card } from '../../shared/card/card';
+import { Subject, timer } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+// Services
+import { BecomeHostService } from '../../core/services/become-host.service';
+import { FileValidationService } from '../../core/services/file-validation.service';
+import { BecomeHostRepository } from '../../core/repositories/become-host.repository';
+
+// Interfaces
+import { 
+  ImageUploadType, 
+  BecomeHostFormState, 
+  ImageUploadState,
+  FileValidationResult 
+} from '../../core/interfaces/become-host.interface';
 
 @Component({
   selector: 'app-become-host',
@@ -12,20 +26,40 @@ import { Card } from '../../shared/card/card';
   templateUrl: './become-host.html',
   styleUrl: './become-host.css'
 })
-export class BecomeHost {
-  frontImageFile: File | null = null;
-  backImageFile: File | null = null;
-  frontImagePreview: string | null = null;
-  backImagePreview: string | null = null;
-  isSubmitting = false;
-  errorMessage = '';
-  successMessage = '';
+export class BecomeHost implements OnInit, OnDestroy {
+  // Form state using typed interfaces
+  formState: BecomeHostFormState = {
+    frontImage: { file: null, preview: null },
+    backImage: { file: null, preview: null },
+    isSubmitting: false,
+    errorMessage: '',
+    successMessage: ''
+  };
 
-  private baseUrl = 'https://localhost:7279';
+  // Subject for managing subscriptions
+  private destroy$ = new Subject<void>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private router: Router,
+    private becomeHostService: BecomeHostService,
+    private fileValidationService: FileValidationService,
+    private becomeHostRepository: BecomeHostRepository
+  ) {}
+  ngOnInit(): void {
+    // Initialize component
+    console.log('BecomeHost requirements:', this.becomeHostRepository.getSubmissionRequirements());
+    
+    // Note: BecomeHostGuard already prevents access for users with pending requests
+    // This component will only load for users who haven't submitted a request yet
+  }
 
-  onFileSelected(event: Event, type: 'front' | 'back'): void {
+  ngOnDestroy(): void {
+    // Complete all subscriptions to prevent memory leaks
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  onFileSelected(event: Event, type: ImageUploadType): void {
     const target = event.target as HTMLInputElement;
     const file = target.files?.[0];
 
@@ -39,7 +73,7 @@ export class BecomeHost {
     event.stopPropagation();
   }
 
-  onDrop(event: DragEvent, type: 'front' | 'back'): void {
+  onDrop(event: DragEvent, type: ImageUploadType): void {
     event.preventDefault();
     event.stopPropagation();
 
@@ -51,132 +85,137 @@ export class BecomeHost {
     }
   }
 
-  private processFile(file: File, type: 'front' | 'back'): void {
-    // Validate file size (max 5MB)
-    if (file.size > 5 * 1024 * 1024) {
-      this.errorMessage = 'File size must be less than 5MB';
+  private processFile(file: File, type: ImageUploadType): void {
+    // Clear previous error
+    this.formState.errorMessage = '';
+
+    // Validate file using service
+    const validationResult: FileValidationResult = this.fileValidationService.validateFile(file);
+    
+    if (!validationResult.isValid) {
+      this.formState.errorMessage = validationResult.error || 'Invalid file';
       return;
     }
 
-    // Validate file type
-    if (!file.type.startsWith('image/')) {
-      this.errorMessage = 'Please select a valid image file';
-      return;
-    }
-
-    // Clear any previous error
-    this.errorMessage = '';
-
-    // Store the file
-    if (type === 'front') {
-      this.frontImageFile = file;
-    } else {
-      this.backImageFile = file;
-    }
-
-    // Create preview
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (type === 'front') {
-        this.frontImagePreview = reader.result as string;
-      } else {
-        this.backImagePreview = reader.result as string;
-      }
-    };
-    reader.readAsDataURL(file);
+    // Create preview using service with Observable
+    this.fileValidationService.createImagePreview(file)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (preview) => {
+          // Update form state with explicit property assignment
+          if (type === 'front') {
+            this.formState.frontImage = {
+              file: file,
+              preview: preview
+            };
+          } else {
+            this.formState.backImage = {
+              file: file,
+              preview: preview
+            };
+          }
+        },
+        error: (error) => {
+          this.formState.errorMessage = 'Failed to process image file';
+          console.error('Image preview error:', error);
+        }
+      });
   }
 
-  removeImage(type: 'front' | 'back'): void {
+  removeImage(type: ImageUploadType): void {
     if (type === 'front') {
-      this.frontImageFile = null;
-      this.frontImagePreview = null;
+      this.formState.frontImage = {
+        file: null,
+        preview: null
+      };
     } else {
-      this.backImageFile = null;
-      this.backImagePreview = null;
+      this.formState.backImage = {
+        file: null,
+        preview: null
+      };
     }
   }
 
-  async onSubmit(): Promise<void> {
-    if (!this.frontImageFile || !this.backImageFile) {
-      this.errorMessage = 'Please select both front and back images';
+
+
+  onSubmit(): void {
+    // Validate required files
+    if (!this.becomeHostRepository.validateApplicationData(
+      this.formState.frontImage.file, 
+      this.formState.backImage.file
+    )) {
+      this.formState.errorMessage = 'Please select both front and back images';
       return;
     }
 
-    this.isSubmitting = true;
-    this.errorMessage = '';
-    this.successMessage = '';
+    this.formState.isSubmitting = true;
+    this.formState.errorMessage = '';
+    this.formState.successMessage = '';
 
-    try {
-      // Create FormData for multipart/form-data
-      const formData = new FormData();
-      formData.append('frontImage', this.frontImageFile, this.frontImageFile.name);
-      formData.append('backImage', this.backImageFile, this.backImageFile.name);
-
-      // Send the request (don't set Content-Type header - Angular will set it automatically with boundary)
-      const response = await this.http.post(`${this.baseUrl}/api/User/BecomeHostRequest/`, formData, {
-        headers: {
-          'accept': '*/*'
-          // Note: Don't set Content-Type for FormData - Angular sets it automatically with boundary
-        }
-      }).toPromise() as any;
-
-      // Display the success message from backend
-      this.successMessage = response?.respond || 'Application submitted successfully! We will review your documents and get back to you soon.';
-      
-      // Reset form after successful submission
-      this.resetForm();
-
-      // Redirect to index page after 2 seconds
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 2000);
-
-    } catch (error: any) {
-      console.error('Error submitting application:', error);
-      console.log('Full error structure:', JSON.stringify(error, null, 2));
-      
-      // Handle specific backend response format
-      let backendMessage = '';
-      
-      // Check for authorization errors first
-      if (error.status === 401) {
-        this.errorMessage = 'You must be logged in to submit a host application.';
-      } else {
-        // Handle other errors - extract backend message
-        if (error.error) {
-          // Backend returns errors in "respond" property
-          backendMessage = error.error.respond || 
-                          error.error.message || 
-                          error.error.title || 
-                          error.error.detail || 
-                          error.error.Message || 
-                          error.error.errors?.[0]?.message || 
-                          (typeof error.error === 'string' ? error.error : '');
-        }
+    // Submit using repository with Observable pattern
+    this.becomeHostRepository.submitHostApplication(
+      this.formState.frontImage.file!,
+      this.formState.backImage.file!
+    )
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (response) => {
+        // Display success message from backend
+        this.formState.successMessage = response?.respond || 'Application submitted successfully! We will review your documents and get back to you soon.';
         
-        // Fallback to direct error properties
-        if (!backendMessage) {
-          backendMessage = error.respond || 
-                          error.message || 
-                          error.title || 
-                          error.detail || 
-                          error.Message || 
-                          error.statusText || 
-                          '';
-        }
-        
-        // Use backend message or fallback
-        this.errorMessage = backendMessage || 'Failed to submit application. Please try again.';
+        // Reset form after successful submission
+        this.resetForm();
+
+        // Redirect to submission under review page after 2 seconds using RxJS timer
+        timer(2000)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => {
+            this.router.navigate(['/submission-under-review']);
+          });
+
+        this.formState.isSubmitting = false;
+      },
+      error: (error) => {
+        // Error handling is now managed by the service
+        this.formState.errorMessage = error.message || 'Failed to submit application. Please try again.';
+        this.formState.isSubmitting = false;
       }
-    } finally {
-      this.isSubmitting = false;
-    }
+    });
   }
 
   private resetForm(): void {
-    this.frontImageFile = null;
-    this.backImageFile = null;
-    this.frontImagePreview = null;
-    this.backImagePreview = null;
+    this.formState.frontImage = { file: null, preview: null };
+    this.formState.backImage = { file: null, preview: null };
   }
+
+  // Getter methods for template binding
+  get frontImageFile(): File | null {
+    return this.formState.frontImage.file;
+  }
+
+  get backImageFile(): File | null {
+    return this.formState.backImage.file;
+  }
+
+  get frontImagePreview(): string | null {
+    return this.formState.frontImage.preview;
+  }
+
+  get backImagePreview(): string | null {
+    return this.formState.backImage.preview;
+  }
+
+  get isSubmitting(): boolean {
+    return this.formState.isSubmitting;
+  }
+
+  get errorMessage(): string {
+    return this.formState.errorMessage;
+  }
+
+  get successMessage(): string {
+    return this.formState.successMessage;
+  }
+
+
 }
