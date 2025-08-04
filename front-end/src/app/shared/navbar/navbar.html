@@ -111,18 +111,11 @@
 <div *ngIf="menuOpen" class="md:hidden bg-white shadow-md z-40 px-4 py-4 space-y-4">
   <a routerLink="/" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Home</a>
   <a routerLink="/rent" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Rent</a>
-  <a routerLink="/host" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Host</a>
-  <div class="relative">
-    <div (click)="toggleDropdown()" class="flex items-center justify-between cursor-pointer hover:text-blue-500">
-      More
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-      </svg>
-    </div>
-    <ul *ngIf="dropdownOpen" class="mt-2 space-y-2 pl-4">
-      <li><a routerLink="/about" class="block hover:text-blue-500">About Us</a></li>
-      <li><a routerLink="/contact" class="block hover:text-blue-500">Contact</a></li>
-      <li><a routerLink="/support" class="block hover:text-blue-500">Support</a></li>
-    </ul>
-  </div>
+  <a routerLink="/contact" routerLinkActive="text-blue-500" class="block hover:text-blue-500">contacts us</a>
+  @if(isHost()) {
+    <a routerLink="/host" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Host</a>
+  }
+  @else {
+    <a routerLink="/BecomeHost" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Become A Host</a>
+  }
 </div>

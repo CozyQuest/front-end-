@@ -7,6 +7,7 @@ import { EditProfile } from './components/profile/edit-profile/edit-profile';
 import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
+import { BecomeHostGuard } from './core/guards/become-host.guard';
 import { changePassword } from './components/profile/change-pass/change-pass';
 import { ForgotPasswordComponent } from './components/Auth Components/forgot-pass/forget-pass';
 
@@ -91,8 +92,12 @@ export const routes: Routes = [
   {
     path: 'BecomeHost',
     loadComponent: () => import('./components/become-host/become-host').then(m => m.BecomeHost),
-    canActivate: [AuthGuard, RoleGuard],
+    canActivate: [AuthGuard, RoleGuard, BecomeHostGuard],
     data: { role: 'User' }
+  },
+  {
+    path: 'submission-under-review',
+    loadComponent: () => import('./components/submission-under-review/submission-under-review').then(m => m.SubmissionUnderReview)
   },
   {
     path: 'test',
