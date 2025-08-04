@@ -27,10 +27,12 @@ export class MapCard implements AfterViewInit {
     });
   }
 
+  private mapInstance: any;
+
   private initMap(): void {
     if (typeof jsVectorMap !== 'undefined') {
       try {
-        new jsVectorMap({
+        this.mapInstance = new jsVectorMap({
           map: 'world',
           selector: '#map',
           zoomOnScroll: false,
@@ -47,6 +49,10 @@ export class MapCard implements AfterViewInit {
               render: (marker: any) => marker.name
             }
           }
+        });
+
+        window.addEventListener('resize', () => {
+          this.mapInstance && this.mapInstance.updateSize();
         });
       } catch (e) {
         if (isDevMode()) console.error('Map init error:', e);
