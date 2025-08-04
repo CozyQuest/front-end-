@@ -2,10 +2,6 @@
     <div class="relative overflow-hidden rounded-md shadow-sm bg-white">
         <div class="p-6 flex items-center justify-between border-b border-gray-100">
             <h6 class="text-lg font-semibold">Pending Requests</h6>
-            <a href=""
-                class="btn btn-link font-normal text-slate-400 hover:text-primary after:bg-primary transition duration-500">
-                View all <i class="mdi mdi-arrow-right ms-1"></i>
-            </a>
         </div>
 
         <div class="relative overflow-x-auto block w-full xl:max-h-[284px] max-h-[350px]" data-simplebar>
@@ -29,7 +25,8 @@
                             <img [src]="property.img" class="object-cover size-12 min-w-[48px] rounded-md shadow-sm"
                                 alt="">
                         </th>
-                        <td class="text-start border-t border-gray-100 px-4 py-3 font-semibold">{{ property.title }}
+                        <td class="text-start border-t border-gray-100 px-4 py-3 font-semibold">
+                            <a href="#" class="font-medium hover:text-primary block text-lg">{{ property.title }}</a>
                         </td>
                         <td class="text-start border-t border-gray-100 px-4 py-3 text-slate-400">
                             {{ property.price | currency:'USD' }}
