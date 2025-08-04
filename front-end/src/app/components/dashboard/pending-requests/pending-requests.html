@@ -1,52 +1,64 @@
-<div class="relative overflow-hidden rounded-md shadow-sm bg-white">
-    <div class="p-6 flex items-center justify-between border-b border-gray-100">
-        <h6 class="text-lg font-semibold">Pending Requests</h6>
-        <a href=""
-            class="btn btn-link font-normal text-slate-400 hover:text-primary after:bg-primary transition duration-500">
-            View all <i class="mdi mdi-arrow-right ms-1"></i>
-        </a>
-    </div>
+<div class="lg:col-span-12 col-span-1 mt-6 gap-6">
+    <div class="relative overflow-hidden rounded-md shadow-sm bg-white">
+        <div class="p-6 flex items-center justify-between border-b border-gray-100">
+            <h6 class="text-lg font-semibold">Pending Requests</h6>
+        </div>
 
-    <div class="relative overflow-x-auto block w-full xl:max-h-[284px] max-h-[350px]" data-simplebar>
-        <table class="w-full text-start">
-            <thead class="text-base">
-                <tr>
-                    <th class="text-start font-semibold text-[15px] px-4 py-3"></th>
-                    <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[140px]">Posted Date</th>
-                    <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[120px]">Title</th>
-                    <th class="text-start font-semibold text-[15px] px-4 py-3">Price</th>
-                    <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[40px]">Type</th>
-                    <th class="text-end font-semibold text-[15px] px-4 py-3 min-w-[120px]">Actions</th>
-                </tr>
-            </thead>
-            
-            <tbody>
-                <tr *ngFor="let property of pendingProperties">
-                    <th class="text-start border-t border-gray-100 px-4 py-3 font-semibold">
-                        <img [src]="property.img" class="object-cover size-12 min-w-[48px] rounded-md shadow-sm" alt="">
-                    </th>
-                    <td class="text-start border-t border-gray-100 px-4 py-3">
-                        <span class="text-slate-400">{{ property.date }}</span>
-                    </td>
-                    <td class="text-start border-t border-gray-100 px-4 py-3 font-semibold">{{ property.title }}</td>
-                    <td class="text-start border-t border-gray-100 px-4 py-3 text-slate-400">
-                        {{ property.price | currency:'USD' }}
-                    </td>
-                    <td class="text-start border-t border-gray-100 px-4 py-3 font-semibold">{{ property.type }}</td>
-                    <td class="text-end border-t border-gray-100 px-4 py-3">
-                        <div class="flex flex-col sm:flex-row sm:justify-end gap-2">
-                            <button
-                                class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto">
-                                Approve
-                            </button>
-                            <button
-                                class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto">
-                                Reject
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="relative overflow-x-auto block w-full xl:max-h-[284px] max-h-[350px]" data-simplebar>
+            <!-- Show table only if there are pending properties -->
+            <table *ngIf="pendingProperties.length > 0" class="w-full text-start">
+                <thead class="text-base">
+                    <tr>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3"></th>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[120px]">Title</th>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3">Price</th>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[40px]">Type</th>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[80px]">Location</th>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[120px]">Owner</th>
+                        <th class="text-end font-semibold text-[15px] px-4 py-3 min-w-[120px]">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let property of pendingProperties">
+                        <th class="text-start border-t border-gray-100 px-4 py-3 font-semibold">
+                            <img [src]="property.img" class="object-cover size-12 min-w-[48px] rounded-md shadow-sm"
+                                alt="">
+                        </th>
+                        <td class="text-start border-t border-gray-100 px-4 py-3 font-semibold">
+                            <a href="#" class="font-medium hover:text-primary block text-lg">{{ property.title }}</a>
+                        </td>
+                        <td class="text-start border-t border-gray-100 px-4 py-3 text-slate-400">
+                            {{ property.price | currency:'USD' }}
+                        </td>
+                        <td class="text-start border-t border-gray-100 px-4 py-3 font-semibold">{{ property.type }}</td>
+                        <td class="text-start border-t border-gray-100 px-4 py-3 text-slate-500">{{ property.location }}
+                        </td>
+                        <td class="text-start border-t border-gray-100 px-4 py-3 text-slate-500">{{ property.ownerName
+                            }}
+                        </td>
+                        <td class="text-end border-t border-gray-100 px-4 py-3">
+                            <div class="flex flex-col sm:flex-row sm:justify-end gap-2">
+                                <button
+                                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto"
+                                    (click)="approve(property)">
+                                    Approve
+                                </button>
+                                <button
+                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto"
+                                    (click)="reject(property)">
+                                    Reject
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Empty message -->
+            <div *ngIf="pendingProperties.length === 0" class="text-center py-10 text-slate-400 text-sm font-medium">
+                No pending requests to show.
+            </div>
+        </div>
     </div>
 </div>
