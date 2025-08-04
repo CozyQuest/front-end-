@@ -1,14 +1,10 @@
 <div class="relative overflow-hidden rounded-md shadow-sm bg-white">
     <div class="p-6 flex items-center justify-between border-b border-gray-100">
         <h6 class="text-lg font-semibold">Recent Transactions</h6>
-        <a href=""
-            class="btn btn-link font-normal text-slate-400 hover:text-primary after:bg-primary transition duration-500">
-            View orders <i class="mdi mdi-arrow-right ms-1"></i>
-        </a>
     </div>
 
     <div class="relative overflow-x-auto block w-full xl:max-h-[284px] max-h-[350px]" data-simplebar>
-        <table class="w-full text-start">
+        <table *ngIf="transactions.length > 0" class="w-full text-start">
             <thead class="text-base">
                 <tr>
                     <th class="text-start font-semibold text-[15px] px-4 py-3"></th>
@@ -48,5 +44,10 @@
                 </tr>
             </tbody>
         </table>
+
+        <!-- Empty message -->
+        <div *ngIf="transactions.length === 0" class="text-center py-10 text-slate-400 text-sm font-medium">
+            No recent transactions to show.
+        </div>
     </div>
 </div>
