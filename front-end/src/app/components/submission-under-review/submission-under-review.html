@@ -1,0 +1,82 @@
+<div class="min-h-[110vh] md:min-h-[150vh] bg-gray-500 bg-cover bg-center bg-no-repeat p-5 flex items-center justify-center" style="background-image: url('assets/images/bg/02.jpg');">
+  <app-card class="md:w-2/3 lg:w-1/2">
+    <div class="flex flex-col items-center justify-center h-full p-8 text-center">
+      <!-- Success Icon -->
+      <div class="mb-6">
+        <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="pi pi-check-circle text-4xl text-green-600"></i>
+        </div>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+        Application Submitted Successfully!
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-lg text-gray-600 mb-6 max-w-2xl">
+        Thank you for your interest in becoming a host. Your application is now under review.
+      </p>
+
+      <!-- Status Information -->
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8 w-full max-w-lg">
+        <div class="flex items-start gap-3">
+          <i class="pi pi-info-circle text-blue-600 text-xl mt-1"></i>
+          <div class="text-left">
+            <h3 class="font-semibold text-blue-800 mb-2">What happens next?</h3>
+            <ul class="text-sm text-blue-700 space-y-2">
+              <li class="flex items-center gap-2">
+                <i class="pi pi-clock text-xs"></i>
+                <span>Our team will review your documents within 2-3 business days</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="pi pi-envelope text-xs"></i>
+                <span>You'll receive an email notification with the review result</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i class="pi pi-user text-xs"></i>
+                <span>If approved, you'll gain access to host features</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional Information -->
+      <div class="bg-gray-50 border border-gray-200 rounded-lg p-4 mb-8 w-full max-w-lg">
+        <p class="text-sm text-gray-600">
+          <strong>Application ID:</strong> #{{getCurrentTimestamp()}}
+        </p>
+        <p class="text-sm text-gray-600 mt-1">
+          <strong>Estimated Review Time:</strong> 2-3 business days
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 w-full max-w-md">
+        <button
+          pButton
+          (click)="goToHome()"
+          label="Back to Home"
+          icon="pi pi-home"
+          class="p-button-outlined w-full sm:w-auto">
+        </button>
+        <button
+          pButton
+          (click)="goToBrowse()"
+          label="Browse Properties"
+          icon="pi pi-search"
+          class="p-button-success w-full sm:w-auto">
+        </button>
+      </div>
+
+      <!-- Footer Note -->
+      <div class="mt-8 pt-6 border-t border-gray-200 w-full max-w-lg">
+        <p class="text-xs text-gray-500">
+          Have questions about your application? Contact our support team at
+          <a href="mailto:support&#64;yourcompany.com" class="text-blue-600 hover:text-blue-800">support&#64;yourcompany.com</a>
+        </p>
+      </div>
+    </div>
+  </app-card>
+</div>
