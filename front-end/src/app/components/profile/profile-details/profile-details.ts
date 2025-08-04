@@ -6,11 +6,12 @@ import { OwnedProperties } from '../owned-properties/owned-properties';
 import { RentedProperties } from '../rented-properties/rented-properties';
 import { UserPublicProfile } from '../../../core/interfaces/UserPublicProfile';
 import { User } from '../../../core/interfaces/User';
+import { RentingHistory } from '../renting-history/renting-history';
 
 @Component({
   selector: 'app-profile-details',
   standalone: true,
-  imports: [CommonModule, CarouselModule, OwnedProperties,RentedProperties],
+  imports: [CommonModule, CarouselModule, OwnedProperties,RentedProperties,RentingHistory],
   templateUrl: './profile-details.html',
   styleUrl: './profile-details.css',
 
@@ -24,7 +25,7 @@ export class ProfileDetails {
   userId = 1;
 
   isOwnProfile = false;
-  activeTab = signal<'my' | 'rented'>('my');
+  activeTab = signal<'my' | 'rented' | 'history'>('my');
 
   userSkills: string = 'html, css, js, mysql';
   userLanguage: string = 'English, Japanese, Chinese';
@@ -61,5 +62,9 @@ export class ProfileDetails {
 
   showRentedProperties() {
     this.activeTab.set('rented');
+  }
+
+  showRentingHistory() {
+    this.activeTab.set('history');
   }
 } 
