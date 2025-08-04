@@ -35,20 +35,42 @@ export class RevenueChart implements OnInit {
     this.revenueService.getRevenueData(period).subscribe({
       next: (data) => {
         const baseColors = [
-          { borderColor: '#6366F1', backgroundColor: 'rgba(99, 102, 241, 0.2)' }, // For "No. of Rentings"
-          { borderColor: '#F59E0B', backgroundColor: 'rgba(245, 158, 11, 0.2)' }  // For "Revenue"
+          {
+            match: 'rentings',
+            yAxisID: 'y',
+            borderColor: '#6366F1',
+            backgroundColor: 'rgba(99, 102, 241, 0.2)',
+            borderDash: []
+          },
+          {
+            match: 'revenue',
+            yAxisID: 'y1',
+            borderColor: '#00a63e',
+            backgroundColor: 'rgba(0, 166, 62, 0.2)',
+            borderDash: [4, 4]
+          }
         ];
 
         this.chartData = {
           labels: data.labels,
-          datasets: data.datasets.map((dataset, index) => ({
-            ...dataset,
-            borderColor: baseColors[index].borderColor,
-            backgroundColor: baseColors[index].backgroundColor,
-            tension: 0.4,
-            fill: true,
-            borderWidth: 2
-          }))
+          datasets: data.datasets.map((dataset) => {
+            const match = baseColors.find(c =>
+              dataset.label.toLowerCase().includes(c.match)
+            ) ?? baseColors[0];
+
+            return {
+              ...dataset,
+              yAxisID: match.yAxisID,
+              borderColor: match.borderColor,
+              backgroundColor: match.backgroundColor,
+              borderDash: match.borderDash,
+              tension: 0.4,
+              fill: true,
+              pointRadius: 0,
+              pointHoverRadius: 4,
+              borderWidth: 2
+            };
+          })
         };
 
         this.cd.markForCheck();
@@ -57,7 +79,6 @@ export class RevenueChart implements OnInit {
     });
   }
 
-
   private initChartOptions(): void {
     const style = getComputedStyle(document.documentElement);
     const textColor = style.getPropertyValue('--p-text-color');
@@ -65,33 +86,86 @@ export class RevenueChart implements OnInit {
     const surfaceBorder = style.getPropertyValue('--p-content-border-color');
 
     this.chartOptions = {
+      responsive: true,
       maintainAspectRatio: false,
       aspectRatio: 0.6,
+      interaction: {
+        mode: 'index',
+        intersect: false
+      },
       plugins: {
         legend: {
           position: 'bottom',
           labels: {
-            color: textColor
+            color: textColor,
+            usePointStyle: true
+          }
+        },
+        tooltip: {
+          backgroundColor: '#1F2937',
+          titleColor: '#F9FAFB',
+          bodyColor: '#E5E7EB',
+          cornerRadius: 6,
+          callbacks: {
+            label: (tooltipItem: any) => {
+              const label = tooltipItem.dataset.label || '';
+              const value = tooltipItem.formattedValue;
+              return label.toLowerCase().includes('revenue')
+                ? `${label}: $${value}`
+                : `${label}: ${value} rentings`;
+            }
           }
         }
       },
       scales: {
         x: {
           ticks: {
-            color: textColorSecondary
+            color: textColorSecondary,
+            font: { size: 12 }
           },
           grid: {
             color: surfaceBorder,
-            drawBorder: false
+            borderDash: [4, 4],
+            drawBorder: true
           }
         },
         y: {
+          type: 'linear',
+          position: 'left',
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'No. of Rentings',
+            color: textColorSecondary,
+            font: { size: 12 }
+          },
           ticks: {
-            color: textColorSecondary
+            color: textColorSecondary,
+            precision: 0
           },
           grid: {
             color: surfaceBorder,
+            borderDash: [4, 4]
+          }
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          beginAtZero: true,
+          grid: {
+            drawTicks: false,
+            drawOnChartArea: false,
             drawBorder: false
+          },
+          title: {
+            display: true,
+            text: 'Revenue ($)',
+            color: textColorSecondary,
+            font: { size: 12 }
+          },
+          ticks: {
+            color: textColorSecondary,
+            precision: 0
           }
         }
       }
