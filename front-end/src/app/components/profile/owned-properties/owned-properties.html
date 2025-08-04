@@ -10,7 +10,7 @@
 >
   <ng-template let-prop pTemplate="item">
     <div class="p-4">
-      <div class="rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow hover:shadow-xl transition-shadow duration-300">
+      <div class="rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition-shadow duration-300">
         <img
           [src]="prop.images[0]?.url"
           alt="Property Image"
@@ -19,15 +19,15 @@
         <div class="p-4 space-y-2">
           <a
             [routerLink]="['/property', prop.id]"
-            class="text-lg font-semibold text-gray-800 dark:text-white hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
+            class="text-lg font-semibold text-gray-800 hover:text-blue-500 transition-colors"
           >
             {{ prop.title }}
           </a>
-          <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-            <ul class="py-6 border-y border-slate-100 dark:border-gray-800 flex items-center list-none">
+          <div class="text-sm text-gray-600 space-y-1">
+            <ul class="py-6 border-y border-slate-100 flex items-center list-none">
               <li class="flex items-center me-4">
                 <i class="uil uil-compress-arrows lg:text-3xl text-2xl me-2 text-blue-500"></i>
-                <span>{{ prop.Area }} m³</span>
+                <span>{{ prop.Area }} m²</span>
               </li>
               <li class="flex items-center me-4">
                 <i class="uil uil-bed-double lg:text-3xl text-2xl me-2 text-blue-500"></i> 
@@ -50,10 +50,10 @@
               <li>
                 <span class="text-slate-400">Rating</span>
                 <ul class="text-lg font-medium text-amber-400 list-none">
-                <li class="inline" *ngFor="let _ of [1,2,3,4,5]">
+               <li class="inline" *ngFor="let _ of [1,2,3,4,5]">
                     <i class="mdi mdi-star"></i>
                 </li>
-              <li class="inline text-black dark:text-white">
+              <li class="inline text-black">
                   {{ getRatingAverage(prop.ratings) }}
               </li>
             </ul>

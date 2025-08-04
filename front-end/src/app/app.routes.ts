@@ -1,12 +1,14 @@
 import { Routes, RouterModule } from '@angular/router';
 import { PropertyCheckout } from './components/property-checkout/property-checkout';
 import { PropertyList } from './components/properties/property-list/property-list';
-import { LoginButton } from './components/Auth Components/login-button/login-button';
-import { RegisterButton } from './components/Auth Components/register-button/register-button';
+import { Login } from './components/Auth Components/login/login';
+import { Register } from './components/Auth Components/register/register';
 import { EditProfile } from './components/profile/edit-profile/edit-profile';
 import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
+import { changePassword } from './components/profile/change-pass/change-pass';
+import { ForgotPasswordComponent } from './components/Auth Components/forgot-pass/forget-pass';
 
 export const routes: Routes = [
   // Protected route - requires login
@@ -19,13 +21,13 @@ export const routes: Routes = [
 
   // Public route
   {
-      path: 'rent',
-      component: PropertyList,
-    },
+    path: 'rent',
+    component: PropertyList,
+  },
 
   // Auth routes
-  { path: 'login', component: LoginButton },
-  { path: 'register', component: RegisterButton },
+  { path: 'login', component: Login },
+  { path: 'register', component: Register },
 
   // Protected route - requires login
   {
@@ -33,6 +35,16 @@ export const routes: Routes = [
     component: EditProfile,
     canActivate: [AuthGuard]
   },
+    {
+    path: 'change-pass',
+    component: changePassword,
+    canActivate: [AuthGuard]
+  },
+      {
+    path: 'forget-pass',
+    component: ForgotPasswordComponent,
+  },
+
 
   // Protected route - requires login AND Host role
   {
@@ -71,6 +83,16 @@ export const routes: Routes = [
     path: 'profile/:id',
     loadComponent: () => import('./components/profile/profile-details/profile-details').then(m => m.ProfileDetails),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'contact',
+    loadComponent: () => import('./components/contact-us/contact-us').then(m => m.ContactUs)
+  },
+  {
+    path: 'BecomeHost',
+    loadComponent: () => import('./components/become-host/become-host').then(m => m.BecomeHost),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'User' }
   },
   {
     path: 'test',

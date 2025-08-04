@@ -7,10 +7,13 @@ import { AuthService } from '../../../core/services/auth.service';
 @Component({
   selector: 'app-login-button',
   imports: [CommonModule, RouterModule,ReactiveFormsModule],
-  templateUrl: './login-button.html',
-  styleUrl: './login-button.css'
+  templateUrl: './login.html',
+  styleUrl: './login.css'
 })
-export class LoginButton {
+export class Login {
+forgetPass() {
+this.router.navigate(['/forget-pass']);
+}
   loginForm!: FormGroup;
   isLoading = false;
   errorMessage = '';

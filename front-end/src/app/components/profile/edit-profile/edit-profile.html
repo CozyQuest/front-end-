@@ -1,4 +1,3 @@
-<div class="mb-35">
 <div class="pt-10 px-6 lg:px-16 bg-gray-50 min-h-screen">
   <div class="max-w-6xl mx-auto px-6 lg:px-16 py-20 bg-white rounded-xl shadow relative"
        style="box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.06), 0 10px 20px rgba(0, 0, 0, 0.08);">
@@ -14,87 +13,64 @@
         <p class="mt-2 text-gray-500 text-sm">Allowed: JPG, PNG</p>
       </div>
 
-      <!-- Personal Details Form -->
-      <form class="md:w-2/3 space-y-4" (ngSubmit)="saveChanges()">
-        <h2 class="text-xl font-semibold mb-2">Personal Details</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block font-medium mb-1">First Name <span class="text-red-500">*</span></label>
-            <input [(ngModel)]="firstName" name="firstName" type="text" class="w-full border rounded px-3 py-2" placeholder="First Name" required />
+      <!-- Personal Details & Danger Zone -->
+      <div class="flex flex-col md:flex-row gap-10 w-full">
+        <!-- Personal Details Form -->
+        <form class="md:w-2/3 space-y-4" (ngSubmit)="saveChanges()">
+          <h2 class="text-xl font-semibold mb-2">Personal Details</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-medium mb-1">First Name <span class="text-red-500">*</span></label>
+              <input [(ngModel)]="firstName" name="firstName" type="text" class="w-full border rounded px-3 py-2" placeholder="First Name" required />
+            </div>
+            <div>
+              <label class="block font-medium mb-1">Last Name <span class="text-red-500">*</span></label>
+              <input [(ngModel)]="lastName" name="lastName" type="text" class="w-full border rounded px-3 py-2" placeholder="Last Name" required />
+            </div>
+            <div>
+              <label class="block font-medium mb-1">Email <span class="text-red-500">*</span></label>
+              <input [(ngModel)]="email" name="email" type="email" class="w-full border rounded px-3 py-2" placeholder="Email" required />
+            </div>
+            <div>
+              <label class="block font-medium mb-1">Location</label>
+              <input [(ngModel)]="location" name="location" type="text" class="w-full border rounded px-3 py-2" placeholder="City, Country" />
+            </div>
+            <div>
+              <label class="block font-medium mb-1">Birthday</label>
+              <input [(ngModel)]="birthday" name="birthday" type="date" class="w-full border rounded px-3 py-2" />
+            </div>
+            <div>
+              <label class="block font-medium mb-1">Language</label>
+              <input [(ngModel)]="language" name="language" type="text" class="w-full border rounded px-3 py-2" placeholder="e.g. English, Arabic" />
+            </div>
           </div>
-          <div>
-            <label class="block font-medium mb-1">Last Name <span class="text-red-500">*</span></label>
-            <input [(ngModel)]="lastName" name="lastName" type="text" class="w-full border rounded px-3 py-2" placeholder="Last Name" required />
-          </div>
-          <div>
-            <label class="block font-medium mb-1">Email <span class="text-red-500">*</span></label>
-            <input [(ngModel)]="email" name="email" type="email" class="w-full border rounded px-3 py-2" placeholder="Email" required />
-          </div>
-          <div>
-            <label class="block font-medium mb-1">Location</label>
-            <input [(ngModel)]="location" name="location" type="text" class="w-full border rounded px-3 py-2" placeholder="City, Country" />
-          </div>
-          <div>
-            <label class="block font-medium mb-1">Birthday</label>
-            <input [(ngModel)]="birthday" name="birthday" type="date" class="w-full border rounded px-3 py-2" />
-          </div>
-          <div>
-            <label class="block font-medium mb-1">Language</label>
-            <input [(ngModel)]="language" name="language" type="text" class="w-full border rounded px-3 py-2" placeholder="e.g. English, Arabic" />
-          </div>
-        </div>
-
-        <button type="submit" class="mt-4 bg-green-600 text-white py-2 px-6 rounded hover:bg-green-700 transition">
-          Save Changes
-        </button>
-      </form>
-    </div>
-
-    <!-- Contact and Password Section -->
-    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div>
-        <h2 class="text-xl font-semibold mb-4">Contact Info</h2>
-        <div class="space-y-4">
           <div>
             <label class="block font-medium mb-1">Phone No.</label>
             <input [(ngModel)]="phone" name="phone" type="text" class="w-full border rounded px-3 py-2" placeholder="Phone number" />
           </div>
-          <div>
-            <label class="block font-medium mb-1">Website</label>
-            <input [(ngModel)]="website" name="website" type="text" class="w-full border rounded px-3 py-2" placeholder="Website URL" />
+
+          <div class="flex gap-4 mt-4">
+            <button type="submit" class="bg-green-600 text-white py-2 px-6 rounded hover:bg-green-700 transition">
+              Save Changes
+            </button>
+              <button type="button" (click)="changePassword()" class="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition">
+              Change Password
+            </button>
           </div>
+        </form>
+
+        <!-- Vertical Divider -->
+        <div class="border-l border-gray-300 h-auto hidden md:block"></div>
+
+        <!-- Danger Zone -->
+        <div class="md:w-1/3 flex flex-col justify-start">
+          <h2 class="text-xl font-semibold text-red-600 mb-3">Danger Zone</h2>
+          <p class="text-sm text-gray-600 mb-3">Deleting your account is irreversible. All your data will be permanently removed.</p>
+          <button (click)="deleteAccount()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded transition">
+            Delete Account
+          </button>
         </div>
       </div>
-
-         <div>
-      <h2 class="text-xl font-semibold mb-4">Change Password</h2>
-     <div>
-  <label class="block font-medium mb-1">Old Password</label>
-  <input [(ngModel)]="oldPassword" name="oldPassword" type="password" class="w-full border rounded px-3 py-2" />
-</div>
-<div>
-  <label class="block font-medium mb-1">New Password</label>
-  <input [(ngModel)]="newPassword" name="newPassword" type="password" class="w-full border rounded px-3 py-2" />
-</div>
-<div>
-  <label class="block font-medium mb-1">Confirm New Password</label>
-  <input [(ngModel)]="confirmPassword" name="confirmPassword" type="password" class="w-full border rounded px-3 py-2" />
-</div>
-<button type="button"  class="mt-2 bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition">
-  Update Password
-</button>
-
     </div>
   </div>
-
-    <!-- Danger Zone -->
-    <div class="mt-12 border-t pt-6">
-      <h2 class="text-xl font-semibold text-red-600 mb-3">Danger Zone</h2>
-      <p class="text-sm text-gray-600 mb-3">Deleting your account is irreversible. All your data will be permanently removed.</p>
-      <button (click)="deleteAccount()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-6 rounded transition">
-        Delete Account
-      </button>
-    </div>
-  </div>
-</div>
 </div>
