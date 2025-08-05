@@ -18,8 +18,10 @@ export interface Property{
   peopleCapacity: number;
   mainImageUrl: string;
   images: string[];
-  // services: GetAllServiceDTO[];
-  // user: UserOwnerDTO;
+  status: number;
+  propertyTypeName?: string | null;
+  imageUrls?: string[] | null;
+  averageRating?: number | null;
+  reviewsCount: number;
+  serviceNames?: string[] | null;
 }
-
-
