@@ -16,7 +16,7 @@ export interface Property {
   flatNo: string;
   images: { id: number; url: string }[];
   ratings: { rating: number }[];
-  services: { id: number; name: string }[];
+  services: { id: number; name: string; icon: string }[];
   owner: User;
   Guests: number;
   Area: number;

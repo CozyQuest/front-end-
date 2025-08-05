@@ -29,9 +29,9 @@ export class PropertyService {
       ],
       ratings: [{ rating: 3 }, { rating: 2 }, { rating: 1 }],
       services: [
-        { id: 1, name: 'WiFi' },
-        { id: 2, name: 'Parking' },
-        { id: 3, name: 'Pool' }
+        { id: 1, name: 'WiFi', icon: 'fas fa-wifi' },
+        { id: 2, name: 'Parking', icon: 'fas fa-parking' },
+        { id: 3, name: 'Pool', icon: 'fas fa-swimming-pool' }
       ],
       owner: {
         id: 1,
@@ -63,7 +63,7 @@ export class PropertyService {
         { id: 1, url: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/504889928.jpg?k=4c3d6395069d1aea6ceb2ddff7b0a522f05d3f8fbd5c152870ab33ab7cf0300a&o=&hp=1' }
       ],
       ratings: [{ rating: 4 }, { rating: 5 }, { rating: 4 }],
-      services: [{ id: 1, name: 'WiFi' }, { id: 2, name: 'Heating' }],
+      services: [{ id: 1, name: 'WiFi', icon: 'fas fa-wifi' }, { id: 2, name: 'Heating', icon: 'fas fa-temperature-high' }],
       owner: {
         id: 1,
         fname: 'John',
@@ -95,10 +95,10 @@ export class PropertyService {
       ],
       ratings: [{ rating: 5 }, { rating: 5 }, { rating: 4 }],
       services: [
-        { id: 1, name: 'WiFi' },
-        { id: 2, name: 'Pool' },
-        { id: 3, name: 'Gym' },
-        { id: 4, name: 'Air Conditioning' }
+        { id: 1, name: 'WiFi', icon: 'fas fa-wifi' },
+        { id: 2, name: 'Pool', icon: 'fas fa-swimming-pool' },
+        { id: 3, name: 'Gym', icon: 'fas fa-dumbbell' },
+        { id: 4, name: 'Air Conditioning', icon: 'fas fa-temperature-high' }
       ],
       owner: {
         id: 1,
@@ -131,9 +131,9 @@ export class PropertyService {
       ],
       ratings: [{ rating: 4 }, { rating: 4 }, { rating: 5 }],
       services: [
-        { id: 1, name: 'WiFi' },
-        { id: 2, name: 'Parking' },
-        { id: 3, name: 'Heating' }
+        { id: 1, name: 'WiFi', icon: 'fas fa-wifi' },
+        { id: 2, name: 'Parking', icon: 'fas fa-parking' },
+        { id: 3, name: 'Heating', icon: 'fas fa-temperature-high' }
       ],
       owner: {
         id: 1,
@@ -166,9 +166,9 @@ export class PropertyService {
       ],
       ratings: [{ rating: 5 }, { rating: 5 }, { rating: 4 }],
       services: [
-        { id: 1, name: 'WiFi' },
-        { id: 2, name: 'Gym' },
-        { id: 3, name: 'Air Conditioning' }
+        { id: 1, name: 'WiFi', icon: 'fas fa-wifi' },
+        { id: 2, name: 'Gym', icon: 'fas fa-dumbbell' },
+        { id: 3, name: 'Air Conditioning', icon: 'fas fa-temperature-high' }
       ],
       owner: {
         id: 1,

@@ -24,4 +24,11 @@ export interface Property{
   averageRating?: number | null;
   reviewsCount: number;
   serviceNames?: string[] | null;
+  services?: Service[] | null;
+}
+
+export interface Service {
+  id: number;
+  name: string;
+  icon: string;
 }
