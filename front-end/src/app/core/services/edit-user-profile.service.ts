@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 export interface UserProfile {
@@ -18,9 +18,9 @@ export interface UserProfile {
   providedIn: 'root'
 })
 export class UserService {
-  private baseUrl = 'https://api.example.com/user'; // Replace with your actual API URL
+  private baseUrl = 'https://localhost:7279'; // Replace with your actual API URL
 
-//   constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
   getUserProfile(): Observable<UserProfile> {
     // return this.http.get<UserProfile>(`${this.baseUrl}/profile`);
@@ -46,13 +46,13 @@ export class UserService {
     return of({ success: true });
   }
 
-  changePassword(oldPassword: string, newPassword: string): Observable<any> {
-    // return this.http.post(`${this.baseUrl}/change-password`, { oldPassword, newPassword });
-
-    // 🔧 Mocked response for development
-    console.log('Mock change password', { oldPassword, newPassword });
-    return of({ success: true });
-  }
+  changePassword(currentPassword: string, newPassword: string, confirmPassword: string): Observable<any> {
+  return this.http.put(`${this.baseUrl}/api/Password/update-password`, {
+    currentPassword,
+    newPassword,
+    confirmPassword
+  });
+}
 
   deleteAccount(): Observable<any> {
     // return this.http.delete(`${this.baseUrl}/delete`);
