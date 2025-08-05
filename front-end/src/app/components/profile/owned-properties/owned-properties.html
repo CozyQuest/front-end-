@@ -12,7 +12,7 @@
     <div class="p-4">
       <div class="rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition-shadow duration-300">
         <img
-          [src]="prop.images[0]?.url"
+          [src]="prop.mainImageUrl"
           alt="Property Image"
           class="w-full h-56 object-cover"
         />
@@ -27,7 +27,7 @@
             <ul class="py-6 border-y border-slate-100 flex items-center list-none">
               <li class="flex items-center me-4">
                 <i class="uil uil-compress-arrows lg:text-3xl text-2xl me-2 text-blue-500"></i>
-                <span>{{ prop.Area }} m²</span>
+                <span>{{ prop.space }} m²</span>
               </li>
               <li class="flex items-center me-4">
                 <i class="uil uil-bed-double lg:text-3xl text-2xl me-2 text-blue-500"></i> 
@@ -35,17 +35,17 @@
               </li>
               <li class="flex items-center">
                 <i class="uil uil-bath lg:text-3xl text-2xl me-2 text-blue-500"></i>
-                <span>{{ prop.bathroomCount }} Baths </span>
+                <span>{{ prop.bathCount}} Baths </span>
               </li>
               <li class="flex items-center">
                 <i class="uil uil-users-alt lg:text-3xl text-2xl me-2 text-blue-500 ml-3"></i>
-                <span> {{ prop.Guests }} Guests</span>
+                <span> {{ prop.peopleCapacity }} Guests</span>
               </li>
             </ul>
             <ul class="pt-6 flex justify-between items-center list-none">
               <li>
                 <span class="text-slate-400">Price</span>
-                <p class="text-lg font-medium">${{ prop.rentPerDay }}</p>
+                <p class="text-lg font-medium">${{ prop.price }}</p>
               </li>
               <li>
                 <span class="text-slate-400">Rating</span>
@@ -54,7 +54,7 @@
                     <i class="mdi mdi-star"></i>
                 </li>
               <li class="inline text-black">
-                  {{ getRatingAverage(prop.ratings) }}
+                  {{ prop.averageRating }}
               </li>
             </ul>
             </li>

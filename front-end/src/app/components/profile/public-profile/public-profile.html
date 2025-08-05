@@ -74,20 +74,27 @@
       <div class="rounded-xl shadow-md bg-white p-6">
         <div class="mb-8 flex flex-wrap gap-4 justify-center animate-fade-in-up">
           @if (userRole === 'Host') {
-              <button (click)="showMyProperties()" class="px-6 py-2 rounded-full font-semibold transition" [ngClass]="{'bg-blue-600 text-white hover:bg-blue-700': activeTab() === 'my', 'bg-gray-200 text-gray-800 hover:bg-gray-300': activeTab() !== 'my'}">My Properties</button>
-            }
-            <button (click)="showRentedProperties()" class="px-6 py-2 rounded-full font-semibold transition" [ngClass]="{'bg-blue-600 text-white hover:bg-blue-700': activeTab() === 'rented', 'bg-gray-200 text-gray-800 hover:bg-gray-300': activeTab() !== 'rented'}">Rented Properties</button>
-            @if (userRole === 'Host') {
-              <button (click)="showRentingHistory()" class="px-6 py-2 rounded-full font-semibold transition" [ngClass]="{'bg-blue-600 text-white hover:bg-blue-700': activeTab() === 'history', 'bg-gray-200 text-gray-800 hover:bg-gray-300': activeTab() !== 'history'}">Earnings Dashboard</button>
-            }
-          </div>
-          @if (activeTab() === 'my' && userRole === 'Host') {
-            <app-owned-properties [userId]="userId"></app-owned-properties>
-          } @else if (activeTab() === 'rented') {
-            <app-rented-properties [userId]="user.id"></app-rented-properties>
-          } @else if (activeTab() === 'history' && userRole === 'Host') {
-            <app-renting-history [hostId]="user.id"></app-renting-history>
-          }
+         <button
+           (click)="showMyProperties()"
+           class="px-6 py-2 rounded-full font-semibold transition"
+           [ngClass]="{
+             'bg-blue-600 text-white hover:bg-blue-700': activeTab() === 'my',
+             'bg-gray-200 text-gray-800 hover:bg-gray-300': activeTab() !== 'my'
+           }"
+           >
+              My Properties
+         </button>
+       }
+     </div>
+      @if (userRole === 'User') {
+        <div class="text-center text-gray-600 dark:text-gray-300 text-lg font-medium">
+           You don’t have any listed properties. Start exploring and renting now!
+        </div>
+    }
+
+      @if (activeTab() === 'my' && userRole === 'Host') {
+       <app-owned-properties [userId]="userId"></app-owned-properties>
+     }
       </div>
     </div>
   </div>

@@ -31,10 +31,6 @@ export class PropertyDetails {
   reviews: Review[] = [];
   mapUrl?: SafeResourceUrl;
   loadingImages = true;
-
-  // checkInDate: Date | null = null;
-  // checkOutDate: Date | null = null;
-  // minDate: Date = new Date();
   averageRating: number = 0;
   ratingCount: number = 0;
 
@@ -90,9 +86,8 @@ export class PropertyDetails {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.propertyService.getPropertyById(id).subscribe((res) => {
-      this.property = res;
-      this.loadingImages = false;
+    this.propertyService.getPropertyById(id).subscribe((res: Property) => {
+    this.property = res;
 
       const location = `${res.latitude},${res.longitude}`;
       this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(

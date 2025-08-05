@@ -1,24 +1,18 @@
 import { Component, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { CarouselModule } from 'primeng/carousel';
+import { AuthService } from '../../../core/services/auth.service';
+import { User } from '../../../core/interfaces/User';
 import { UserService } from '../../../core/services/user.service';
 import { OwnedProperties } from '../owned-properties/owned-properties';
-import { RentedProperties } from '../rented-properties/rented-properties';
-import { User } from '../../../core/interfaces/User';
-import { RentingHistory } from '../renting-history/renting-history';
-import { AuthService } from '../../../core/services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-profile-details',
-  standalone: true,
-  imports: [CommonModule, CarouselModule, OwnedProperties,RentedProperties,RentingHistory],
-  templateUrl: './profile-details.html',
-  styleUrl: './profile-details.css',
-
+  selector: 'app-public-profile',
+  imports: [OwnedProperties,CommonModule],
+  templateUrl: './public-profile.html',
+  styleUrl: './public-profile.css'
 })
-
-export class ProfileDetails {
- user: User | null = null;
+export class PublicProfile {
+user: User | null = null;
   activeTab = signal<'my' | 'rented' | 'history'>('rented'); 
   userRole: string | null = null;
   userLanguage: string = 'English, Japanese, Chinese';
@@ -31,10 +25,8 @@ export class ProfileDetails {
     const fetchedUser = await this.userService.getPrivateProfile();
     this.user = fetchedUser;
 
-    // Get user role from AuthService
     this.userRole = this.authService.getUserRole();
     
-    // Set initial active tab based on role
     if (this.userRole === 'Host') {
       this.activeTab.set('my');
     }

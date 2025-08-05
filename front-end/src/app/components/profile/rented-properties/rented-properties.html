@@ -12,7 +12,7 @@
     <div class="p-4">
       <div class="rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition-shadow duration-300">
         <img
-          [src]="rent.imageUrl"
+          [src]="rent.mainImageUrl"
           alt="Rented Property Image"
           class="w-full h-56 object-cover"
         />
@@ -22,15 +22,15 @@
             <ul class="py-6 border-y border-slate-100 flex items-center list-none">
               <li class="flex items-center me-4">
                 <i class="uil uil-star lg:text-3xl text-2xl me-2 text-blue-500"></i>
-                <span><span class="font-medium">Rating:</span> {{ rent.userRating }}/5</span>
+                <span><span class="font-medium">Rating:</span> {{ rent.rate }}/5</span>
               </li>
               <li class="flex items-center me-4">
                 <i class="uil uil-calendar-alt lg:text-3xl text-2xl me-2 text-blue-500"></i>
-                <span><span class="font-medium">Check-in:</span> {{ rent.checkinDate }}</span>
+                <span><span class="font-medium">Check-in:</span> {{rent.checkIn | date: 'M/d/yyyy' }}</span>
               </li>
               <li class="flex items-center">
                 <i class="uil uil-calendar-alt lg:text-3xl text-2xl me-2 text-blue-500"></i>
-                <span><span class="font-medium">Check-out:</span> {{ rent.checkoutDate }}</span>
+                <span><span class="font-medium">Check-out:</span> {{ rent.checkOut | date: 'M/d/yyyy' }}</span>
               </li>
               </ul>
             <ul class="pt-6 flex justify-between items-center list-none">
@@ -45,3 +45,7 @@
     </div>
   </ng-template>
 </p-carousel>
+
+<div *ngIf="rentedProperties.length === 0" class="text-center text-gray-500 mt-4">
+  No rented properties found.
+</div>

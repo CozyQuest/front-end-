@@ -4,7 +4,7 @@
     <div class="text-center text-gray-500 dark:text-gray-400 italic">
       No rental activity on your properties yet.
     </div>
-  }
+  } 
 
   @if (history.length > 0) {
     <table class="w-full table-auto text-left border-separate border-spacing-y-3">
@@ -25,9 +25,9 @@
               <img [src]="rent.propertyImageUrl" class="w-16 h-16 object-cover rounded-lg shadow-sm" alt="Property Image">
               <span class="font-medium text-gray-800 dark:text-white">{{ rent.propertyTitle }}</span>
             </td>
-            <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ rent.renterName }}</td>
+            <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ rent.renterFullName }}</td>
             <td class="px-4 py-3 text-gray-600 dark:text-gray-400">
-              {{ rent.startDate | date:'shortDate' }} → {{ rent.endDate | date:'shortDate' }}
+              {{ rent.checkIn | date:'shortDate' }} → {{ rent.checkOut | date:'shortDate' }}
             </td>
             <td class="px-4 py-3 text-gray-600 dark:text-gray-400">
               {{ rent.transactionDate | date:'mediumDate' }}
