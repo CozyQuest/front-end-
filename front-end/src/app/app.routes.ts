@@ -10,6 +10,8 @@ import { RoleGuard } from './core/guards/role.guard';
 import { BecomeHostGuard } from './core/guards/become-host.guard';
 import { changePassword } from './components/profile/change-pass/change-pass';
 import { ForgotPasswordComponent } from './components/Auth Components/forgot-pass/forget-pass';
+import { PaymentSuccess } from './components/payment-success/payment-success';
+import { PaymentCancel } from './components/payment-cancel/payment-cancel';
 
 export const routes: Routes = [
   // Protected route - requires login
@@ -35,6 +37,18 @@ export const routes: Routes = [
     path: 'edit-profile',
     component: EditProfile,
     canActivate: [AuthGuard]
+  },
+  { 
+    path: 'payment-success', 
+    component: PaymentSuccess,
+    canActivate: [AuthGuard, RoleGuard],
+      data: { role: ['User','Host'] }
+  },
+  { 
+    path: 'payment-cancel', 
+    component: PaymentCancel ,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: ['User','Host'] }
   },
     {
     path: 'change-pass',
