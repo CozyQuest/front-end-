@@ -19,7 +19,7 @@ import { AuthService } from '../../../core/services/auth.service';
 
 export class ProfileDetails {
  user: User | null = null;
-  activeTab = signal<'my' | 'rented' | 'history'>('rented'); 
+ activeTab = signal<'my' | 'rented' | 'history'>('my');
   userRole: string | null = null;
   userLanguage: string = 'English, Japanese, Chinese';
   userBirthday: string = '2nd March, 1996';

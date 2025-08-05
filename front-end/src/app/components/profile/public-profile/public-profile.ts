@@ -1,54 +1,42 @@
-import { Component, signal } from '@angular/core';
-import { AuthService } from '../../../core/services/auth.service';
-import { User } from '../../../core/interfaces/User';
+import { Component, inject } from '@angular/core';
 import { UserService } from '../../../core/services/user.service';
-import { OwnedProperties } from '../owned-properties/owned-properties';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { UserPublicProfile } from '../../../core/interfaces/UserPublicProfile';
+import { OwnedProperties } from '../owned-properties/owned-properties';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-public-profile',
-  imports: [OwnedProperties,CommonModule],
+  imports: [CommonModule,OwnedProperties,RouterModule],
   templateUrl: './public-profile.html',
   styleUrl: './public-profile.css'
 })
 export class PublicProfile {
-user: User | null = null;
-  activeTab = signal<'my' | 'rented' | 'history'>('rented'); 
-  userRole: string | null = null;
+private route = inject(ActivatedRoute);
+  private userService = inject(UserService);
+
+  user: UserPublicProfile | null = null;
+  fullName = '';
   userLanguage: string = 'English, Japanese, Chinese';
   userBirthday: string = '2nd March, 1996';
-  userLocation: string = 'Alexandria,Egypt';
+  userLocation: string = 'Alexandria,Egypt';        
+  userRole: string | null = null;
 
-  constructor(private userService: UserService, private authService: AuthService) {}
-
-  async ngOnInit(): Promise<void> {
-    const fetchedUser = await this.userService.getPrivateProfile();
-    this.user = fetchedUser;
-
-    this.userRole = this.authService.getUserRole();
-    
-    if (this.userRole === 'Host') {
-      this.activeTab.set('my');
-    }
-  }
-
-  get fullName(): string {
-    return this.user ? `${this.user.fname} ${this.user.lname}` : '';
-  }
-
-  get userId(): string {
-    return this.user?.id || '';
-  }
-
-  showMyProperties() {
-    this.activeTab.set('my');
-  }
-
-  showRentedProperties() {
-    this.activeTab.set('rented');
-  }
-
-  showRentingHistory() {
-    this.activeTab.set('history');
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const userId = params.get('id');
+      if (userId) {
+        this.userService.getPublicProfile(userId).subscribe({
+          next: (data) => {
+            this.user = data;
+            this.fullName = `${data.fname} ${data.lname}`;
+            this.userRole = data.role; 
+          },
+        });
+      }
+    });
   }
 }
+
+

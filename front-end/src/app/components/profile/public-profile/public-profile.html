@@ -16,23 +16,6 @@
         <h6 class="text-lg font-semibold mb-4">Personal Details :</h6>
         <div class="space-y-3">
           <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail text-blue-500 mr-3">
-              <rect width="20" height="16" x="2" y="4" rx="2" />
-              <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-            </svg>
-            <div>
-              <h6 class="text-gray-700 dark:text-white font-medium mb-0">Email :</h6>
-              <a [href]="'mailto:' + user.email" class="text-slate-500 dark:text-slate-400">{{ user.email }}</a>
-            </div>
-          </div>
-          <div class="flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone text-blue-500 mr-3">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-            </svg>
-            <div>
-              <h6 class="text-gray-700 dark:text-white font-medium mb-0">Phone :</h6>
-              <span class="text-slate-500 dark:text-slate-400">{{ user.phone }}</span>
-            </div>
           </div>
           <div class="flex items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe text-blue-500 mr-3">
@@ -72,28 +55,24 @@
     </div>
     <div class="w-full lg:w-[72%]">
       <div class="rounded-xl shadow-md bg-white p-6">
-        <div class="mb-8 flex flex-wrap gap-4 justify-center animate-fade-in-up">
-          @if (userRole === 'Host') {
-         <button
-           (click)="showMyProperties()"
-           class="px-6 py-2 rounded-full font-semibold transition"
-           [ngClass]="{
-             'bg-blue-600 text-white hover:bg-blue-700': activeTab() === 'my',
-             'bg-gray-200 text-gray-800 hover:bg-gray-300': activeTab() !== 'my'
-           }"
-           >
-              My Properties
-         </button>
-       }
-     </div>
       @if (userRole === 'User') {
-        <div class="text-center text-gray-600 dark:text-gray-300 text-lg font-medium">
-           You don’t have any listed properties. Start exploring and renting now!
-        </div>
-    }
+       <div class="bg-white dark:bg-slate-900 rounded-xl shadow-md p-6 text-center">
+       <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="mx-auto w-24 h-24 mb-4" alt="User Icon" />
+       <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">Renter Profile</h2>
+       <p class="text-gray-600 dark:text-gray-300 mb-4">
+           This user is actively exploring and renting properties across our platform.
+       </p>
+       <p class="text-gray-500 dark:text-gray-400">
+          Interested in hosting your own property? 
+       <a href="/become-a-host" class="text-blue-600 hover:underline">Become a host today</a>.
+      </p>
+    </div>
+   }
 
-      @if (activeTab() === 'my' && userRole === 'Host') {
-       <app-owned-properties [userId]="userId"></app-owned-properties>
+      @if ( userRole === 'Host') {
+        <div *ngIf="user">
+          <app-owned-properties [userId]="user.id"></app-owned-properties>
+      </div>
      }
       </div>
     </div>

@@ -3,4 +3,5 @@ export interface UserPublicProfile {
   fname: string;
   lname: string;
   profilePicUrl: string;
+  role: string; 
 }

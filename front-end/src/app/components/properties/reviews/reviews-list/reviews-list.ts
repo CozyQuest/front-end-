@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, inject, Input, signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewsDialog } from '../reviews-dialog/reviews-dialog';
 import { CommonModule } from '@angular/common';
@@ -6,10 +6,12 @@ import { ViewReviewService } from '../../../../core/services/view-reviews.servic
 import { ViewReview } from '../../../../core/interfaces/ViewReviews';
 import { AddReview } from '../add-review/add-review';
 import { AuthService } from '../../../../core/services/auth.service';
+import { RouterModule,Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-reviews-list',
-  imports: [CommonModule,AddReview],
+  imports: [CommonModule,AddReview,RouterModule],
   templateUrl: './reviews-list.html',
   styleUrl: './reviews-list.css'
 })
@@ -21,13 +23,15 @@ export class ReviewsList {
 
   showAddReviewModal = signal(false);
   showLoginMessage = signal(false);
+   private router = inject(Router)
 
   isLoggedIn: boolean;
 
   constructor(
     private reviewService: ViewReviewService,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+   
   ) {
     this.isLoggedIn = this.authService.isAuthenticated();
   }
@@ -49,6 +53,7 @@ export class ReviewsList {
     this.reviewService.getReviewsForProperty(propertyId).subscribe({
       next: (data) => {
         this.reviews = data.map(r => ({
+          userId : r.userId,
           reviewText: r.reviewText,
           rate: r.rate,
           createdAt: r.createdAt,
@@ -85,4 +90,10 @@ export class ReviewsList {
     this.closeModal();
     this.fetchReviews(this.propertyId);
   }
+
+  goToPublicProfile(userId: string) {
+    console.log('Navigating to user:', userId); 
+    this.router.navigate(['/public', userId]);
+  }
+
 }
