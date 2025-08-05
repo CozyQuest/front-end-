@@ -7,13 +7,14 @@ import { MapCard } from '../dashboard/map-card/map-card';
 import { RecentTransactions } from '../dashboard/recent-transactions/recent-transactions';
 import { TopProperties } from '../dashboard/top-properties/top-properties';
 import { PendingRequests } from '../dashboard/pending-requests/pending-requests';
-import { StatService } from '../../core/services/stat.service';
-import { Stat } from '../../core/interfaces/stat.model';
+import { UserHostRequests } from '../dashboard/user-host-requests/user-host-requests';
+import { StatService } from '../../core/services/dashboard/stat.service';
+import { Stat } from '../../core/interfaces/dashboard/stat.model';
 
 @Component({
     selector: 'app-dashboard-shell',
     standalone: true,
-    imports: [CommonModule, StatCard, RevenueChart, SalesBreakdown, PendingRequests, MapCard, RecentTransactions, TopProperties],
+    imports: [CommonModule, StatCard, RevenueChart, SalesBreakdown, PendingRequests, UserHostRequests, MapCard, RecentTransactions, TopProperties],
     templateUrl: './dashboard-shell.html',
     styleUrl: './dashboard-shell.css'
 })
