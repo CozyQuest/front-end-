@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, inject, isDevMode } from '@angular/core';
-import { MapMarkerService } from '../../../core/services/map-marker.service';
-import { MapMarker } from '../../../core/interfaces/map-marker.model';
+import { MapMarkerService } from '../../../core/services/dashboard/map-marker.service';
+import { MapMarker } from '../../../core/interfaces/dashboard/map-marker.model';
 
 declare const jsVectorMap: any;
 

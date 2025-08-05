@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RecentTransaction } from '../../../core/interfaces/recent-transaction.model';
-import { RecentTransactionService } from '../../../core/services/recent-transaction.service';
+import { RecentTransaction } from '../../../core/interfaces/dashboard/recent-transaction.model';
+import { RecentTransactionService } from '../../../core/services/dashboard/recent-transaction.service';
 
 @Component({
   selector: 'app-recent-transactions',
