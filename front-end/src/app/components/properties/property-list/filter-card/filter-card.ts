@@ -1,55 +1,64 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { PropertyService } from '../../../../core/services/property.service';
+import { PropertyListService } from '../../../../core/services/property-list.service/property-list.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+interface City {
+  city: string;
+  districts: string[];
+}
+
+interface Location {
+  country: string;
+  cities: City[];
+}
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter-card.html',
-  imports:[CommonModule,FormsModule]
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class FilterComponent implements OnInit {
   @Output() filterApplied = new EventEmitter<any>();
 
-  locations: any[] = [];
+  locations: Location[] = [];
   cities: string[] = [];
   districts: string[] = [];
 
-  search: any;
-  propertyTypeId: any;
-  country: any;
-  city: any;
-  district: any;
-  minRoomCount: any;
-  maxPrice: any;
-  minPeople: any;
+  country: string = '';
+  city: string = '';
+  district: string = '';
 
- 
+  search: string = '';
+  propertyTypeId: number | null = null;
+  minRoomCount: number | null = null;
+  maxPrice: number | null = null;
+  minPeople: number | null = null;
 
-  constructor(private propertyService: PropertyService) {}
+  constructor(private propertyListService: PropertyListService) {}
 
   ngOnInit(): void {
-    this.propertyService.getLocations().subscribe((res) => {
+    this.propertyListService.getLocations().subscribe((res: Location[]) => {
       this.locations = res;
     });
   }
 
-onCountryChange() {
-  const selected = this.locations.find((l: any) => l.country === this.country);
-  this.cities = selected ? selected.cities.map((c: any) => c.city) : [];
-  this.city = null;
-  this.district = null;
-  this.districts = [];
-}
+  onCountryChange(): void {
+    const selected = this.locations.find(l => l.country === this.country);
+    this.cities = selected ? selected.cities.map(c => c.city) : [];
+    this.city = '';
+    this.district = '';
+    this.districts = [];
+  }
 
-onCityChange() {
-  const selectedCountry = this.locations.find((l: any) => l.country === this.country);
-  const selectedCity = selectedCountry?.cities.find((c: any) => c.city === this.city);
-  this.districts = selectedCity?.districts || [];
-}
+  onCityChange(): void {
+    const selectedCountry = this.locations.find(l => l.country === this.country);
+    const selectedCity = selectedCountry?.cities.find(c => c.city === this.city);
+    this.districts = selectedCity?.districts || [];
+  }
 
-
-  applyFilter() {
+  applyFilter(): void {
     this.filterApplied.emit({
       search: this.search,
       propertyTypeId: this.propertyTypeId,
@@ -58,7 +67,7 @@ onCityChange() {
       district: this.district,
       minRoomCount: this.minRoomCount,
       maxPrice: this.maxPrice,
-      minPeople: this.minPeople,
+      minPeople: this.minPeople
     });
   }
 }

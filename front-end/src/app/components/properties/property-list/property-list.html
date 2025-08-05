@@ -18,9 +18,10 @@
     <div class="grid md:grid-cols-12 grid-cols-1 gap-[30px]">
 
       <!-- Filter Component -->
-  <div class="lg:col-span-4 md:col-span-6">
-    <app-filter (filterApplied)="onFilterApplied($event)"></app-filter>
-  </div>
+    <div class="lg:col-span-4 md:col-span-6">
+      <app-filter (filterApplied)="onFilterApplied($event)"></app-filter>
+    </div>
+
 
 
       <!-- Apartments List -->
@@ -37,33 +38,30 @@
           <div class="md:col-span-12 text-center">
             <nav>
              <ul class="inline-flex items-center -space-x-px">
-        <!-- Prev Button -->
-        <li>
-          <a (click)="changePage(currentPage - 1)" [class.opacity-50]="currentPage === 1"
-            class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 bg-white hover:text-white hover:bg-primary shadow-xs">
-            <i class="uil uil-angle-left text-[20px]"></i>
-          </a>
-        </li>
+       <!-- Prev Button -->
+<li>
+  <a (click)="changePage(currentPage - 1)" [class.opacity-50]="currentPage === 1"
+     class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 bg-white hover:text-white hover:bg-primary shadow-xs">
+    <i class="uil uil-angle-left text-[20px]"></i>
+  </a>
+</li>
 
-        <!-- Page Numbers -->
-        <li *ngFor="let page of [].constructor(totalPages); let i = index">
-          <a (click)="changePage(i + 1)"
-            [ngClass]="{
-              'bg-primary text-white': currentPage === i + 1,
-              'bg-white text-slate-400 hover:text-white hover:bg-primary': currentPage !== i + 1
-            }"
-            class="size-10 inline-flex justify-center items-center mx-1 rounded-full shadow-xs">
-            {{ i + 1 }}
-          </a>
-        </li>
+<!-- Page Numbers -->
+<li *ngFor="let page of [].constructor(totalPages); let i = index">
+  <a (click)="changePage(i + 1)">
+    {{ i + 1 }}
+  </a>
+</li>
 
-        <!-- Next Button -->
-        <li>
-          <a (click)="changePage(currentPage + 1)" [class.opacity-50]="currentPage === totalPages"
-            class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 bg-white hover:text-white hover:bg-primary shadow-xs">
-            <i class="uil uil-angle-right text-[20px]"></i>
-          </a>
-        </li>
+
+<!-- Next Button -->
+<li>
+  <a (click)="changePage(currentPage + 1)" [class.opacity-50]="currentPage === totalPages"
+     class="size-10 inline-flex justify-center items-center mx-1 rounded-full text-slate-400 bg-white hover:text-white hover:bg-primary shadow-xs">
+    <i class="uil uil-angle-right text-[20px]"></i>
+  </a>
+</li>
+
         </ul>
 
             </nav>

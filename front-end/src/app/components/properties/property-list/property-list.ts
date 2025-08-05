@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FilterComponent } from "./filter-card/filter-card";
 import { PropertyCard } from "./property-card/property-card";
 import { CommonModule } from '@angular/common';
-import { PropertyService } from '../../../core/services/property.service';
+import { PropertyListService } from '../../../core/services/property-list.service/property-list.service';
 
 @Component({
   selector: 'app-property-list',
@@ -23,7 +23,7 @@ export class PropertyList implements OnInit {
   // Filters
   currentFilters: any = {};
 
-  constructor(private propertyService: PropertyService) {}
+  constructor(private propertyListService: PropertyListService) {}
 
   ngOnInit() {
     this.getFiltered();
@@ -40,16 +40,18 @@ export class PropertyList implements OnInit {
       PropertyTypeIds: filters.propertyTypeId ? [filters.propertyTypeId] : undefined,
     };
 
-    this.propertyService.getFilteredProperties(requestPayload).subscribe(response => {
+    this.propertyListService.getFilteredProperties(requestPayload).subscribe(response => {
       this.properties = response.items;
       const totalCount = response.totalCount || 0;
       this.totalPages = Math.ceil(totalCount / this.pageSize);
     });
   }
 
-  onFilterApplied(filters: any) {
-    this.getFiltered(1, filters); // Reset to page 1 when new filter is applied
-  }
+ onFilterApplied(filter: any) {
+  this.getFiltered(1, filter); // Reset to page 1 with new filters
+}
+
+
 
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
