@@ -69,8 +69,8 @@
         <span class="text-sm text-gray-700">Welcome, {{ (currentUser$ | async)?.name }}</span>
 
         <!-- Show dashboard link only for hosts -->
-        <a *ngIf="isHost()" routerLink="/dashboard"
-           class="text-blue-600 hover:text-blue-800 text-sm">Dashboard</a>
+        <!-- <a *ngIf="isHost()" routerLink="/dashboard"
+           class="text-blue-600 hover:text-blue-800 text-sm">Dashboard</a> -->
       </div>
 
       <!-- User Menu Dropdown -->
