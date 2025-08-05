@@ -110,6 +110,12 @@ export const routes: Routes = [
     data: { role: 'User' }
   },
   {
+    path: 'host',
+    loadComponent: () => import('./components/host-owned-list/host-owned-list').then(m => m.HostOwnedList),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'Host' }
+  },
+  {
     path: 'submission-under-review',
     loadComponent: () => import('./components/submission-under-review/submission-under-review').then(m => m.SubmissionUnderReview)
   },
