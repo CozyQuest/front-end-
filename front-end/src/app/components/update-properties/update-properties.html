@@ -1,0 +1,473 @@
+<div class="mx-auto p-4 bg-gray-50 w-full h-full md:p-8">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header with Navigation -->
+    <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center space-x-4">
+        <button 
+          type="button"
+          (click)="goBack()"
+          class="flex items-center px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+          </svg>
+          Back
+        </button>
+        <h1 class="text-3xl font-bold text-gray-800">Update Property</h1>
+      </div>
+      
+      <!-- Unsaved Changes Indicator -->
+      @if(hasUnsavedChanges) {
+        <div class="flex items-center text-amber-600 bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">
+          <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+          </svg>
+          <span class="text-sm font-medium">Unsaved changes</span>
+        </div>
+      }
+    </div>
+    
+    <!-- Loading Overlay -->
+    @if(isLoading) {
+      <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 flex items-center space-x-3">
+          <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-500"></div>
+          <span class="text-gray-700">Loading property data...</span>
+        </div>
+      </div>
+    }
+    
+    <form (ngSubmit)="updateProperty()" class="lg:flex lg:gap-8 lg:items-start">
+      <!-- LEFT SIDE - Image Upload -->
+      <div class="lg:w-1/2 mb-8 lg:mb-0">
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+            <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+            </svg>
+            Property Images
+          </h2>
+          
+          <p class="text-gray-600 mb-6">
+            Upload new images to replace existing ones, or keep existing images unchanged.
+          </p>
+
+          <!-- Existing Images Display -->
+          @if(existingImages && existingImages.length > 0 && !property.Images.length) {
+            <div class="mb-6">
+              <h3 class="text-sm font-medium text-gray-700 mb-3">Current Images</h3>
+              <div class="grid grid-cols-2 gap-4">
+                @for (imageUrl of existingImages; track $index) {
+                  <div class="relative group">
+                    <img 
+                      [src]="imageUrl" 
+                      alt="Existing Property Image" 
+                      class="w-full h-32 object-cover rounded-lg shadow-md transition-transform duration-300 group-hover:scale-105" />
+                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 rounded-lg"></div>
+                  </div>
+                }
+              </div>
+              <div class="mt-3 text-sm text-gray-500">
+                {{ existingImages.length }} existing image(s). Upload new images to replace them.
+              </div>
+            </div>
+          }
+
+          <!-- New Images Display -->
+          @if(property.Images && property.Images.length > 0) {
+            <div class="mb-6">
+              <h3 class="text-sm font-medium text-gray-700 mb-3">New Images (will replace existing)</h3>
+              <p-carousel 
+                [value]="property.Images" 
+                [numVisible]="1" 
+                [numScroll]="1" 
+                orientation="horizontal" 
+                verticalViewPortHeight="400px" 
+                [circular]="true"
+                class="custom-carousel">
+                <ng-template let-image let-i="index">
+                  <div class="relative group">
+                    <img 
+                      [src]="image | filePreview" 
+                      alt="New Property Image" 
+                      class="w-full h-[400px] object-cover rounded-xl shadow-md transition-transform duration-300 group-hover:scale-[1.02]" />
+                    
+                    <!-- Main Image Selector -->
+                    <button 
+                      type="button"
+                      class="absolute top-4 right-4 p-2 rounded-full bg-white/90 backdrop-blur-sm hover:bg-white transition-all duration-300 shadow-lg"
+                      (click)="setMainImage(image)">
+                      <svg 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-6 h-6 transition-all duration-300" 
+                        [ngClass]="{
+                          'fill-red-500 text-red-500': property.MainImage === image,
+                          'fill-gray-300 text-gray-400 hover:fill-red-300 hover:text-red-300': property.MainImage !== image
+                        }">
+                        <path d="M20.808,11.079C19.829,16.132,12,20.5,12,20.5s-7.829-4.368-8.808-9.421C2.227,6.1,5.066,3.5,8,3.5a4.444,4.444,0,0,1,4,2,4.444,4.444,0,0,1,4-2C18.934,3.5,21.773,6.1,20.808,11.079Z" />
+                      </svg>
+                    </button>
+                    
+                    <!-- Image Counter -->
+                    <div class="absolute bottom-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm backdrop-blur-sm">
+                      {{ i + 1 }} / {{ property.Images.length }}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-carousel>
+              
+              <!-- Main Image Status -->
+              @if(property.Images.length > 0 && !property.MainImage) {
+                <div class="mt-4 bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-lg flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="font-medium">Please select a main image by clicking the heart icon</span>
+                </div>
+              }
+              
+              @if(property.MainImage) {
+                <div class="mt-4 bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg flex items-center">
+                  <svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                  </svg>
+                  <span class="font-medium">Main image selected</span>
+                </div>
+              }
+            </div>
+          }
+
+          @if(!property.Images.length && !existingImages.length) {
+            <div class="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center bg-gray-50 hover:bg-gray-100 transition-colors mb-6">
+              <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <p class="text-gray-600 text-lg font-medium mb-2">No images found</p>
+              <p class="text-gray-500 text-sm">Upload new images for this property</p>
+            </div>
+          }
+
+          <!-- Upload Button -->
+          <div class="text-center">
+            <input 
+              type="file" 
+              (change)="onImagesSelected($event)" 
+              multiple 
+              accept="image/*" 
+              class="hidden"
+              id="fileInput" />
+            <label 
+              for="fileInput" 
+              class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl cursor-pointer hover:from-blue-600 hover:to-blue-700 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+              </svg>
+              {{ property.Images.length > 0 ? 'Replace Images' : 'Upload New Images' }}
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDE - Form Fields -->
+      <div class="lg:w-1/2">
+        <div class="bg-white rounded-2xl shadow-lg p-6">
+          <h2 class="text-xl font-semibold text-gray-800 mb-6 flex items-center">
+            <svg class="w-5 h-5 mr-2 text-blue-500" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
+              <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a2 2 0 00-2 2v6a2 2 0 002 2V8a2 2 0 012-2h8a2 2 0 012 2v4.586A1 1 0 0017 13h-2V9a1 1 0 00-1-1H6a1 1 0 00-1 1v4H3a1 1 0 00-.707.293A1 1 0 002 14v-4a2 2 0 00-2-2H4z" clip-rule="evenodd"/>
+            </svg>
+            Property Details
+          </h2>
+
+          <div class="space-y-6">
+            <!-- Title -->
+            <div class="form-group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Property Title <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="text" 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                placeholder="Enter property title" 
+                [(ngModel)]="property.Title" 
+                name="Title" 
+                (input)="onFormChange()"
+                required />
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Description <span class="text-red-500">*</span>
+              </label>
+              <textarea 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white resize-none" 
+                rows="4"
+                placeholder="Describe your property in detail..."
+                [(ngModel)]="property.Description" 
+                name="Description" 
+                (input)="onFormChange()"
+                required></textarea>
+            </div>
+
+            <!-- Category -->
+            <div class="form-group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Property Type <span class="text-red-500">*</span>
+              </label>
+              <select 
+                [(ngModel)]="property.PropertyTypeId" 
+                name="PropertyTypeId" 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                (change)="onFormChange()"
+                required>
+                <option value="0" disabled>Select property type</option>
+                @for (category of propertyType; track $index) {
+                  <option [value]="category.id">{{ category.name }}</option>
+                }
+              </select>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Location <span class="text-red-500">*</span>
+              </label>
+              <div 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors flex items-center justify-between"
+                (click)="mapVisible = true">
+                <span [ngClass]="selectedLocationSummary ? 'text-gray-800' : 'text-gray-400'">
+                  {{ selectedLocationSummary || 'Click to select location' }}
+                </span>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Address Details Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Building No. <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                  placeholder="123"
+                  [(ngModel)]="property.BuildingNo" 
+                  name="BuildingNo" 
+                  (input)="onFormChange()"
+                  min="1" 
+                  required />
+              </div>
+
+              <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Floor Level <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                  placeholder="5"
+                  [(ngModel)]="property.Level" 
+                  name="Level" 
+                  (input)="onFormChange()"
+                  min="1" 
+                  required />
+              </div>
+
+              <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Flat No. <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                  placeholder="12"
+                  [(ngModel)]="property.FlatNo" 
+                  name="FlatNo" 
+                  (input)="onFormChange()"
+                  min="1" 
+                  required />
+              </div>
+            </div>
+
+            <!-- Property Details Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Area (sq ft) <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                  placeholder="1500"
+                  [(ngModel)]="property.Space" 
+                  name="Space" 
+                  (input)="onFormChange()"
+                  min="1" 
+                  required />
+              </div>
+
+              <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  People Capacity <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                  placeholder="4"
+                  [(ngModel)]="property.PeopleCapacity" 
+                  name="PeopleCapacity" 
+                  (input)="onFormChange()"
+                  min="1" 
+                  required />
+              </div>
+
+              <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Bedrooms <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                  placeholder="3"
+                  [(ngModel)]="property.RoomCount" 
+                  name="RoomCount" 
+                  (input)="onFormChange()"
+                  min="0" 
+                  required />
+              </div>
+
+              <div class="form-group">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">
+                  Bathrooms <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                  placeholder="2"
+                  [(ngModel)]="property.BathroomCount" 
+                  name="BathroomCount" 
+                  (input)="onFormChange()"
+                  min="1" 
+                  required />
+              </div>
+            </div>
+
+            <!-- Price -->
+            <div class="form-group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Rent per Day ($) <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="number" 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 bg-gray-50 focus:bg-white"
+                placeholder="150"
+                [(ngModel)]="property.Price" 
+                name="Price" 
+                (input)="onFormChange()"
+                min="0.01" 
+                step="0.01" 
+                required />
+            </div>
+
+            <!-- Amenities -->
+            <div class="form-group">
+              <label class="block text-sm font-semibold text-gray-700 mb-2">
+                Amenities
+              </label>
+              <div 
+                class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 cursor-pointer hover:bg-gray-100 transition-colors flex items-center justify-between"
+                (click)="openAmenitiesDialog()">
+                <span [ngClass]="property.ServiceIds.length ? 'text-gray-800' : 'text-gray-400'">
+                  @if (property.ServiceIds.length) {
+                    {{ getSelectedAmenityNames().join(', ') }}
+                  } @else {
+                    Select amenities
+                  }
+                </span>
+                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200">
+              <button 
+                type="button"
+                (click)="resetForm()"
+                class="w-full sm:w-auto px-6 py-3 text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors flex items-center justify-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                </svg>
+                Reset Changes
+              </button>
+              
+              <button 
+                type="submit"
+                [disabled]="isSubmitting"
+                [class]="isSubmitting ? 'loading' : ''"
+                class="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transform hover:scale-[1.02] transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none">
+                @if (isSubmitting) {
+                  <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Updating...
+                } @else {
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                  </svg>
+                  Update Property
+                }
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Dialogs -->
+    <!-- Location Map Dialog -->
+    <p-dialog 
+      [(visible)]="mapVisible" 
+      [modal]="true" 
+      header="Select Property Location"
+      [style]="{ width: '90vw', height: '80vh' }"
+      [baseZIndex]="10000"
+      [draggable]="false"
+      [resizable]="false">
+      <app-map (locationSelected)="onLocationSelected($event)"></app-map>
+    </p-dialog>
+
+    <!-- Amenities Dialog -->
+    <p-dialog 
+      [(visible)]="amenitiesVisible"
+      modal="true"
+      header="Select Property Amenities"
+      [style]="{ width: '700px', maxWidth: '95vw' }"
+      [breakpoints]="{ '960px': '90vw', '640px': '95vw' }"
+      [baseZIndex]="10000"
+      [draggable]="false"
+      [resizable]="false"
+      [dismissableMask]="true">
+      <app-amenities (selectedAmenitiesChange)="onServicesSelected($event)"></app-amenities>
+      <div class="mt-6 flex justify-end gap-3">
+        <button 
+          type="button"
+          class="px-4 py-2 text-gray-600 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          (click)="amenitiesVisible = false">
+          Cancel
+        </button>
+        <button 
+          type="button"
+          class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          (click)="amenitiesVisible = false">
+          Save Selection
+        </button>
+      </div>
+    </p-dialog>
+  </div>
+</div>

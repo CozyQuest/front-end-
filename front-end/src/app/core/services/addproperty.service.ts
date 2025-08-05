@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AddPropertyRequest } from '../interfaces/AddPropertyDTO';
-import { Property } from '../interfaces/Property';
-import { AddProperty } from '../../components/add-property/add-property';
+
 
 @Injectable({
   providedIn: 'root'

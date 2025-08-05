@@ -9,6 +9,8 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
 import { changePassword } from './components/profile/change-pass/change-pass';
 import { ForgotPasswordComponent } from './components/Auth Components/forgot-pass/forget-pass';
+import { UpdateProperty } from './components/update-properties/update-properties';
+
 
 export const routes: Routes = [
   // Protected route - requires login
@@ -93,6 +95,10 @@ export const routes: Routes = [
     loadComponent: () => import('./components/become-host/become-host').then(m => m.BecomeHost),
     canActivate: [AuthGuard, RoleGuard],
     data: { role: 'User' }
+  },
+  {
+    path: 'properties/edit/:id',
+    component: UpdateProperty
   },
   {
     path: 'test',
