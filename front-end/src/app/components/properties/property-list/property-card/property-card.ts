@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { Apartment } from '../../../../core/interfaces/apartment.model';
+import { Router, RouterModule } from '@angular/router';
+import { Apartment as Property } from '../../../../core/interfaces/apartment.model';
 
 @Component({
   selector: 'app-property-card',
@@ -10,7 +10,13 @@ import { Apartment } from '../../../../core/interfaces/apartment.model';
 })
 export class PropertyCard {
   @Input()
-  apartment!: Apartment;
+  property!: Property;
+
+  constructor(private router: Router) {}
+
+  NavigateToProp(id: number) {
+    this.router.navigate(['/properties', id]);
+  }
 
   toggleFavorite() {
     // Handle favorite toggle logic here

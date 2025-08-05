@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FilterComponent } from "./filter-card/filter-card";
 import { PropertyCard } from "./property-card/property-card";
-import { Apartment } from '../../../core/interfaces/apartment.model';
+import { Apartment as Property } from '../../../core/interfaces/apartment.model';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PropertyList {
   heroBackgroundImage = 'url(assets/images/bg/01.jpg)';
-  apartments: Apartment[] = [
+  properties: Property[] = [
     {
       id: 1,
       title: 'Modern Studio in Zamalek',
@@ -108,9 +108,9 @@ export class PropertyList {
   //   return Math.ceil(this.apartments.length / this.pageSize);
   // }
 
-  get pagedApartments(): Apartment[] {
+  get pagedApartments(): Property[] {
     const start = (this.currentPage - 1) * this.pageSize;
-    return this.apartments.slice(start, start + this.pageSize);
+    return this.properties.slice(start, start + this.pageSize);
   }
 
   changePage(page: number) {
