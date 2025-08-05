@@ -3,14 +3,14 @@
     <ng-container *ngFor="let review of reviews.slice(0, 6)">
       <div class="space-y-2">
         <div class="flex items-center gap-4">
-          <img [src]="review.user?.profilePicUrl" alt="{{ review.user?.fname }}" class="w-12 h-12 rounded-full object-cover">
+          <img [src]="review.userProfilePicUrl" alt="{{ review.userFullName }}" class="w-12 h-12 rounded-full object-cover">
           <div>
-            <p class="font-semibold">{{ review.user?.fname }}</p>
-            <p class="text-sm text-gray-600">{{ review.user?.location}}</p>
+            <p class="font-semibold">{{ review.userFullName }}</p>
+            <p class="text-sm text-gray-600">{{ userLocation}}</p>
           </div>
         </div>
-        <p class="text-sm text-gray-700">★★★★★ <span class="font-medium text-black">· {{ review.date | date: 'MMMM y' }}</span></p>
-        <p class="text-sm text-gray-700">{{ review.review | slice:0:140 }}...</p>
+        <p class="text-sm text-gray-700">★★★★★ <span class="font-medium text-black">· {{ review.createdAt | date: 'MMMM y' }}</span></p>
+        <p class="text-sm text-gray-700">{{ review.reviewText | slice:0:140 }}...</p>
         <a class="text-black cursor-pointer underline" (click)="openDialog()">Show more</a>
       </div>
     </ng-container>

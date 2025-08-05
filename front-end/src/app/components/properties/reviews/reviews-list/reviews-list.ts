@@ -4,6 +4,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReviewsDialog } from '../reviews-dialog/reviews-dialog';
 import { CommonModule } from '@angular/common';
 import { AddReview } from '../add-review/add-review';
+import { ViewReviewService } from '../../../../core/services/view-reviews.service';
+import { ViewReview } from '../../../../core/interfaces/ViewReviews';
 
 @Component({
   selector: 'app-reviews-list',
@@ -12,9 +14,37 @@ import { AddReview } from '../add-review/add-review';
   styleUrl: './reviews-list.css'
 })
 export class ReviewsList {
- @Input() reviews: Review[] = [];
+@Input() propertyId?: number; 
 
-  constructor(private dialog: MatDialog) {}
+  reviews: ViewReview[] = [];
+  userLocation: string = "Alexandria, Egypt";
+
+  constructor(private reviewService: ViewReviewService,private dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    if (this.propertyId !== undefined) {
+      this.fetchReviews(this.propertyId);
+    } else {
+      console.warn('No propertyId provided to ReviewsListComponent');
+    }
+  }
+
+  private fetchReviews(propertyId: number): void {
+    this.reviewService.getReviewsForProperty(propertyId).subscribe({
+      next: (data) => {
+        this.reviews = data.map(r => ({
+          reviewText: r.reviewText,
+          rate: r.rate,
+          createdAt: r.createdAt,
+          userFullName : r.userFullName,
+          userProfilePicUrl : r.userProfilePicUrl
+        }));
+      },
+      error: (err) => {
+        console.error('Error fetching reviews:', err);
+      },
+    });
+  }
 
 openDialog(): void {
   this.dialog.open(ReviewsDialog, {

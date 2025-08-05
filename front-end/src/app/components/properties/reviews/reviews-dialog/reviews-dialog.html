@@ -44,25 +44,25 @@
         <!-- Reviewer Info -->
         <div class="flex items-center gap-4">
           <img
-            [src]="review.user?.profilePicUrl || 'assets/images/avatar.png'"
-            alt="{{ review.user?.fname }}"
+            [src]="review.userProfilePicUrl || 'assets/images/avatar.png'"
+            alt="{{ review.userFullName }}"
             class="w-12 h-12 rounded-full object-cover border border-blue-200"
           />
           <div>
-            <p class="font-semibold text-gray-900">{{ review.user?.fname }}</p>
-            <p class="text-sm text-gray-600">{{ review.user?.location }}</p>
+            <p class="font-semibold text-gray-900">{{ review.userFullName }}</p>
+            <p class="text-sm text-gray-600">{{ userLocation}}</p>
           </div>
         </div>
 
         <!-- Rating & Date -->
         <div class="flex items-center text-sm text-gray-700 gap-2">
           <span class="text-yellow-400 text-lg">★★★★★</span>
-          <span class="text-gray-500">· {{ review.date | date: 'MMMM y' }}</span>
+          <span class="text-gray-500">· {{ review.createdAt | date: 'MMMM y' }}</span>
         </div>
 
         <!-- Review Text -->
         <p class="text-sm text-gray-800">
-          {{ review.review.length > 140 ? (review.review | slice: 0:140) + '...' : review.review }}
+          {{ review.reviewText.length > 140 ? (review.reviewText | slice: 0:140) + '...' : review.reviewText }}
         </p>
       </div>
     </div>

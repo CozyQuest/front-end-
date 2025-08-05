@@ -4,6 +4,7 @@ import {  MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materi
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
+import { ViewReview } from '../../../../core/interfaces/ViewReviews';
 
 
 @Component({
@@ -14,20 +15,21 @@ import { FormsModule } from '@angular/forms';
 })
 export class ReviewsDialog {
   searchText: string = '';
-  reviews: Review[] = [];
+  reviews: ViewReview[] = [];
+
+  userLocation: string = "Alexandria,Egypt";
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { reviews: Review[] },
+    @Inject(MAT_DIALOG_DATA) public data: { reviews: ViewReview[] },
     private dialogRef: MatDialogRef<ReviewsDialog>
   ) {
     this.reviews = data.reviews;
   }
 
-  get filteredReviews(): Review[] {
+  get filteredReviews(): ViewReview[] {
     return this.reviews.filter(review =>
-      review.review.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      review.user?.fname?.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      review.user?.lname?.toLowerCase().includes(this.searchText.toLowerCase())
+      review.reviewText.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      review.userFullName.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
 
