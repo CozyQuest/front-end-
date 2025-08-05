@@ -5,12 +5,16 @@ import { LoginButton } from './components/Auth Components/login-button/login-but
 import { RegisterButton } from './components/Auth Components/register-button/register-button';
 import { EditProfile } from './components/profile/edit-profile/edit-profile';
 import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
+import { PaymentSuccess } from './components/payment-success/payment-success';
+import { PaymentCancel } from './components/payment-cancel/payment-cancel';
 
 export const routes: Routes = [
     { path: 'checkout/:id', component: PropertyCheckout },
     { path: 'rent', component: PropertyList },
     { path: 'login', component: LoginButton },
     { path: 'register', component: RegisterButton },
+    { path: 'payment-success', component: PaymentSuccess },
+    { path: 'payment-cancel', component: PaymentCancel },
     {path: 'edit-profile', component: EditProfile},
     {path:'dashboard', component: DashboardShell},
     {
