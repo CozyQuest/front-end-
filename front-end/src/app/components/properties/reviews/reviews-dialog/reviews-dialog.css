@@ -1,24 +1,28 @@
 .custom-scrollbar::-webkit-scrollbar {
-  width: 28px; 
+  width: 20px; /* Thicker scrollbar */
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #e0e7ff;
-  border-radius: 10px; 
+  background: rgba(221, 238, 255, 0.3);
+  border-radius: 9999px;
+  backdrop-filter: blur(4px);
+  margin-block: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #3b82f6; 
-  border-radius: 10px;
-  border: 6px solid #e0e7ff; 
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  border-radius: 9999px;
+  border: 5px solid rgba(221, 238, 255, 0.3); /* Creates visual separation */
+  transition: background 0.3s ease;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #2563eb; 
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
 }
-
 
 .custom-scrollbar {
-  scrollbar-width: thin; 
-  scrollbar-color: #3b82f6 #e0e7ff; 
+  scrollbar-width: thin;
+  scrollbar-color: #60a5fa rgba(221, 238, 255, 0.3);
+  padding-right: 12px; /* Ensures content doesn't overlap scrollbar */
 }
+

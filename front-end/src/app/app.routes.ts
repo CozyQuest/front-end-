@@ -7,6 +7,7 @@ import { EditProfile } from './components/profile/edit-profile/edit-profile';
 import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
+import { BecomeHostGuard } from './core/guards/become-host.guard';
 import { changePassword } from './components/profile/change-pass/change-pass';
 import { ForgotPasswordComponent } from './components/Auth Components/forgot-pass/forget-pass';
 
@@ -21,9 +22,9 @@ export const routes: Routes = [
 
   // Public route
   {
-      path: 'rent',
-      component: PropertyList,
-    },
+    path: 'rent',
+    component: PropertyList,
+  },
 
   // Auth routes
   { path: 'login', component: Login },
@@ -83,6 +84,20 @@ export const routes: Routes = [
     path: 'profile/:id',
     loadComponent: () => import('./components/profile/profile-details/profile-details').then(m => m.ProfileDetails),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'contact',
+    loadComponent: () => import('./components/contact-us/contact-us').then(m => m.ContactUs)
+  },
+  {
+    path: 'BecomeHost',
+    loadComponent: () => import('./components/become-host/become-host').then(m => m.BecomeHost),
+    canActivate: [AuthGuard, RoleGuard, BecomeHostGuard],
+    data: { role: 'User' }
+  },
+  {
+    path: 'submission-under-review',
+    loadComponent: () => import('./components/submission-under-review/submission-under-review').then(m => m.SubmissionUnderReview)
   },
   {
     path: 'test',

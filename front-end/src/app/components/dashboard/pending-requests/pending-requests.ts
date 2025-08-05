@@ -1,40 +1,45 @@
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { PendingRequestsService } from '../../../core/services/pending-requests.service';
+import { PendingProperty } from '../../../core/interfaces/pending-property.model';
 
 @Component({
   selector: 'app-pending-requests',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './pending-requests.html',
   styleUrl: './pending-requests.css'
 })
-export class PendingRequests {
-  pendingProperties = [
-    {
-      img: '/assets/images/property/1.jpg',
-      title: 'Modern Apartment in Downtown',
-      date: '2025-07-25',
-      price: 1200,
-      type: 'Apartment',
-      status: 'Pending',
-    },
-    {
-      img: '/assets/images/property/2.jpg',
-      title: 'Spacious Villa with Garden',
-      date: '2025-07-24',
-      price: 2500,
-      type: 'Villa',
-      status: 'Pending',
-    },
-  ];
+export class PendingRequests implements OnInit {
+  @Output() propertyApproved = new EventEmitter<void>();
 
-  approve(property: any) {
-    console.log('Approved:', property.title);
-    // logic to update backend or state
+  pendingProperties: PendingProperty[] = [];
+
+  constructor(private pendingService: PendingRequestsService) {}
+
+  ngOnInit(): void {
+    this.pendingService.getPendingRequests().subscribe({
+      next: (data) => (this.pendingProperties = data),
+      error: (err) => console.error('Failed to load pending requests', err)
+    });
   }
 
-  reject(property: any) {
-    console.log('Rejected:', property.title);
-    // logic to update backend or state
+  approve(property: PendingProperty) {
+    this.pendingService.approveRequest(property.id).subscribe({
+      next: () => {
+        this.pendingProperties = this.pendingProperties.filter(p => p.id !== property.id);
+        this.propertyApproved.emit(); // notify parent
+      },
+      error: err => console.error('Approve failed:', err)
+    });
   }
 
+  reject(property: PendingProperty) {
+    this.pendingService.rejectRequest(property.id).subscribe({
+      next: () => {
+        this.pendingProperties = this.pendingProperties.filter(p => p.id !== property.id);
+      },
+      error: err => console.error('Reject failed:', err)
+    });
+  }
 }

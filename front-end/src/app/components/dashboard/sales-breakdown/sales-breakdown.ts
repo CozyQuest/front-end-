@@ -1,19 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SalesBreakdownService } from '../../../core/services/sales-breakdown.service';
+import { SalesSource } from '../../../core/interfaces/sales-source.model';
 
 @Component({
-    selector: 'app-sales-breakdown',
-    imports: [CommonModule],
-    templateUrl: './sales-breakdown.html',
-    styleUrl: './sales-breakdown.css'
+  selector: 'app-sales-breakdown',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './sales-breakdown.html',
+  styleUrl: './sales-breakdown.css'
 })
-export class SalesBreakdown {
-    sources = [
-        { label: 'Via Website', percent: 50 },
-        { label: 'Via Team Member', percent: 12 },
-        { label: 'Via Agents', percent: 6 },
-        { label: 'Via Social Media', percent: 15 },
-        { label: 'Via Digital Marketing', percent: 12 },
-        { label: 'Via Others', percent: 5 },
-    ];
+export class SalesBreakdown implements OnInit {
+  sources: SalesSource[] = [];
+
+  constructor(private breakdownService: SalesBreakdownService) {}
+
+  ngOnInit(): void {
+    this.loadData('Y');
+  }
+
+  onPeriodChange(event: Event): void {
+    const period = (event.target as HTMLSelectElement).value;
+    this.loadData(period);
+  }
+
+  private loadData(period: string): void {
+    this.breakdownService.getBreakdown(period).subscribe({
+      next: (data) => (this.sources = data),
+      error: (err) => console.error('Failed to load sales breakdown', err)
+    });
+  }
 }
