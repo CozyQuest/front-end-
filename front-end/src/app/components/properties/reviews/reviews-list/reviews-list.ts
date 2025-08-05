@@ -1,11 +1,11 @@
 import { Component, Input, signal } from '@angular/core';
-import { Review } from '../../../../core/interfaces/Review';
 import { MatDialog } from '@angular/material/dialog';
 import { ReviewsDialog } from '../reviews-dialog/reviews-dialog';
 import { CommonModule } from '@angular/common';
-import { AddReview } from '../add-review/add-review';
 import { ViewReviewService } from '../../../../core/services/view-reviews.service';
 import { ViewReview } from '../../../../core/interfaces/ViewReviews';
+import { AddReview } from '../add-review/add-review';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-reviews-list',
@@ -14,12 +14,23 @@ import { ViewReview } from '../../../../core/interfaces/ViewReviews';
   styleUrl: './reviews-list.css'
 })
 export class ReviewsList {
-@Input() propertyId?: number; 
+@Input() propertyId!: number;
 
   reviews: ViewReview[] = [];
   userLocation: string = "Alexandria, Egypt";
 
-  constructor(private reviewService: ViewReviewService,private dialog: MatDialog) {}
+  showAddReviewModal = signal(false);
+  showLoginMessage = signal(false);
+
+  isLoggedIn: boolean;
+
+  constructor(
+    private reviewService: ViewReviewService,
+    private dialog: MatDialog,
+    private authService: AuthService
+  ) {
+    this.isLoggedIn = this.authService.isAuthenticated();
+  }
 
   ngOnInit(): void {
     if (this.propertyId !== undefined) {
@@ -27,6 +38,11 @@ export class ReviewsList {
     } else {
       console.warn('No propertyId provided to ReviewsListComponent');
     }
+
+    // Listen for custom event dispatched from AddReview component
+    window.addEventListener('submitted', () => {
+      this.onReviewSubmitted();
+    });
   }
 
   private fetchReviews(propertyId: number): void {
@@ -36,27 +52,28 @@ export class ReviewsList {
           reviewText: r.reviewText,
           rate: r.rate,
           createdAt: r.createdAt,
-          userFullName : r.userFullName,
-          userProfilePicUrl : r.userProfilePicUrl
+          userFullName: r.userFullName,
+          userProfilePicUrl: r.userProfilePicUrl
         }));
-      },
-      error: (err) => {
-        console.error('Error fetching reviews:', err);
-      },
+      }
     });
   }
 
-openDialog(): void {
-  this.dialog.open(ReviewsDialog, {
-    width: '800px',
-    panelClass: 'custom-dialog-container',
-    data: { reviews: this.reviews }
-  });
-}
+  openDialog(): void {
+    this.dialog.open(ReviewsDialog, {
+      width: '800px',
+      panelClass: 'custom-dialog-container',
+      data: { reviews: this.reviews }
+    });
+  }
 
-showAddReviewModal = signal(false);
+  openReviewModal() {
+    if (!this.isLoggedIn) {
+      this.showLoginMessage.set(true);
+      setTimeout(() => this.showLoginMessage.set(false), 3000);
+      return;
+    }
 
-  openModal() {
     this.showAddReviewModal.set(true);
   }
 
@@ -64,8 +81,8 @@ showAddReviewModal = signal(false);
     this.showAddReviewModal.set(false);
   }
 
-  handleReviewSubmitted(review: any) {
-    console.log('Review submitted:', review);
+  onReviewSubmitted() {
     this.closeModal();
+    this.fetchReviews(this.propertyId);
   }
 }
