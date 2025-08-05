@@ -40,6 +40,7 @@
     "date-fns": "^4.1.0",
     "express": "^5.1.0",
     "feather-icons": "^4.29.2",
+    "google-auth-library": "^10.2.0",
     "lucide-angular": "^0.525.0",
     "ng-apexcharts": "^1.17.0",
     "postcss": "^8.5.6",
