@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { SalesSource } from '../interfaces/sales-source.model';
+import { SalesSource } from '../../interfaces/dashboard/sales-source.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
