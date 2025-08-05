@@ -10,7 +10,7 @@
 >
   <ng-template let-rent pTemplate="item">
     <div class="p-4">
-      <div class="rounded-xl overflow-hidden bg-white dark:bg-slate-800 shadow hover:shadow-xl transition-shadow duration-300">
+      <div class="rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition-shadow duration-300">
         <img
           [src]="rent.imageUrl"
           alt="Rented Property Image"
@@ -18,8 +18,8 @@
         />
         <div class="p-4 space-y-2">
           <h6 class="text-lg font-medium">{{ rent.title }}</h6>
-          <div class="text-sm text-gray-600 dark:text-gray-300 space-y-1">
-            <ul class="py-6 border-y border-slate-100 dark:border-gray-800 flex items-center list-none">
+          <div class="text-sm text-gray-600 space-y-1">
+            <ul class="py-6 border-y border-slate-100 flex items-center list-none">
               <li class="flex items-center me-4">
                 <i class="uil uil-star lg:text-3xl text-2xl me-2 text-blue-500"></i>
                 <span><span class="font-medium">Rating:</span> {{ rent.userRating }}/5</span>

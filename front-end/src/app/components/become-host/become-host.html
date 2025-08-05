@@ -1,0 +1,90 @@
+<div class="min-h-[110vh] md:min-h-[120vh] bg-gray-500 bg-cover bg-center bg-no-repeat p-5 flex items-center justify-center" style="background-image: url('assets/images/bg/02.jpg');">
+  <app-card class="md:w-1/2">
+    <div class="flex flex-col items-center justify-center h-full p-6 w-full">
+      <h1 class="text-3xl font-bold mb-4">Become a Host</h1>
+      <p class="text-lg text-gray-400 mb-6 text-center">Join us in providing exceptional experiences for our guests.</p>
+
+      <form (ngSubmit)="onSubmit()" #hostForm="ngForm" class="w-full max-w-md space-y-6 md:max-w-xl">
+        <!-- Front Image Upload -->
+         <div class="md:flex md:items-center md:justify-between">
+           <div class="mb-6 md:px-5">
+             <label class="block text-sm font-medium text-gray-700 mb-2">Front ID Image</label>
+             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-all duration-300 bg-gray-50 relative min-h-[150px] flex items-center justify-center hover:border-indigo-500 hover:bg-gray-100"
+                  [class]="frontImagePreview ? 'border-green-500 bg-green-50 p-4' : ''"
+                  (click)="frontFileInput.click()"
+                  (dragover)="onDragOver($event)"
+                  (drop)="onDrop($event, 'front')">
+               <input #frontFileInput
+                      type="file"
+                      accept="image/*"
+                      (change)="onFileSelected($event, 'front')"
+                      class="hidden">
+               <div *ngIf="!frontImagePreview" class="flex flex-col items-center justify-center">
+                 <i class="pi pi-cloud-upload text-4xl text-gray-400 mb-2 block"></i>
+                 <p class="text-gray-500">Click or drag to upload front ID image</p>
+               </div>
+               <div *ngIf="frontImagePreview" class="relative w-full max-w-xs mx-auto">
+                 <img [src]="frontImagePreview" alt="Front ID Preview" class="w-full h-auto max-h-48 object-contain rounded-md shadow-sm">
+                 <button type="button"
+                         (click)="removeImage('front'); $event.stopPropagation()"
+                         class="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white border-none rounded-full w-6 h-6 flex items-center justify-center cursor-pointer transition-colors duration-200 text-xs">
+                   <i class="pi pi-times"></i>
+                 </button>
+               </div>
+             </div>
+           </div>
+
+           <!-- Back Image Upload -->
+           <div class="mb-6">
+             <label class="block text-sm font-medium text-gray-700 mb-2">Back ID Image</label>
+             <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-all duration-300 bg-gray-50 relative min-h-[150px] flex items-center justify-center hover:border-indigo-500 hover:bg-gray-100"
+                  [class]="backImagePreview ? 'border-green-500 bg-green-50 p-4' : ''"
+                  (click)="backFileInput.click()"
+                  (dragover)="onDragOver($event)"
+                  (drop)="onDrop($event, 'back')">
+               <input #backFileInput
+                      type="file"
+                      accept="image/*"
+                      (change)="onFileSelected($event, 'back')"
+                      class="hidden">
+               <div *ngIf="!backImagePreview" class="flex flex-col items-center justify-center">
+                 <i class="pi pi-cloud-upload text-4xl text-gray-400 mb-2 block"></i>
+                 <p class="text-gray-500">Click or drag to upload back ID image</p>
+               </div>
+               <div *ngIf="backImagePreview" class="relative w-full max-w-xs mx-auto">
+                 <img [src]="backImagePreview" alt="Back ID Preview" class="w-full h-auto max-h-48 object-contain rounded-md shadow-sm">
+                 <button type="button"
+                         (click)="removeImage('back'); $event.stopPropagation()"
+                         class="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white border-none rounded-full w-6 h-6 flex items-center justify-center cursor-pointer transition-colors duration-200 text-xs">
+                   <i class="pi pi-times"></i>
+                 </button>
+               </div>
+             </div>
+           </div>
+         </div>
+
+                <!-- Submit Button -->
+        <button pButton 
+                type="submit"
+                [disabled]="!frontImageFile || !backImageFile || isSubmitting"
+                [loading]="isSubmitting"
+                label="Submit Application"
+                icon="pi pi-check" 
+                class="p-button-success w-full">
+        </button>
+
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="flex items-center gap-2 p-3 bg-red-50 border border-red-200 text-red-700 rounded-md text-sm">
+          <i class="pi pi-exclamation-triangle"></i>
+          {{ errorMessage }}
+        </div>
+
+        <!-- Success Message -->
+        <div *ngIf="successMessage" class="flex items-center gap-2 p-3 bg-green-50 border border-green-200 text-green-700 rounded-md text-sm">
+          <i class="pi pi-check-circle"></i>
+          {{ successMessage }}
+        </div>
+      </form>
+    </div>
+  </app-card>
+</div>

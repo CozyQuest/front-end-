@@ -1,0 +1,75 @@
+<div class="animate-fade-in-up px-6 py-8 bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-auto">
+
+  @if (history.length === 0) {
+    <div class="text-center text-gray-500 dark:text-gray-400 italic">
+      No rental activity on your properties yet.
+    </div>
+  }
+
+  @if (history.length > 0) {
+    <table class="w-full table-auto text-left border-separate border-spacing-y-3">
+      <thead>
+        <tr class="text-sm text-gray-700 dark:text-gray-200 uppercase">
+          <th class="px-4 py-2">Property</th>
+          <th class="px-4 py-2">Renter</th>
+          <th class="px-4 py-2">Dates</th>
+          <th class="px-4 py-2">Transaction</th>
+          <th class="px-4 py-2">Total</th>
+          <th class="px-4 py-2">Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (rent of history; track rent) {
+          <tr class="bg-gray-50 dark:bg-slate-800 shadow-md rounded-lg transition hover:scale-[1.01] duration-300">
+            <td class="px-4 py-3 flex items-center gap-4">
+              <img [src]="rent.propertyImageUrl" class="w-16 h-16 object-cover rounded-lg shadow-sm" alt="Property Image">
+              <span class="font-medium text-gray-800 dark:text-white">{{ rent.propertyTitle }}</span>
+            </td>
+            <td class="px-4 py-3 text-gray-700 dark:text-gray-300">{{ rent.renterName }}</td>
+            <td class="px-4 py-3 text-gray-600 dark:text-gray-400">
+              {{ rent.startDate | date:'shortDate' }} → {{ rent.endDate | date:'shortDate' }}
+            </td>
+            <td class="px-4 py-3 text-gray-600 dark:text-gray-400">
+              {{ rent.transactionDate | date:'mediumDate' }}
+            </td>
+            <td class="px-4 py-3 text-blue-700 dark:text-blue-300 font-semibold">
+              ${{ rent.totalPrice }}
+            </td>
+            <td class="px-4 py-3">
+              @if (rent.rating !== null) {
+                <div class="flex items-center gap-1">
+                  @for (star of [1, 2, 3, 4, 5]; track star) {
+              <i class="mdi"
+                [ngClass]="{
+                 'mdi-star text-yellow-400': star <= rent.rating,
+                 'mdi-star-outline text-gray-300 dark:text-gray-600': star > rent.rating
+               }">
+               </i>
+             }
+                </div>
+              } @else {
+                <span class="text-gray-400 italic">—</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+  <div class="relative mt-10 flex justify-center perspective">
+    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 max-w-md w-full shadow-2xl transition-transform transform-gpu duration-500 hover:rotate-x-3 hover:-rotate-y-6 hover:scale-105 animate-fade-in-up">
+      <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute left-4 top-2 text-2xl animate-drop-slow">💸</div>
+        <div class="absolute right-5 top-0 text-xl animate-drop delay-100">🪙</div>
+        <div class="absolute left-10 top-1 text-xl animate-drop delay-300">💵</div>
+      </div>
+
+      <div class="relative z-10 text-center space-y-2">
+        <p class="text-sm uppercase text-gray-500 dark:text-gray-400 tracking-wider">Total Profit</p>
+        <h2 class="text-5xl font-black text-green-600 dark:text-green-300 tracking-tight">$ {{ totalProfit }}</h2>
+        <p class="text-xs italic text-gray-400 dark:text-gray-500">Cha-ching! 💰</p>
+      </div>
+    </div>
+  </div>
+</div>

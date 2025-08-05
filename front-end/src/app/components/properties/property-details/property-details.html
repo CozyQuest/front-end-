@@ -42,7 +42,7 @@
         <ul class="py-6 flex flex-wrap items-center gap-x-6 gap-y-4 ml-0 md:ml-10">
        <li class="flex items-center">
         <i class="uil uil-compress-arrows text-2xl md:text-3xl text-blue-500 mr-2"></i>
-        <span class="text-lg md:text-xl">{{ property?.Area }} m³</span>
+        <span class="text-lg md:text-xl">{{ property?.Area }} m²</span>
        </li>
        <li class="flex items-center">
         <i class="uil uil-bed-double text-2xl md:text-3xl text-blue-500 mr-2"></i> 
@@ -73,23 +73,23 @@
 
         <!-- Services List -->
         <div *ngIf="property?.services?.length" class="mt-10 mb-10 ml-0 md:ml-10">
-          <h2 class="text-2xl font-semibold mb-6 text-black dark:text-white">What This Place Offers</h2>
+          <h2 class="text-2xl font-semibold mb-6 text-black">What This Place Offers</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div
               *ngFor="let service of property?.services"
-              class="flex items-center gap-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-blue-500 dark:hover:border-blue-400 transition duration-300"
+              class="flex items-center gap-4 bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-blue-500 transition duration-300"
             >
               <div class="text-blue-500 dark:text-pink-400 text-xl flex-shrink-0">
                 <i [ngClass]="getServiceIcon(service.name)"></i>
               </div>
-              <span class="text-sm text-black dark:text-white font-medium">{{ service.name }}</span>
+              <span class="text-sm text-black font-medium">{{ service.name }}</span>
             </div>
           </div>
         </div>
 
         <!-- Rating Overview -->
         <div *ngIf="averageRating > 0"
-             class="bg-white dark:bg-gray-900 shadow-xl border border-gray-200 dark:border-gray-700 rounded-2xl p-6 w-full mx-auto mt-10 transition-all duration-500 animate-fade-in mb-6">
+             class="bg-white shadow-xl border border-gray-200 rounded-2xl p-6 w-full mx-auto mt-10 transition-all duration-500 animate-fade-in mb-6">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div class="flex items-center gap-6">
               <div class="bg-yellow-400 text-white w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-2xl md:text-3xl font-bold shadow-md">
@@ -101,19 +101,19 @@
                     <i class="uil uil-star text-yellow-400 text-xl"></i>
                   </ng-container>
                   <ng-container *ngFor="let star of getEmptyStars(); let i = index">
-                    <i class="uil uil-star text-gray-300 dark:text-gray-600 text-xl"></i>
+                    <i class="uil uil-star text-gray-300 text-xl"></i>
                   </ng-container>
                 </div>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                <p class="text-sm text-gray-600 mt-1">
                   Based on {{ ratingCount }} {{ ratingCount === 1 ? 'review' : 'reviews' }}
                 </p>
               </div>
             </div>
 
             <div class="flex-1">
-              <p class="text-gray-700 dark:text-gray-300 italic text-base">"{{ getRatingText() }}"</p>
+              <p class="text-gray-700 italic text-base">"{{ getRatingText() }}"</p>
               <div class="mt-4">
-                <div class="h-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                <div class="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
                   <div class="h-full bg-yellow-400 transition-all duration-500"
                        [style.width.%]="(averageRating / 5) * 100">
                   </div>

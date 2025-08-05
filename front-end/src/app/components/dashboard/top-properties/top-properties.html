@@ -1,28 +1,30 @@
 <div class="relative overflow-hidden rounded-md shadow-sm bg-white">
     <div class="p-6 flex items-center justify-between border-b border-gray-100">
         <h6 class="text-lg font-semibold">Top Properties</h6>
-        <a href=""
-            class="btn btn-link font-normal text-slate-400 hover:text-primary after:bg-primary transition duration-500">See
-            More <i class="mdi mdi-arrow-right ms-1"></i></a>
     </div>
 
-    <div class="relative overflow-x-auto block w-full max-h-[284px] p-6" data-simplebar>
+    <!-- List wrapper (only if properties exist) -->
+    <div *ngIf="properties.length > 0" class="relative overflow-x-auto block w-full max-h-[284px] p-6" data-simplebar>
         <div *ngFor="let p of properties" class="flex justify-between items-center mt-4 first:mt-0">
             <div class="flex items-center">
                 <div class="relative md:shrink-0">
-                    <img [src]="p.img" class="object-cover size-14 min-w-[56px] rounded-md shadow-smy" alt="">
+                    <img [src]="p.img" class="object-cover size-14 min-w-[56px] rounded-md shadow-smy" alt="property">
                 </div>
-
                 <div class="ms-2">
                     <a href="#" class="font-medium hover:text-primary block text-lg">{{ p.name }}</a>
                     <span class="text-slate-400">{{ p.location }}</span>
                 </div>
             </div>
 
-            <span class="w-20 text-end" [ngClass]="p.isDown ? 'text-red-600' : 'text-emerald-600'">
-                <i class="mdi" [ngClass]="p.isDown ? 'mdi-arrow-bottom-right' : 'mdi-arrow-top-right'"></i>
-                {{ p.change }}
+            <span class="w-20 text-end text-yellow-500 flex items-center justify-end gap-1">
+                <i class="mdi mdi-star"></i>
+                {{ p.totalRating | number: '1.1-1' }}
             </span>
         </div>
+    </div>
+
+    <!-- Empty state -->
+    <div *ngIf="properties.length === 0" class="text-center py-10 text-slate-400 text-sm font-medium">
+        No top properties to show.
     </div>
 </div>

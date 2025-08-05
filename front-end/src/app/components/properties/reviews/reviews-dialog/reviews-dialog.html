@@ -1,50 +1,70 @@
-<div class="w-full max-w-4xl max-h-[80vh] overflow-hidden bg-white dark:bg-slate-900 rounded-xl p-6 flex flex-col">
-  <div class="flex justify-end">
-    <button (click)="closeDialog()" class="text-gray-500 hover:text-gray-800 dark:hover:text-white text-xl font-bold">
-      &times;
-    </button>
-  </div>
+<!-- Full-screen overlay with blur -->
+<div
+  class="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-md transition-opacity duration-300"
+  (click)="closeDialog()"
+>
+  <!-- Modal -->
+  <div
+    class="w-full max-w-3xl max-h-[75vh] mx-auto rounded-3xl p-6 space-y-6 overflow-hidden flex flex-col animate-zoomIn shadow-[0_8px_40px_rgba(0,0,0,0.2)]"
+    (click)="$event.stopPropagation()"
+    style="background: linear-gradient(135deg, #dbeafe, #bfdbfe); border: 1px solid rgba(147, 197, 253, 0.3);"
+  >
+    <!-- Close Button -->
+    <div class="flex justify-end">
+      <button
+        (click)="closeDialog()"
+        class="text-gray-600 hover:text-black text-2xl font-bold transition duration-150"
+      >
+        &times;
+      </button>
+    </div>
 
-  <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
-    {{ filteredReviews.length }} Review{{ filteredReviews.length !== 1 ? 's' : '' }}
-  </h2>
+    <!-- Title -->
+    <h2 class="text-2xl font-bold text-center text-gray-900">
+      {{ filteredReviews.length }} Review{{ filteredReviews.length !== 1 ? 's' : '' }}
+    </h2>
 
-  <input
-    [(ngModel)]="searchText"
-    type="text"
-    placeholder="Search by name or review..."
-    class="mb-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-400"
-  />
+    <!-- Search Bar -->
+    <div class="relative">
+      <input
+        [(ngModel)]="searchText"
+        type="text"
+        placeholder="Search by name or review..."
+        class="w-full px-5 py-3 text-sm rounded-xl border border-blue-300 placeholder-gray-500 text-gray-700 bg-white/70 backdrop-blur-md focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all"
+      />
+      <i class="mdi mdi-magnify absolute right-4 top-3 text-gray-400"></i>
+    </div>
 
-  <div class="overflow-y-auto flex-1 pr-1 space-y-6 custom-scrollbar">
-    <div
-      *ngFor="let review of filteredReviews"
-      class="space-y-2 border-b border-gray-200 dark:border-gray-700 pb-4"
-    >
-      <div class="flex items-center gap-4">
-        <img
-          [src]="review.user?.profilePicUrl || 'assets/images/avatar.png'"
-          alt="{{ review.user?.fname }}"
-          class="w-12 h-12 rounded-full object-cover"
-        />
-        <div>
-          <p class="font-semibold text-gray-900 dark:text-white">
-            {{ review.user?.fname }}
-          </p>
-          <p class="text-sm text-gray-600 dark:text-gray-400">
-            {{ review.user?.location}}
-          </p>
+    <!-- Reviews List -->
+    <div class="overflow-y-auto flex-1 space-y-6 custom-scrollbar pr-4">
+      <div
+        *ngFor="let review of filteredReviews"
+        class="border border-blue-100 bg-white/80 rounded-xl p-4 space-y-3 transition-all duration-300 hover:shadow-md"
+      >
+        <!-- Reviewer Info -->
+        <div class="flex items-center gap-4">
+          <img
+            [src]="review.user?.profilePicUrl || 'assets/images/avatar.png'"
+            alt="{{ review.user?.fname }}"
+            class="w-12 h-12 rounded-full object-cover border border-blue-200"
+          />
+          <div>
+            <p class="font-semibold text-gray-900">{{ review.user?.fname }}</p>
+            <p class="text-sm text-gray-600">{{ review.user?.location }}</p>
+          </div>
         </div>
+
+        <!-- Rating & Date -->
+        <div class="flex items-center text-sm text-gray-700 gap-2">
+          <span class="text-yellow-400 text-lg">★★★★★</span>
+          <span class="text-gray-500">· {{ review.date | date: 'MMMM y' }}</span>
+        </div>
+
+        <!-- Review Text -->
+        <p class="text-sm text-gray-800">
+          {{ review.review.length > 140 ? (review.review | slice: 0:140) + '...' : review.review }}
+        </p>
       </div>
-
-      <p class="text-sm text-gray-700 dark:text-gray-300">
-        ★★★★★
-        <span class="font-medium text-black dark:text-white">· {{ review.date | date: 'MMMM y' }}</span>
-      </p>
-
-      <p class="text-sm text-gray-700 dark:text-gray-200">
-        {{ review.review.length > 140 ? (review.review | slice: 0:140) + '...' : review.review }}
-      </p>
     </div>
   </div>
 </div>

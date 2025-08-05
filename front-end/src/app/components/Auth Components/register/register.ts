@@ -11,6 +11,7 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrl: './register.css'
 })
 export class Register {
+
   registerForm!: FormGroup;
   isLoading = false;
   errorMessage = '';

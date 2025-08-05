@@ -20,6 +20,12 @@ export interface LoginRequest {
   rememberMe: boolean;
 }
 
+// Define the structure of Google auth request (matches backend GoogleAuthDTO)
+export interface GoogleAuthRequest {
+  idToken: string;
+  rememberMe: boolean;
+}
+
 // Define the structure of your API's auth response
 export interface AuthResponse {
   accessToken: string;
@@ -89,6 +95,30 @@ export class AuthService {
    */
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/login`, credentials)
+      .pipe(
+        tap(response => {
+          if (response.accessToken) {
+            // Store tokens in localStorage
+            this.setTokens(response);
+
+            // Decode the JWT token to get user info
+            const decodedUser = this.decodeToken(response.accessToken);
+            this.setCurrentUser(decodedUser);
+
+            // Update observable streams to notify UI
+            this.isAuthenticatedSubject.next(true);
+            this.currentUserSubject.next(decodedUser);
+          }
+        })
+      );
+  }
+
+  /**
+   * GOOGLE AUTH METHOD
+   * Sends Google ID token to your API for authentication
+   */
+  googleAuth(googleToken: GoogleAuthRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/google-auth`, googleToken)
       .pipe(
         tap(response => {
           if (response.accessToken) {

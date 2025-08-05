@@ -16,13 +16,53 @@
     </ng-container>
   </div>
 
-  <!-- Footer -->
-  <div class="mt-10 flex justify-between items-center">
-    <button (click)="openDialog()" class="bg-gray-200 hover:bg-gray-300 text-black px-6 py-2 rounded-lg font-medium">
-      Show all {{ reviews.length }} reviews
+  <!-- Modal -->
+  @if (showAddReviewModal()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-lg w-full relative animate-modalIn">
+
+        <!-- Close Button -->
+        <button
+          (click)="closeModal()"
+          class="absolute top-3 right-3 text-gray-500 hover:text-black text-2xl"
+        >
+          &times;
+        </button>
+
+        <!-- AddReview Component -->
+        <app-add-review
+          (reviewSubmitted)="handleReviewSubmitted($event)">
+        </app-add-review>
+      </div>
+    </div>
+  }
+
+  <!-- Footer with stylish buttons -->
+<div class="mt-10 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+  <div class="flex gap-4">
+
+    <!-- Show All Reviews Button -->
+    <button
+      (click)="openDialog()"
+      class="group px-6 py-2 bg-gradient-to-r from-sky-100 to-blue-100 text-blue-800 font-medium rounded-full shadow-sm hover:from-blue-100 hover:to-blue-200 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2"
+    >
+      <i class="mdi mdi-eye-outline text-lg group-hover:animate-pulse"></i>
+      <span>Show All Reviews</span>
     </button>
-    <a href="#" class="text-sm text-gray-600 underline hover:text-gray-800">
-      Learn how reviews work
-    </a>
+
+    <!-- Leave a Review Button -->
+    <button
+      (click)="openModal()"
+      class="group px-6 py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full shadow-md hover:from-blue-600 hover:to-sky-600 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2"
+    >
+      <i class="mdi mdi-pencil-outline text-lg group-hover:animate-pulse"></i>
+      <span>Leave a Review</span>
+    </button>
+
   </div>
+
+  <!-- Learn how reviews work link -->
+  <a href="#" class="text-sm text-gray-600 underline hover:text-gray-800 transition-all">
+    Learn how reviews work
+  </a>
 </div>
