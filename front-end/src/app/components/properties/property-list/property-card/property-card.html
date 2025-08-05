@@ -2,7 +2,7 @@
     <div class="group rounded-xl bg-white shadow-sm hover:shadow-xl overflow-hidden ease-in-out duration-500 w-full mx-auto cursor-pointer" (click)="NavigateToProp(property.id)">
     <div class="lg:flex">
         <div class="relative md:shrink-0">
-            <img class="size-full object-cover lg:w-64" [src]="property.imageUrl" [alt]="property.title">
+            <img class="size-full object-cover lg:w-64" [src]="property.images" [alt]="property.title">
           
         </div>
         <div class="p-6">
@@ -13,10 +13,10 @@
             <ul class="md:py-4 py-6 border-y border-slate-100  flex items-center list-none">
                 <li class="flex items-center me-4">
                     <i class="uil uil-compress-arrows text-2xl me-2 text-primary"></i>
-                    <span>{{ property.area }}sqf</span>
+                    <span>{{ property.Area }}sqf</span>
                 </li>
 
-                <!-- <li class="flex items-center me-4">
+                <!-- <!-- <li class="flex items-center me-4">
                     <i  id="icon" class="uil uil-bed-double text-2xl me-2 text-primary"></i>
                     <span>{{ property.beds }} Beds</span>
                 </li>
@@ -45,4 +45,5 @@
             </ul>
         </div>
     </div>
-</div>
+</div> -->
+
