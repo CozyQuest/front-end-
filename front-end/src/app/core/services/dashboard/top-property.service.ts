@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TopProperty } from '../interfaces/top-property.model';
+import { TopProperty } from '../../interfaces/dashboard/top-property.model';
 
 @Injectable({ providedIn: 'root' })
 export class TopPropertyService {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { MapMarker } from '../interfaces/map-marker.model';
+import { MapMarker } from '../../interfaces/dashboard/map-marker.model';
 
 @Injectable({ providedIn: 'root' })
 export class MapMarkerService {

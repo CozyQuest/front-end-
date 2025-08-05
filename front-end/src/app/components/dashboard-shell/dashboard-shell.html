@@ -1,12 +1,5 @@
 <div class="m-10 mb-30">
     <div class="layout-specing">
-        <div class="flex justify-between items-center">
-            <div>
-                <h5 class="text-xl font-semibold">Hello, Ahmed</h5>
-                <h6 class="text-slate-400">Welcome back!</h6>
-            </div>
-        </div>
-
         <div class="grid xl:grid-cols-5 md:grid-cols-3 grid-cols-1 mt-6 gap-6">
             <app-stat-card class="relative overflow-hidden rounded-md shadow-sm bg-white" *ngFor="let card of cards"
                 [title]="card.title" [value]="card.value" [currency]="card.currency" [icon]="card.icon">
@@ -18,12 +11,14 @@
             <app-sales-breakdown class="lg:col-span-4"></app-sales-breakdown>
         </div>
 
-        <app-pending-requests (propertyApproved)="onPropertyApproved()"></app-pending-requests>
+        <app-pending-requests  (propertyApproved)="onPropertyApproved()"></app-pending-requests>
+        
+        <app-user-host-requests ></app-user-host-requests>
 
         <div class="grid lg:grid-cols-12 grid-cols-1 mt-6 gap-6">
             <app-map-card class="xl:col-span-3 lg:col-span-6 order-1"></app-map-card>
-            <app-recent-transactions class="xl:col-span-6 lg:col-span-12 xl:order-2 order-3"></app-recent-transactions>
-            <app-top-properties class="xl:col-span-3 lg:col-span-6 xl:order-3 order-2"></app-top-properties>
+            <app-recent-transactions class="xl:col-span-6 lg:col-span-12 xl:order-2 order-2"></app-recent-transactions>
+            <app-top-properties class="xl:col-span-3 lg:col-span-6 xl:order-3 order-3"></app-top-properties>
         </div>
     </div>
 

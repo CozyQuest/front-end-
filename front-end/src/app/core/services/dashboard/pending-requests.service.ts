@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PendingProperty } from '../interfaces/pending-property.model';
+import { PendingProperty } from '../../interfaces/dashboard/pending-property.model';
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })

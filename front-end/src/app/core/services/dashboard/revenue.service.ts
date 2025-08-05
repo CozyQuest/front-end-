@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RevenueData } from '../interfaces/revenue-data.model';
+import { RevenueData } from '../../interfaces/dashboard/revenue-data.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

@@ -2,8 +2,8 @@ import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { ChartModule } from 'primeng/chart';
-import { RevenueService } from '../../../core/services/revenue.service';
-import { RevenueData } from '../../../core/interfaces/revenue-data.model';
+import { RevenueService } from '../../../core/services/dashboard/revenue.service';
+import { RevenueData } from '../../../core/interfaces/dashboard/revenue-data.model';
 
 @Component({
   selector: 'app-revenue-chart',
