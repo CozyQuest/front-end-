@@ -1,5 +1,5 @@
 import { IpropertyType } from "./iproperty-type";
-
+//This is a deprecated interface, use AddPropertyRequest instead
 export interface IAddProperty {
   id: string;
   name: string;
