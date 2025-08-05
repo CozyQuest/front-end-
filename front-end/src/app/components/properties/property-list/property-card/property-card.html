@@ -2,44 +2,44 @@
     <div class="group rounded-xl bg-white  shadow-sm hover:shadow-xl  overflow-hidden ease-in-out duration-500 w-full mx-auto">
     <div class="lg:flex">
         <div class="relative md:shrink-0">
-            <img class="size-full object-cover lg:w-64" [src]="apartment.imageUrl" [alt]="apartment.title">
+            <img class="size-full object-cover lg:w-64" [src]="property.mainImageUrl" [alt]="property.title">
           
         </div>
         <div class="p-6">
             <div class="md:pb-4 pb-6">
-                <a [routerLink]="['/property-detail', apartment.id]" class="text-lg hover:text-primary font-medium ease-in-out duration-500">{{ apartment.title }}</a>
+                <a [routerLink]="['/property-detail', property.id]" class="text-lg hover:text-primary font-medium ease-in-out duration-500">{{ property.title }}</a>
             </div>
 
             <ul class="md:py-4 py-6 border-y border-slate-100  flex items-center list-none">
                 <li class="flex items-center me-4">
                     <i class="uil uil-compress-arrows text-2xl me-2 text-primary"></i>
-                    <span>{{ apartment.area }}sqf</span>
+                    <span>{{ property.space }}sqf</span>
                 </li>
 
-                <li class="flex items-center me-4">
+                <!-- <li class="flex items-center me-4">
                     <i  id="icon" class="uil uil-bed-double text-2xl me-2 text-primary"></i>
-                    <span>{{ apartment.beds }} Beds</span>
-                </li>
+                    <span>{{ property.beds }} Beds</span>
+                </li> -->
 
                 <li class="flex items-center">
                     <i id="icon" class="uil uil-bath text-2xl me-2 text-primary "></i>
-                    <span>{{ apartment.baths }} Baths</span>
+                    <span>{{ property.bathroomCount }} Baths</span>
                 </li>
             </ul>
 
             <ul class="md:pt-4 pt-6 flex justify-between items-center list-none">
                 <li>
                     <span class="text-slate-400">Price</span>
-                    <p class="text-lg font-medium">{{ apartment.price | currency }}</p>
+                    <p class="text-lg font-medium">{{ property.price | currency }}</p>
                 </li>
 
                 <li>
                     <span class="text-slate-400">Rating</span>
                     <ul class="text-lg font-medium text-amber-400 list-none">
                         <li *ngFor="let star of [1,2,3,4,5]" class="inline">
-                            <i class="mdi" [class.mdi-star]="star <= apartment.rating" [class.mdi-star-outline]="star > apartment.rating"></i>
+                            <!-- <i class="mdi" [class.mdi-star]="star <= property.averageRating" [class.mdi-star-outline]="star > property.averageRating"></i> -->
                         </li>
-                        <li class="inline text-slate-900 ">{{ apartment.rating }}({{ apartment.reviewCount }})</li>
+                        <!-- <li class="inline text-slate-900 ">{{ property.averageRating }}({{ property.reviewsCount }})</li> -->
                     </ul>
                 </li>
             </ul>

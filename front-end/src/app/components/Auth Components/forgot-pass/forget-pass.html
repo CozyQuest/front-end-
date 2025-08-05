@@ -2,11 +2,11 @@
 
   <div class="backdrop-blur-md bg-white bg-opacity-80 p-8 rounded-xl shadow-lg w-full max-w-md">
     <div class="space-y-5">
-      <h2 class="text-xl font-semibold text-center mb-4">Change Password</h2>
+      <h2 class="text-xl font-semibold text-center mb-4">Reset Password</h2>
 
       <div>
-        <label class="block font-medium mb-1">Old Password</label>
-        <input [(ngModel)]="oldPassword" name="oldPassword" type="password"
+        <label class="block font-medium mb-1">Email</label>
+        <input [(ngModel)]="email" name="email" type="email"
                class="w-full border rounded px-3 py-2" />
       </div>
 
@@ -22,9 +22,9 @@
                class="w-full border rounded px-3 py-2" />
       </div>
 
-      <button type="button" (click)="updatePassword()"
-              class="w-full mt-4 bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition">
-        Update Password
+      <button type="button" (click)="resetPassword()"
+              class="mt-4 bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700 transition">
+        Reset Password
       </button>
     </div>
   </div>
