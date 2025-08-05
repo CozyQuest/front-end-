@@ -85,9 +85,8 @@
 
         <!-- Dropdown Menu -->
         <div *ngIf="dropdownOpen" class="absolute right-0 bg-white shadow-lg rounded mt-2 w-48 z-50">
-          <a routerLink="/profile/1" class="block px-4 py-2 hover:bg-gray-100">Profile</a>
-          <a routerLink="/edit-profile" class="block px-4 py-2 hover:bg-gray-100">Edit Profile</a>
-          <a *ngIf="isHost()" routerLink="/add-property" class="block px-4 py-2 hover:bg-gray-100">Add Property</a>
+          <a routerLink="/profile/1" class="block px-4 py-2 hover:bg-gray-100" (click)="closeDropdown()">Profile</a>
+          <a routerLink="/edit-profile" class="block px-4 py-2 hover:bg-gray-100" (click)="closeDropdown()">Edit Profile</a>
           <hr class="my-1">
           <button (click)="logout()" class="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600">
             Logout
@@ -107,15 +106,21 @@
   </div>
 </nav>
 
-<!-- Mobile Menu (below navbar) -->
-<div *ngIf="menuOpen" class="md:hidden bg-white shadow-md z-40 px-4 py-4 space-y-4">
-  <a routerLink="/" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Home</a>
-  <a routerLink="/rent" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Rent</a>
-  <a routerLink="/contact" routerLinkActive="text-blue-500" class="block hover:text-blue-500">contacts us</a>
+<!-- Mobile Menu (fixed positioned below navbar) -->
+<div *ngIf="menuOpen" class="md:hidden fixed top-16 left-0 right-0 bg-white shadow-md z-40 px-4 py-4 space-y-4">
+  <a routerLink="/" routerLinkActive="text-blue-500" class="block hover:text-blue-500" (click)="closeMenu()">Home</a>
+  <a routerLink="/rent" routerLinkActive="text-blue-500" class="block hover:text-blue-500" (click)="closeMenu()">Rent</a>
+  <a routerLink="/contact" routerLinkActive="text-blue-500" class="block hover:text-blue-500" (click)="closeMenu()">contacts us</a>
   @if(isHost()) {
-    <a routerLink="/host" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Host</a>
+    <a routerLink="/host" routerLinkActive="text-blue-500" class="block hover:text-blue-500" (click)="closeMenu()">Host</a>
   }
   @else {
-    <a routerLink="/BecomeHost" routerLinkActive="text-blue-500" class="block hover:text-blue-500">Become A Host</a>
+    <a routerLink="/BecomeHost" routerLinkActive="text-blue-500" class="block hover:text-blue-500" (click)="closeMenu()">Become A Host</a>
   }
 </div>
+
+<!-- Overlay to close menu when clicking outside -->
+<div *ngIf="menuOpen" class="fixed inset-0 z-30 md:hidden" (click)="closeMenu()"></div>
+
+<!-- Overlay to close dropdown when clicking outside -->
+<div *ngIf="dropdownOpen" class="fixed inset-0 z-40" (click)="closeDropdown()"></div>
