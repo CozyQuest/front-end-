@@ -11,14 +11,18 @@
                     <img [src]="p.img" class="object-cover size-14 min-w-[56px] rounded-md shadow-smy" alt="property">
                 </div>
                 <div class="ms-2">
-                    <a href="#" class="font-medium hover:text-primary block text-lg">{{ p.name }}</a>
+                    <a [routerLink]="['/properties', p.propertyId]"
+                        class="font-medium hover:text-primary block text-lg">
+                        {{ p.title }}
+                    </a>
                     <span class="text-slate-400">{{ p.location }}</span>
                 </div>
             </div>
 
-            <span class="w-20 text-end text-yellow-500 flex items-center justify-end gap-1">
+            <span class="w-24 text-end text-yellow-500 flex items-center justify-end gap-1">
                 <i class="mdi mdi-star"></i>
                 {{ p.totalRating | number: '1.1-1' }}
+                <span class="text-slate-400 text-sm">({{ p.countRatings }})</span>
             </span>
         </div>
     </div>
