@@ -1,6 +1,8 @@
 export interface TopProperty {
-  name: string;
-  location: string;
+  propertyId: number;
   img: string;
+  title: string;  
+  location: string;
   totalRating: number;
+  countRatings: number;
 }

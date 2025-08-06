@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RecentTransaction } from '../../../core/interfaces/dashboard/recent-transaction.model';
 import { RecentTransactionService } from '../../../core/services/dashboard/recent-transaction.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-recent-transactions',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './recent-transactions.html',
   styleUrl: './recent-transactions.css'
 })

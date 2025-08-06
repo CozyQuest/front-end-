@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TopPropertyService } from '../../../core/services/dashboard/top-property.service';
 import { TopProperty } from '../../../core/interfaces/dashboard/top-property.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-top-properties',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './top-properties.html',
   styleUrl: './top-properties.css',
 })
