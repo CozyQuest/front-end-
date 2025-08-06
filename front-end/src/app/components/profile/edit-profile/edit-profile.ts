@@ -15,7 +15,7 @@ export class EditProfile implements OnInit {
   profileImage: string = '';
   firstName: string = '';
   lastName: string = '';
-  phone: string = '';
+  PhoneNumber: string = '';
   
   // These will be loaded from existing profile and sent back unchanged
   userId: string = '';
@@ -105,7 +105,7 @@ export class EditProfile implements OnInit {
     console.log('Form data before sending:', {
       firstName: this.firstName,
       lastName: this.lastName,
-      phone: this.phone,
+      PhoneNumber: this.PhoneNumber,
       profileImage: this.profileImage ? 'Image selected' : 'No image'
     });
 
@@ -115,7 +115,7 @@ export class EditProfile implements OnInit {
       fname: this.firstName.trim(),
       lname: this.lastName.trim(),
       email: this.currentEmail,
-      phone: this.phone.trim(),
+      PhoneNumber: this.PhoneNumber.trim(),
       profilePicUrl: this.profileImage
     };
 

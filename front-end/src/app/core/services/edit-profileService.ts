@@ -8,7 +8,7 @@ export interface EditUserProfile {
     fname: string;
     lname: string;
     email: string;
-    phone: string;
+    PhoneNumber: string;
     profilePicUrl: string;
 }
 

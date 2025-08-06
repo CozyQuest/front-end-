@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 
 export interface UserProfile {
-   firstName: string;
+  firstName: string;
   lastName: string;
   email: string;
   phone?: string;

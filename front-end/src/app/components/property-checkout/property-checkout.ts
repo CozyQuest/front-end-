@@ -6,10 +6,11 @@ import { PropertyCheckoutInterface } from '../../core/interfaces/property-checko
 import { PropertyCheckoutService } from '../../core/services/property-checkout-service';
 import { ActivatedRoute } from '@angular/router';
 import { RentingCheckoutInterface } from '../../core/interfaces/renting-checkout-interface';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-property-checkout',
-  imports: [DateRangePicker, CommonModule],
+  imports: [DateRangePicker, CommonModule, FormsModule],
   templateUrl: './property-checkout.html',
   styleUrl: './property-checkout.css'
 })
