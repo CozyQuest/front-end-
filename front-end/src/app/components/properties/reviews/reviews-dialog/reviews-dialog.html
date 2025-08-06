@@ -44,7 +44,7 @@
         <!-- Reviewer Info -->
         <div class="flex items-center gap-4" (click)="goToPublicProfile(review.userId)">
           <img
-            [src]="review.userProfilePicUrl || 'assets/images/avatar.png'"
+            [src]="review.userProfilePicUrl || defaultAvatar "
             alt="{{ review.userFullName }}"
             class="w-12 h-12 rounded-full object-cover border border-blue-200 cursor-pointer hover:ring-2 ring-blue-500"
           />
@@ -61,8 +61,8 @@
         </div>
 
         <!-- Review Text -->
-        <p class="text-sm text-gray-800">
-          {{ review.reviewText.length > 140 ? (review.reviewText | slice: 0:140) + '...' : review.reviewText }}
+       <p class="text-sm text-gray-800">
+          {{ review.reviewText }}
         </p>
       </div>
     </div>

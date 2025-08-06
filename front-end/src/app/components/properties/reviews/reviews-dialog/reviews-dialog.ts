@@ -1,5 +1,4 @@
 import { Component,inject,Inject } from '@angular/core';
-import { Review } from '../../../../core/interfaces/Review';
 import {  MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -21,6 +20,7 @@ export class ReviewsDialog {
 
   userLocation: string = "Alexandria,Egypt";
   private router = inject(Router);
+   defaultAvatar : string = "https://i.pinimg.com/736x/82/85/96/828596ef925a10e8c1a76d3a3be1d3e5.jpg";
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { reviews: ViewReview[] },
@@ -42,8 +42,9 @@ export class ReviewsDialog {
 
  goToPublicProfile(userId: string): void {
   console.log('Navigating to user:', userId); 
-  this.closeDialog(); 
-  this.router.navigate(['/public', userId]);
+  this.router.navigate(['/public', userId]).then(() => {
+    this.closeDialog(); 
+  });
 }
 
 }

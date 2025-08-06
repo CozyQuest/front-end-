@@ -16,6 +16,7 @@ export class PublicProfile {
 private route = inject(ActivatedRoute);
   private userService = inject(UserService);
 
+  defaultAvatar : string = "https://i.pinimg.com/736x/82/85/96/828596ef925a10e8c1a76d3a3be1d3e5.jpg";
   user: UserPublicProfile | null = null;
   fullName = '';
   userLanguage: string = 'English, Japanese, Chinese';

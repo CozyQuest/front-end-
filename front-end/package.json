@@ -30,7 +30,7 @@
     "@angular/platform-browser": "^20.1.0",
     "@angular/platform-server": "^20.1.0",
     "@angular/router": "^20.1.0",
-    "@angular/ssr": "^20.1.2",
+    "@angular/ssr": "^20.1.4",
     "@iconscout/unicons": "^4.2.0",
     "@mdi/font": "^7.4.47",
     "@primeuix/themes": "^1.2.1",

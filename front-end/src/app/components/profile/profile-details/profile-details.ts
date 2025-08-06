@@ -4,7 +4,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { UserService } from '../../../core/services/user.service';
 import { OwnedProperties } from '../owned-properties/owned-properties';
 import { RentedProperties } from '../rented-properties/rented-properties';
-import { User } from '../../../core/interfaces/User';
+import { UserPrivateProfile } from '../../../core/interfaces/UserPrivateProfile.model';
 import { RentingHistory } from '../renting-history/renting-history';
 import { AuthService } from '../../../core/services/auth.service';
 
@@ -18,7 +18,8 @@ import { AuthService } from '../../../core/services/auth.service';
 })
 
 export class ProfileDetails {
- user: User | null = null;
+  defaultAvatar : string = "https://i.pinimg.com/736x/82/85/96/828596ef925a10e8c1a76d3a3be1d3e5.jpg";
+ user: UserPrivateProfile | null = null;
  activeTab = signal<'my' | 'rented' | 'history'>('my');
   userRole: string | null = null;
   userLanguage: string = 'English, Japanese, Chinese';

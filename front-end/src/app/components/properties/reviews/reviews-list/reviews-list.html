@@ -3,7 +3,7 @@
     <ng-container *ngFor="let review of reviews.slice(0, 6)">
       <div class="space-y-2">
         <div class="flex items-center gap-4" (click)="goToPublicProfile(review.userId)">
-          <img [src]="review.userProfilePicUrl" alt="{{ review.userFullName }}" 
+          <img [src]="review.userProfilePicUrl || defaultAvatar" alt="{{ review.userFullName }}" 
           class="w-12 h-12 rounded-full object-cover cursor-pointer"
           >
           <div>
