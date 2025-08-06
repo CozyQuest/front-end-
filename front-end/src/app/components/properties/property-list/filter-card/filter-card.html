@@ -8,31 +8,106 @@
                     <i class="uil uil-search text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2"></i>
                     <input name="search" id="searchname" type="text"
                         class="w-full ps-10 py-2.5 px-3 border border-gray-200  rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm "
-                        placeholder="Search">
+                        placeholder="Search" [(ngModel)]="search" (input)="onSearchChange()">
                 </div>
             </div>
 
-            <!-- Categories Dropdown -->
+
+            <!-- Type Dropdown -->
             <div>
                 <label class="font-semibold text-sm text-gray-900 ">Categories</label>
                 <select
-                    class="w-full mt-2 py-2.5 px-3 border border-gray-200 rounded-md bg-white  text-sm  focus:outline-none focus:ring-2 focus:ring-primary">
-                    <option value="re">Residential</option>
-                    <option value="la">Land</option>
-                    <option value="co">Commercial</option>
-                    <option value="ind">Industrial</option>
-                    <option value="inv">Investment</option>
+                    class="w-full mt-2 py-2.5 px-3 border border-gray-200 rounded-md bg-white  text-sm  focus:outline-none focus:ring-2 focus:ring-primary"
+                    [(ngModel)]="selectedTypeId" name="type">
+                    <option [ngValue]="null">Select Type</option>
+                    <option *ngFor="let type of propertyTypes" [ngValue]="type.id">{{ type.name }}</option>
                 </select>
             </div>
 
-            <!-- Location Dropdown -->
+            <!-- Service Dropdown -->
             <div>
-                <label class="font-semibold text-sm text-gray-900 ">Location</label>
+                <label class="font-semibold text-sm text-gray-900 ">Service</label>
                 <select
-                    class="w-full mt-2 py-2.5 px-3 border border-gray-200 rounded-md bg-white  text-sm  focus:outline-none focus:ring-2 focus:ring-primary">
-                    <option value="NY">New York</option>
-                    <option value="MC">North Carolina</option>
-                    <option value="SC">South Carolina</option>
+                    class="w-full mt-2 py-2.5 px-3 border border-gray-200 rounded-md bg-white  text-sm  focus:outline-none focus:ring-2 focus:ring-primary"
+                    [(ngModel)]="selectedServiceId" name="service">
+                    <option [ngValue]="null">Select Service</option>
+                    <option *ngFor="let service of services" [ngValue]="service.id">{{ service.name }}</option>
+                </select>
+            </div>
+
+           
+
+            <!-- Country Dropdown -->
+            <div>
+                <label class="font-semibold text-sm text-gray-900 ">Country</label>
+                <select class="w-full mt-2 py-2.5 px-3 border border-gray-200 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary" 
+                        [(ngModel)]="selectedCountry" name="country" (ngModelChange)="onCountryChange()">
+                    <option value="">Select Country</option>
+                    <option *ngFor="let location of locations" [value]="location.country">{{ location.country }}</option>
+                </select>
+            </div>
+
+            <!-- City Dropdown -->
+            <div>
+                <label class="font-semibold text-sm text-gray-900 ">City</label>
+                <select class="w-full mt-2 py-2.5 px-3 border border-gray-200 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary" 
+                        [(ngModel)]="selectedCity" name="city" (ngModelChange)="onCityChange()">
+                    <option value="">Select City</option>
+                    <option *ngFor="let city of cities" [value]="city.city">{{ city.city }}</option>
+                </select>
+            </div>
+
+            <!-- District Dropdown -->
+            <div>
+                <label class="font-semibold text-sm text-gray-900 ">District</label>
+                <select class="w-full mt-2 py-2.5 px-3 border border-gray-200 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary" 
+                        [(ngModel)]="selectedDistrict" name="district">
+                    <option value="">Select District</option>
+                    <option *ngFor="let district of districts" [value]="district">{{ district }}</option>
+                </select>
+            </div>
+
+            <!-- Min People Field -->
+            <div>
+                <label for="minPeople" class="font-semibold text-sm text-gray-900 ">Min People</label>
+                <input name="minPeople" id="minPeople" type="number"
+                    class="w-full py-2.5 px-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm "
+                    placeholder="Min People" [(ngModel)]="minPeople">
+            </div>
+
+            <!-- Min Space Field -->
+            <div>
+                <label for="minSpace" class="font-semibold text-sm text-gray-900 ">Min Space (m²)</label>
+                <input name="minSpace" id="minSpace" type="number"
+                    class="w-full py-2.5 px-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm "
+                    placeholder="Min Space" [(ngModel)]="minSpace">
+            </div>
+
+            <!-- Min Price Field -->
+            <div>
+                <label for="minPrice" class="font-semibold text-sm text-gray-900 ">Min Price</label>
+                <input name="minPrice" id="minPrice" type="number"
+                    class="w-full py-2.5 px-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm "
+                    placeholder="Min Price" [(ngModel)]="minPrice">
+            </div>
+
+            <!-- Max Price Field -->
+            <div>
+                <label for="maxPrice" class="font-semibold text-sm text-gray-900 ">Max Price</label>
+                <input name="maxPrice" id="maxPrice" type="number"
+                    class="w-full py-2.5 px-3 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-primary text-sm "
+                    placeholder="Max Price" [(ngModel)]="maxPrice">
+            </div>
+
+            <!-- Order By Dropdown -->
+            <div>
+                <label class="font-semibold text-sm text-gray-900 ">Order By</label>
+                <select class="w-full mt-2 py-2.5 px-3 border border-gray-200 rounded-md bg-white text-sm focus:outline-none focus:ring-2 focus:ring-primary" [(ngModel)]="orderBy" name="orderBy">
+                    <option value="">Select Order</option>
+                    <option value="priceAsc">Price: Low to High</option>
+                    <option value="priceDesc">Price: High to Low</option>
+                    <option value="areaAsc">Area: Small to Large</option>
+                    <option value="areaDesc">Area: Large to Small</option>
                 </select>
             </div>
 

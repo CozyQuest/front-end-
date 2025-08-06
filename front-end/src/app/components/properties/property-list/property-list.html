@@ -19,14 +19,14 @@
 
       <!-- Filter Component -->
       <div class="lg:col-span-4 md:col-span-6">
-        <app-filter></app-filter>
+        <app-filter (filterApplied)="onFilterApplied($event)"></app-filter>
       </div>
 
       <!-- Apartments List -->
       <div class="lg:col-span-8 md:col-span-6">
         <div class="grid grid-cols-1 gap-[30px]">
           <app-property-card
-            *ngFor="let property of properties"
+            *ngFor="let property of pagedApartments"
             [property]="property">
           </app-property-card>
         </div>
