@@ -26,12 +26,12 @@
 
     <!-- Remember Me -->
     <div class="flex items-center">
-      <input type="checkbox" formControlName="rememberMe" id="rememberMe" class="mr-2">
-      <label for="rememberMe" class="text-sm text-gray-700">Remember Me</label>
+      <input type="checkbox" formControlName="rememberMe" id="rememberMe" class="mr-2 cursor-pointer">
+      <label for="rememberMe" class="text-sm text-gray-700 cursor-pointer">Remember Me</label>
     </div>
 
      <a (click)="forgetPass()"
-   class="mt-4 inline-block text-blue-600 hover:underline text-sm">
+   class="mt-4 inline-block text-blue-600 hover:underline text-sm cursor-pointer">
   Forgot Password?
 </a>
 
@@ -40,7 +40,7 @@
     <button
       type="submit"
       [disabled]="isLoading"
-      class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition disabled:opacity-50">
+      class="w-full bg-blue-500 text-white p-3 rounded hover:bg-blue-700 transition disabled:opacity-50 cursor-pointer">
       {{ isLoading ? 'Logging in...' : 'Login' }}
     </button>
 

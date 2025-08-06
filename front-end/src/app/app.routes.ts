@@ -8,7 +8,7 @@ import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
 import { BecomeHostGuard } from './core/guards/become-host.guard';
-import { changePassword } from './components/profile/change-pass/change-pass';
+import { ChangePassword } from './components/profile/change-pass/change-pass';
 import { ForgotPasswordComponent } from './components/Auth Components/forgot-pass/forget-pass';
 import { PaymentSuccess } from './components/payment-success/payment-success';
 import { PaymentCancel } from './components/payment-cancel/payment-cancel';
@@ -54,7 +54,7 @@ export const routes: Routes = [
   },
     {
     path: 'change-pass',
-    component: changePassword,
+    component: ChangePassword,
     canActivate: [AuthGuard]
   },
       {

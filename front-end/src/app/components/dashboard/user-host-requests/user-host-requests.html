@@ -1,0 +1,81 @@
+<div class="lg:col-span-12 col-span-1 mt-6 gap-6">
+    <div class="relative overflow-hidden rounded-md shadow-sm bg-white">
+        <div class="p-6 flex items-center justify-between border-b border-gray-100">
+            <h6 class="text-lg font-semibold">Host Upgrade Requests</h6>
+        </div>
+
+        <div class="relative overflow-x-auto block w-full xl:max-h-[284px] max-h-[350px]" data-simplebar>
+            <!-- Show table only if there are host upgrade requests -->
+            <table *ngIf="userRequests.length > 0" class="w-full text-start">
+                <thead class="text-base">
+                    <tr>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3"></th>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[120px]">Name</th>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[120px]">Email</th>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[80px]">ID Front</th>
+                        <th class="text-start font-semibold text-[15px] px-4 py-3 min-w-[80px]">ID Back</th>
+                        <th class="text-end font-semibold text-[15px] px-4 py-3 min-w-[120px]">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let user of userRequests">
+                        <th class="text-start border-t border-gray-100 px-4 py-3 font-semibold">
+                            <img [src]="user.profilePicUrl"
+                                class="object-cover size-12 min-w-[48px] rounded-md shadow-sm" alt="">
+                        </th>
+                        <td class="text-start border-t border-gray-100 px-4 py-3 font-semibold">
+                            {{ user.fname }} {{ user.lname }}
+                        </td>
+                        <td class="text-start border-t border-gray-100 px-4 py-3 text-slate-500">
+                            {{ user.email }}
+                        </td>
+                        <!-- ID Front Thumbnail -->
+                        <td class="text-start border-t border-gray-100 px-4 py-3">
+                            <img [src]="user.urlIdFront" alt="ID Front"
+                                class="h-16 w-auto rounded shadow-sm cursor-pointer hover:opacity-80"
+                                (click)="selectedImageUrl = user.urlIdFront" />
+                        </td>
+                        <!-- ID Back Thumbnail -->
+                        <td class="text-start border-t border-gray-100 px-4 py-3">
+                            <img [src]="user.urlIdBack" alt="ID Back"
+                                class="h-16 w-auto rounded shadow-sm cursor-pointer hover:opacity-80"
+                                (click)="selectedImageUrl = user.urlIdBack" />
+                        </td>
+                        <td class="text-end border-t border-gray-100 px-4 py-3">
+                            <div class="flex flex-col sm:flex-row sm:justify-end gap-2">
+                                <button
+                                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto"
+                                    (click)="approve(user)">
+                                    Approve
+                                </button>
+                                <button
+                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto"
+                                    (click)="reject(user)">
+                                    Reject
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div *ngIf="selectedImageUrl"
+                class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                <div class="bg-white p-4 rounded-md shadow-xl max-w-[90%] max-h-[90%]">
+                    <img [src]="selectedImageUrl" alt="Full ID Preview" class="max-w-full max-h-[80vh] rounded" />
+                    <button (click)="selectedImageUrl = null"
+                        class="absolute top-3 right-3 text-gray-500 hover:text-red-600 text-4xl font-bold focus:outline-none"
+                        aria-label="Close preview">
+                        &times;
+                    </button>
+                </div>
+            </div>
+
+            <!-- Empty message -->
+            <div *ngIf="userRequests.length === 0" class="text-center py-10 text-slate-400 text-sm font-medium">
+                No host upgrade requests to show.
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RecentTransaction } from '../interfaces/recent-transaction.model';
+import { RecentTransaction } from '../../interfaces/dashboard/recent-transaction.model';
 import { Observable } from 'rxjs';
 
 @Injectable({

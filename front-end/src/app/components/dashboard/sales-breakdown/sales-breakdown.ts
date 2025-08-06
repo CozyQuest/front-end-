@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SalesBreakdownService } from '../../../core/services/sales-breakdown.service';
-import { SalesSource } from '../../../core/interfaces/sales-source.model';
+import { SalesBreakdownService } from '../../../core/services/dashboard/sales-breakdown.service';
+import { SalesSource } from '../../../core/interfaces/dashboard/sales-source.model';
 
 @Component({
   selector: 'app-sales-breakdown',

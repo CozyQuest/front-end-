@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PendingRequestsService } from '../../../core/services/pending-requests.service';
-import { PendingProperty } from '../../../core/interfaces/pending-property.model';
+import { PendingRequestsService } from '../../../core/services/dashboard/pending-requests.service';
+import { PendingProperty } from '../../../core/interfaces/dashboard/pending-property.model';
 
 @Component({
   selector: 'app-pending-requests',

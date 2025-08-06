@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ForgetPasswordService } from '../../../core/services/forget-password-service';
 
 @Component({
   imports:[CommonModule,FormsModule],
@@ -11,6 +12,8 @@ export class ForgotPasswordComponent {
   email: string = '';
   newPassword: string = '';
   confirmPassword: string = '';
+
+  constructor(private forgetPasswordService: ForgetPasswordService) {}
 
   resetPassword(): void {
     if (!this.email || !this.newPassword || !this.confirmPassword) {
@@ -23,13 +26,19 @@ export class ForgotPasswordComponent {
       return;
     }
 
-    // Simulated request – replace this with a real service call
-    console.log('Sending password reset for:', this.email);
-    alert('Password reset request submitted. Please check your email.');
-
-    // Optionally, reset form fields
-    this.email = '';
-    this.newPassword = '';
-    this.confirmPassword = '';
+    this.forgetPasswordService
+      .resetPassword(this.email, this.newPassword, this.confirmPassword)
+      .subscribe({
+        next: () => {
+          alert('Password reset successful. Please log in with your new password.');
+          this.email = '';
+          this.newPassword = '';
+          this.confirmPassword = '';
+        },
+        error: (err) => {
+          const message = typeof err.error === 'string' ? err.error : 'Reset failed.';
+          alert(message);
+        },
+      });
   }
 }

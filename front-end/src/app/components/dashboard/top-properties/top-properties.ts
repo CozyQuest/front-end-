@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TopPropertyService } from '../../../core/services/top-property.service';
-import { TopProperty } from '../../../core/interfaces/top-property.model';
+import { TopPropertyService } from '../../../core/services/dashboard/top-property.service';
+import { TopProperty } from '../../../core/interfaces/dashboard/top-property.model';
 
 @Component({
   selector: 'app-top-properties',
