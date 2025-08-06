@@ -25,15 +25,22 @@
                     </th>
                     <td class="text-start border-t border-gray-100 px-4 py-3 font-semibold">
                         <div class="ms-2">
-                            <a href="#" class="font-medium hover:text-primary block text-lg">{{ txn.title }}</a>
+                            <a [routerLink]="['/properties', txn.propertyId]"
+                                class="font-medium hover:text-primary block text-lg">
+                                {{ txn.title }}
+                            </a>
                             <span class="text-slate-400">{{ txn.location }}</span>
                         </div>
                     </td>
                     <td class="text-start border-t border-gray-100 px-4 py-3">
-                        <span>{{ txn.guestName }}</span>
+                        <a [routerLink]="['/profile', txn.guestId]" class="hover:text-primary">
+                            {{ txn.guestName }}
+                        </a>
                     </td>
                     <td class="text-start border-t border-gray-100 px-4 py-3">
-                        <span>{{ txn.hostName }}</span>
+                        <a [routerLink]="['/profile', txn.hostId]" class="hover:text-primary">
+                            {{ txn.hostName }}
+                        </a>
                     </td>
                     <td class="text-start border-t border-gray-100 px-4 py-3">
                         <span class="text-slate-400">{{ txn.price }}</span>
