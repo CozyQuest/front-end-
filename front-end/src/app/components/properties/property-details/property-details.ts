@@ -20,6 +20,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './property-details.css'
 })
 export class PropertyDetails implements OnInit {
+getRatingText() {
+throw new Error('Method not implemented.');
+}
   property?: properties;
   mapUrl?: SafeResourceUrl;
   loadingImages = true;
