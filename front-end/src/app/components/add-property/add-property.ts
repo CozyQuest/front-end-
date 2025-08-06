@@ -1,4 +1,5 @@
 import { Component, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Carousel } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -57,7 +58,7 @@ export class AddProperty implements OnDestroy {
   private objectUrls: string[] = [];
   private imageUrlCache: { [key: string]: string } = {};
 
-  constructor(private propertyService: PropertyService) { }
+  constructor(private propertyService: PropertyService, private router: Router) { }
 
   ngOnDestroy(): void {
     // Clean up object URLs to prevent memory leaks
@@ -101,25 +102,121 @@ export class AddProperty implements OnDestroy {
     }
   }
 
-  // Fix: This method now correctly sets the main image from the carousel
-  setMainImage(image: File): void {
-    this.property.MainImage = image;
-    console.log('Main image set:', image);
+  // Image management methods (like update-properties)
+  getAllImages(): any[] {
+    const allImages: any[] = [];
+    
+    // Add uploaded images
+    if (this.property.Images && this.property.Images.length > 0) {
+      this.property.Images.forEach(file => {
+        allImages.push({
+          type: 'new',
+          file: file,
+          id: file.name + file.lastModified // Unique identifier for file
+        });
+      });
+    }
+    
+    return allImages;
+  }
+
+  getImageSrc(imageData: any): string {
+    if (imageData.type === 'new') {
+      return this.getImagePreview(imageData.file);
+    }
+    console.warn('⚠️ Unknown image data type:', imageData);
+    return '';
+  }
+
+  getImageAlt(imageData: any, index: number): string {
+    if (imageData.type === 'new') {
+      return imageData.file.name;
+    }
+    return `Image ${index + 1}`;
+  }
+
+  isMainImage(imageData: any): boolean {
+    if (imageData.type === 'new') {
+      return this.property.MainImage === imageData.file;
+    }
+    return false;
+  }
+
+  setMainImage(imageData: any): void {
+    console.log('Setting main image:', imageData);
+    
+    if (imageData.type === 'new') {
+      this.property.MainImage = imageData.file;
+      console.log('✅ Selected new image as main:', imageData.file.name);
+    }
+  }
+
+  toggleFavorite(imageData: any): void {
+    this.setMainImage(imageData);
+  }
+
+  hasMainImageSelected(): boolean {
+    return !!this.property.MainImage;
+  }
+
+  // Remove an image from the list
+  removeImage(imageData: any): void {
+    if (imageData.type === 'new') {
+      const index = this.property.Images?.indexOf(imageData.file);
+      if (index !== undefined && index > -1 && this.property.Images) {
+        this.property.Images.splice(index, 1);
+        console.log('🗑️ Removed image:', imageData.file.name);
+        
+        // If this was the main image, reset main image selection
+        if (this.property.MainImage === imageData.file) {
+          this.property.MainImage = null;
+          
+          // Auto-select the first remaining image as main if available
+          const allImages = this.getAllImages();
+          if (allImages.length > 0) {
+            this.setMainImage(allImages[0]);
+          }
+        }
+      }
+    }
   }
 
   // This method handles file input selection for multiple images
   onImagesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files?.length) {
-      this.property.Images = Array.from(input.files);
+      const newImages = Array.from(input.files);
       
-      // Automatically set the first image as main image if none is selected
-      if (!this.property.MainImage && this.property.Images.length > 0) {
-        this.property.MainImage = this.property.Images[0];
+      // Validate image files
+      const validImages = newImages.filter(file => {
+        if (!file.type.startsWith('image/')) {
+          console.warn('Skipping non-image file:', file.name);
+          return false;
+        }
+        return true;
+      });
+      
+      if (validImages.length === 0) {
+        alert('Please select valid image files only.');
+        return;
       }
       
-      console.log('Images selected:', this.property.Images);
-      console.log('Main image:', this.property.MainImage);
+      // Append new images to existing ones instead of replacing
+      const currentImages = this.property.Images || [];
+      this.property.Images = [...currentImages, ...validImages];
+      
+      // Set first image as main if no main image is selected
+      if (!this.hasMainImageSelected() && this.getAllImages().length > 0) {
+        const firstImage = this.getAllImages()[0];
+        this.setMainImage(firstImage);
+        console.log('🎯 Auto-selected main image:', firstImage);
+      }
+      
+      console.log('🖼️ Images added:', validImages.length, 'files');
+      console.log('📝 Total images now:', this.property.Images.length);
+      
+      // Reset the input
+      input.value = '';
     }
   }
 
@@ -135,7 +232,8 @@ export class AddProperty implements OnDestroy {
       .subscribe({
         next: res => {
           console.log('Property added successfully', res);
-          // this.router.navigate(['/properties']);
+          // Navigate to host dashboard after successful property addition
+          this.router.navigate(['/host']);
         },
         error: err => {
           console.error('Error adding property', err);

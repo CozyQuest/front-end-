@@ -81,8 +81,8 @@ export class UpdateProperty implements OnInit, OnDestroy {
       if (this.propertyId) {
         this.loadPropertyData();
       } else {
-        // Invalid ID, redirect to properties list
-        this.router.navigate(['/properties']);
+        // Invalid ID, redirect to host dashboard
+        this.router.navigate(['/host']);
       }
     });
   }
@@ -533,8 +533,8 @@ export class UpdateProperty implements OnInit, OnDestroy {
         this.property.Images = [];
         this.property.MainImage = null;
         
-        // Reload the updated data to get fresh image URLs
-        this.loadPropertyData();
+        // Navigate to host dashboard after successful update
+        this.router.navigate(['/host']);
       },
       error: (error) => {
         console.error('Error updating property', error);
@@ -676,7 +676,7 @@ export class UpdateProperty implements OnInit, OnDestroy {
         return;
       }
     }
-    this.router.navigate(['/properties']);
+    this.router.navigate(['/host']);
   }
 
   resetForm(): void {

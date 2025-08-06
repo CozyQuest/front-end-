@@ -2,32 +2,48 @@
 
 /* Custom Carousel Styling */
 .custom-carousel ::ng-deep .p-carousel-content {
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
+  padding: 0 8px;
 }
 
 .custom-carousel ::ng-deep .p-carousel-prev,
 .custom-carousel ::ng-deep .p-carousel-next {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   color: #374151;
   border: none;
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  width: 48px;
+  height: 48px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.custom-carousel ::ng-deep .p-carousel-prev:hover,
-.custom-carousel ::ng-deep .p-carousel-next:hover {
-  background: rgba(255, 255, 255, 1);
-  color: #1f2937;
-  transform: scale(1.1);
-}
+
 
 .custom-carousel ::ng-deep .p-carousel-indicators {
-  display: none;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+  gap: 8px;
+}
+
+.custom-carousel ::ng-deep .p-carousel-indicator button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.custom-carousel ::ng-deep .p-carousel-indicator.p-highlight button {
+  background: #3b82f6;
+  width: 24px;
+  border-radius: 4px;
 }
 
 /* Form Input Focus Effects */
@@ -124,11 +140,7 @@ button:hover:before {
 
 /* Image preview enhancements */
 .relative img {
-  transition: all 0.3s ease;
-}
-
-.group:hover img {
-  filter: brightness(1.1);
+  transition: none;
 }
 
 /* Heart icon animation */
@@ -146,6 +158,11 @@ button:hover:before {
   100% {
     transform: scale(1);
   }
+}
+
+/* Enhanced shadow effects for badges */
+.bg-gradient-to-r {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 /* Custom scrollbar for textarea */
