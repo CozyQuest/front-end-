@@ -7,8 +7,11 @@ import { EditProfile } from './components/profile/edit-profile/edit-profile';
 import { DashboardShell } from './components/dashboard-shell/dashboard-shell';
 import { AuthGuard } from './core/guards/auth.guard';
 import { RoleGuard } from './core/guards/role.guard';
+import { BecomeHostGuard } from './core/guards/become-host.guard';
 import { changePassword } from './components/profile/change-pass/change-pass';
 import { ForgotPasswordComponent } from './components/Auth Components/forgot-pass/forget-pass';
+import { PaymentSuccess } from './components/payment-success/payment-success';
+import { PaymentCancel } from './components/payment-cancel/payment-cancel';
 
 export const routes: Routes = [
   // Protected route - requires login
@@ -34,6 +37,18 @@ export const routes: Routes = [
     path: 'edit-profile',
     component: EditProfile,
     canActivate: [AuthGuard]
+  },
+  { 
+    path: 'payment-success', 
+    component: PaymentSuccess,
+    canActivate: [AuthGuard, RoleGuard],
+      data: { role: ['User','Host'] }
+  },
+  { 
+    path: 'payment-cancel', 
+    component: PaymentCancel ,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: ['User','Host'] }
   },
     {
     path: 'change-pass',
@@ -90,8 +105,24 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'contact-us',
+    path: 'contact',
     loadComponent: () => import('./components/contact-us/contact-us').then(m => m.ContactUs)
+  },
+  {
+    path: 'BecomeHost',
+    loadComponent: () => import('./components/become-host/become-host').then(m => m.BecomeHost),
+    canActivate: [AuthGuard, RoleGuard, BecomeHostGuard],
+    data: { role: 'User' }
+  },
+  {
+    path: 'host',
+    loadComponent: () => import('./components/host-owned-list/host-owned-list').then(m => m.HostOwnedList),
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'Host' }
+  },
+  {
+    path: 'submission-under-review',
+    loadComponent: () => import('./components/submission-under-review/submission-under-review').then(m => m.SubmissionUnderReview)
   },
   {
     path: 'test',

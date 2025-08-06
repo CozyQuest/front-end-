@@ -1,88 +1,174 @@
-import { Component, OnInit, ChangeDetectorRef, effect, inject } from '@angular/core';
-import { ChartModule } from 'primeng/chart';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
+import { ChartModule } from 'primeng/chart';
+import { RevenueService } from '../../../core/services/dashboard/revenue.service';
+import { RevenueData } from '../../../core/interfaces/dashboard/revenue-data.model';
 
 @Component({
   selector: 'app-revenue-chart',
   standalone: true,
-  imports: [ChartModule],
+  imports: [CommonModule, ChartModule],
   templateUrl: './revenue-chart.html'
 })
 export class RevenueChart implements OnInit {
-  chartData: any;
+  chartData: RevenueData | undefined;
   chartOptions: any;
 
   platformId = inject(PLATFORM_ID);
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private revenueService: RevenueService) { }
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const documentStyle = getComputedStyle(document.documentElement);
-      const textColor = documentStyle.getPropertyValue('--p-text-color');
-      const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color');
-      const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
+      this.initChartOptions();
+      this.fetchChartData('Y');
+    }
+  }
 
-      this.chartData = {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        datasets: [
+  onPeriodChange(event: Event): void {
+    const period = (event.target as HTMLSelectElement).value;
+    this.fetchChartData(period);
+  }
+
+  private fetchChartData(period: string): void {
+    this.revenueService.getRevenueData(period).subscribe({
+      next: (data) => {
+        const baseColors = [
           {
-            label: 'No. of Sales',
-            data: [0, 100, 40, 110, 60, 140, 55, 130, 65, 180, 75, 115],
-            borderColor: '#94a3b8',
-            backgroundColor: 'rgba(148, 163, 184, 0.2)',
-            tension: 0.4,
-            fill: true,
-            borderWidth: 1.5
+            match: 'rentings',
+            yAxisID: 'y',
+            borderColor: '#6366F1',
+            backgroundColor: 'rgba(99, 102, 241, 0.2)',
+            borderDash: []
           },
           {
-            label: 'Revenue',
-            data: [0, 45, 10, 75, 35, 94, 40, 115, 30, 105, 65, 110],
-            borderColor: '#16a34a',
-            backgroundColor: 'rgba(22, 163, 74, 0.2)',
-            tension: 0.4,
-            fill: true,
-            borderWidth: 1.5,
+            match: 'revenue',
+            yAxisID: 'y1',
+            borderColor: '#00a63e',
+            backgroundColor: 'rgba(0, 166, 62, 0.2)',
             borderDash: [4, 4]
           }
-        ]
-      };
+        ];
 
-      this.chartOptions = {
-        maintainAspectRatio: false,
-        aspectRatio: 0.6,
-        plugins: {
-          legend: {
-            position: 'bottom',
-            labels: {
-              color: textColor
-            }
+        this.chartData = {
+          labels: data.labels,
+          datasets: data.datasets.map((dataset) => {
+            const match = baseColors.find(c =>
+              dataset.label.toLowerCase().includes(c.match)
+            ) ?? baseColors[0];
+
+            return {
+              ...dataset,
+              yAxisID: match.yAxisID,
+              borderColor: match.borderColor,
+              backgroundColor: match.backgroundColor,
+              borderDash: match.borderDash,
+              tension: 0.4,
+              fill: true,
+              pointRadius: 0,
+              pointHoverRadius: 4,
+              borderWidth: 2
+            };
+          })
+        };
+
+        this.cd.markForCheck();
+      },
+      error: (err) => console.error('Error fetching revenue data:', err)
+    });
+  }
+
+  private initChartOptions(): void {
+    const style = getComputedStyle(document.documentElement);
+    const textColor = style.getPropertyValue('--p-text-color');
+    const textColorSecondary = style.getPropertyValue('--p-text-muted-color');
+    const surfaceBorder = style.getPropertyValue('--p-content-border-color');
+
+    this.chartOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      aspectRatio: 0.6,
+      interaction: {
+        mode: 'index',
+        intersect: false
+      },
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            color: textColor,
+            usePointStyle: true
           }
         },
-        scales: {
-          x: {
-            ticks: {
-              color: textColorSecondary
-            },
-            grid: {
-              color: surfaceBorder,
-              drawBorder: false
-            }
-          },
-          y: {
-            ticks: {
-              color: textColorSecondary
-            },
-            grid: {
-              color: surfaceBorder,
-              drawBorder: false
+        tooltip: {
+          backgroundColor: '#1F2937',
+          titleColor: '#F9FAFB',
+          bodyColor: '#E5E7EB',
+          cornerRadius: 6,
+          callbacks: {
+            label: (tooltipItem: any) => {
+              const label = tooltipItem.dataset.label || '';
+              const value = tooltipItem.formattedValue;
+              return label.toLowerCase().includes('revenue')
+                ? `${label}: $${value}`
+                : `${label}: ${value} rentings`;
             }
           }
         }
-      };
-
-      this.cd.markForCheck();
-    }
+      },
+      scales: {
+        x: {
+          ticks: {
+            color: textColorSecondary,
+            font: { size: 12 }
+          },
+          grid: {
+            color: surfaceBorder,
+            borderDash: [4, 4],
+            drawBorder: true
+          }
+        },
+        y: {
+          type: 'linear',
+          position: 'left',
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'No. of Rentings',
+            color: textColorSecondary,
+            font: { size: 12 }
+          },
+          ticks: {
+            color: textColorSecondary,
+            precision: 0
+          },
+          grid: {
+            color: surfaceBorder,
+            borderDash: [4, 4]
+          }
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          beginAtZero: true,
+          grid: {
+            drawTicks: false,
+            drawOnChartArea: false,
+            drawBorder: false
+          },
+          title: {
+            display: true,
+            text: 'Revenue ($)',
+            color: textColorSecondary,
+            font: { size: 12 }
+          },
+          ticks: {
+            color: textColorSecondary,
+            precision: 0
+          }
+        }
+      }
+    };
   }
 }

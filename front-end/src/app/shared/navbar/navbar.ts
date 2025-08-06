@@ -29,6 +29,15 @@ export class Navbar {
     if (!this.menuOpen) this.dropdownOpen = false;
   }
 
+  closeMenu() {
+    this.menuOpen = false;
+    this.dropdownOpen = false;
+  }
+
+  closeDropdown() {
+    this.dropdownOpen = false;
+  }
+
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
@@ -38,6 +47,7 @@ export class Navbar {
    * Called when user clicks logout button
    */
   logout() {
+    this.closeDropdown(); // Close dropdown when logging out
     this.authService.logout();
     // The BehaviorSubjects will automatically update,
     // and the navbar will re-render to show login buttons

@@ -5,6 +5,7 @@ import { differenceInDays } from 'date-fns'; // Import differenceInDays
 import { PropertyCheckoutInterface } from '../../core/interfaces/property-checkout';
 import { PropertyCheckoutService } from '../../core/services/property-checkout-service';
 import { ActivatedRoute } from '@angular/router';
+import { RentingCheckoutInterface } from '../../core/interfaces/renting-checkout-interface';
 
 @Component({
   selector: 'app-property-checkout',
@@ -84,5 +85,31 @@ export class PropertyCheckout implements OnInit {
       this.numberOfDays = 0;
       this.totalPrice = 0;
     }
+  }
+
+  payWithStripe() {
+    if (!this.selectedStartDate || !this.selectedEndDate) {
+      alert('Please select a valid date range before proceeding to payment.');
+      return;
+    }
+    if (this.numberOfDays <= 0) {
+      alert('Please select a valid date range with at least one day.');
+      return;
+    }
+    const checkoutData: RentingCheckoutInterface = {
+      propertyId: this.property.id,
+      startDate: this.selectedStartDate,
+      endDate: this.selectedEndDate
+    };
+    this.propertyCheckoutService.createStripeSession(checkoutData).subscribe({
+      next: (response) => {
+        // Redirect to the Stripe checkout URL
+        window.location.href = response.checkoutUrl;
+      },
+      error: (err) => {
+        console.error('Failed to create Stripe session:', err);
+        alert('An error occurred while processing your payment. Please try again later.');
+      }
+    });
   }
 }
