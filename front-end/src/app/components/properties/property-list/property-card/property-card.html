@@ -1,49 +1,52 @@
 
-    <div class="group rounded-xl bg-white shadow-sm hover:shadow-xl overflow-hidden ease-in-out duration-500 w-full mx-auto cursor-pointer" (click)="NavigateToProp(property.id)">
+    <div class="group rounded-xl bg-white shadow-sm hover:shadow-xl overflow-hidden ease-in-out duration-500 w-full mx-auto cursor-pointer" (click)="NavigateToProp(property?.id)">
     <div class="lg:flex">
         <div class="relative md:shrink-0">
             <img class="size-full object-cover lg:w-64" 
-                 [src]="(property.images && property.images.length > 0 ? property.images[0] : 
-                         property.imageUrls && property.imageUrls.length > 0 ? property.imageUrls[0] : 
-                         property.mainImageUrl) || 'assets/images/property/1.jpg'" 
-                 [alt]="property.title">
+                 [src]="(property?.imageUrl || 
+                         (property?.images && property.images.length > 0 ? property.images[0] : null) || 
+                         (property?.imageUrls && property.imageUrls.length > 0 ? property.imageUrls[0] : null) || 
+                         property?.mainImageUrl) || 'assets/images/property/1.jpg'" 
+                 [alt]="property?.title || 'Property'"
+                 (error)="onImageError($event)"
+                 (load)="onImageLoad($event)">
           
         </div>
         <div class="p-6">
             <div class="md:pb-4 pb-6">
-                <h3 class="text-lg hover:text-primary font-medium ease-in-out duration-500 cursor-pointer">{{ property.title }}</h3>
+                <h3 class="text-lg hover:text-primary font-medium ease-in-out duration-500 cursor-pointer">{{ property?.title || 'Untitled Property' }}</h3>
             </div>
 
             <ul class="md:py-4 py-6 border-y border-slate-100  flex items-center list-none">
                 <li class="flex items-center me-4">
                     <i class="uil uil-compress-arrows text-2xl me-2 text-primary"></i>
-                    <span>{{ property.space }}sqf</span>
+                    <span>{{ property?.space || property?.area || 0 }}sqf</span>
                 </li>
 
                 <li class="flex items-center me-4">
                     <i  id="icon" class="uil uil-bed-double text-2xl me-2 text-primary"></i>
-                    <span>{{ property.roomCount }} Beds</span>
+                    <span>{{ property?.roomCount || property?.beds || 0 }} Beds</span>
                 </li>
 
                 <li class="flex items-center">
                     <i id="icon" class="uil uil-bath text-2xl me-2 text-primary "></i>
-                    <span>{{ property.bathroomCount }} Baths</span>
+                    <span>{{ property?.bathroomCount || property?.baths || 0 }} Baths</span>
                 </li>
             </ul>
 
             <ul class="md:pt-4 pt-6 flex justify-between items-center list-none">
                 <li>
                     <span class="text-slate-400">Price</span>
-                    <p class="text-lg font-medium">{{ property.price | currency }}</p>
+                    <p class="text-lg font-medium">{{ property?.price || 0 | currency }}</p>
                 </li>
 
                 <li>
                     <span class="text-slate-400">Rating</span>
                     <ul class="text-lg font-medium text-amber-400 list-none">
                         <li *ngFor="let star of [1,2,3,4,5]" class="inline">
-                            <i class="mdi" [class.mdi-star]="star <= (property.averageRating || 0)" [class.mdi-star-outline]="star > (property.averageRating || 0)"></i>
+                            <i class="mdi" [class.mdi-star]="star <= (property?.averageRating || property?.rating || 0)" [class.mdi-star-outline]="star > (property?.averageRating || property?.rating || 0)"></i>
                         </li>
-                        <li class="inline text-slate-900 ">{{ property.averageRating || 0 }}({{ property.reviewsCount || 0 }})</li>
+                        <li class="inline text-slate-900 ">{{ property?.averageRating || property?.rating || 0 }}({{ property?.reviewsCount || property?.reviewCount || 0 }})</li>
                     </ul>
                 </li>
             </ul>

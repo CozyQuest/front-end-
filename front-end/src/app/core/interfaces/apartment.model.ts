@@ -9,6 +9,11 @@ export interface Apartment {
   price: number;
   rating: number;
   reviewCount: number;
-  location:string;
-  // Add other properties as needed
+  location: string;
+  // Optional properties for backward compatibility
+  space?: number;
+  roomCount?: number;
+  bathroomCount?: number;
+  averageRating?: number;
+  reviewsCount?: number;
 }
