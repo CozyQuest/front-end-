@@ -34,13 +34,13 @@ export class PropertyService {
         { id: 3, name: 'Pool' }
       ],
       owner: {
-        id: 1,
+        id: "1",
         fname: 'John',
         lname: 'Doe',
         email: 'owner@example.com',
         phone: '+123456789',
         profilePicUrl: 'https://randomuser.me/api/portraits/men/1.jpg',
-        location: 'Alexandria, Egypt' // Added location field
+        location: 'Alexandria, Egypt'
       }
     },
     {
@@ -65,7 +65,7 @@ export class PropertyService {
       ratings: [{ rating: 4 }, { rating: 5 }, { rating: 4 }],
       services: [{ id: 1, name: 'WiFi' }, { id: 2, name: 'Heating' }],
       owner: {
-        id: 1,
+        id: "1",
         fname: 'John',
         lname: 'Doe',
         email: 'owner@example.com',
@@ -101,7 +101,7 @@ export class PropertyService {
         { id: 4, name: 'Air Conditioning' }
       ],
       owner: {
-        id: 1,
+        id:" 1",
         fname: 'John',
         lname: 'Doe',
         email: 'owner@example.com',
@@ -136,7 +136,7 @@ export class PropertyService {
         { id: 3, name: 'Heating' }
       ],
       owner: {
-        id: 1,
+        id: "1",
         fname: 'John',
         lname: 'Doe',
         email: 'owner@example.com',
@@ -171,7 +171,7 @@ export class PropertyService {
         { id: 3, name: 'Air Conditioning' }
       ],
       owner: {
-        id: 1,
+        id: "1",
         fname: 'John',
         lname: 'Doe',
         email: 'owner@example.com',

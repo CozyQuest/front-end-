@@ -4,9 +4,9 @@ import { CarouselModule } from 'primeng/carousel';
 import { UserService } from '../../../core/services/user.service';
 import { OwnedProperties } from '../owned-properties/owned-properties';
 import { RentedProperties } from '../rented-properties/rented-properties';
-import { UserPublicProfile } from '../../../core/interfaces/UserPublicProfile';
-import { User } from '../../../core/interfaces/User';
+import { UserPrivateProfile } from '../../../core/interfaces/UserPrivateProfile.model';
 import { RentingHistory } from '../renting-history/renting-history';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-profile-details',
@@ -18,42 +18,40 @@ import { RentingHistory } from '../renting-history/renting-history';
 })
 
 export class ProfileDetails {
-  user!: User | UserPublicProfile;
-  fullName: string = '';
-
-  loggedInUserId = 2;
-  userId = 1;
-
-  isOwnProfile = false;
-  activeTab = signal<'my' | 'rented' | 'history'>('my');
-
-  userSkills: string = 'html, css, js, mysql';
+  defaultAvatar : string = "https://i.pinimg.com/736x/82/85/96/828596ef925a10e8c1a76d3a3be1d3e5.jpg";
+ user: UserPrivateProfile | null = null;
+ activeTab = signal<'my' | 'rented' | 'history'>('my');
+  userRole: string | null = null;
   userLanguage: string = 'English, Japanese, Chinese';
-  userWebsite: string = 'https://www.cristina.com';
   userBirthday: string = '2nd March, 1996';
+  userLocation: string = 'Alexandria,Egypt';
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.isOwnProfile = this.userId === this.loggedInUserId;
+  async ngOnInit(): Promise<void> {
+    const fetchedUser = await this.userService.getPrivateProfile();
+    this.user = fetchedUser;
 
-    if (this.isOwnProfile) {
-      const full = this.userService.getFullUserById(this.userId);
-      if (full) {
-        this.user = full;
-        this.fullName = `${full.fname} ${full.lname}`;
-      }
-    } else {
-      const publicUser = this.userService.getPublicUserById(this.userId);
-      if (publicUser) {
-        this.user = publicUser;
-        this.fullName = `${publicUser.fname} ${publicUser.lname}`;
-      }
+    // Get user role from AuthService
+    this.userRole = this.authService.getUserRole();
+    
+    // Set initial active tab based on role
+    if (this.userRole === 'Host') {
+      this.activeTab.set('my');
     }
   }
 
-  get fullUser(): User | null {
-    return this.isOwnProfile ? this.user as User : null;
+  get fullName(): string {
+  if (this.user) {
+    const capitalizedFname = this.capitalizeName(this.user.fname);
+    const capitalizedLname = this.capitalizeName(this.user.lname);
+    return `${capitalizedFname} ${capitalizedLname}`;
+  }
+  return '';
+}
+
+  get userId(): string {
+    return this.user?.id || '';
   }
 
   showMyProperties() {
@@ -67,4 +65,8 @@ export class ProfileDetails {
   showRentingHistory() {
     this.activeTab.set('history');
   }
-} 
+
+  private capitalizeName(name: string): string {
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
+}

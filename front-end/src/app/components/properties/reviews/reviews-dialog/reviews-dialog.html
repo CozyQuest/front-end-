@@ -42,27 +42,27 @@
         class="border border-blue-100 bg-white/80 rounded-xl p-4 space-y-3 transition-all duration-300 hover:shadow-md"
       >
         <!-- Reviewer Info -->
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-4" (click)="goToPublicProfile(review.userId)">
           <img
-            [src]="review.user?.profilePicUrl || 'assets/images/avatar.png'"
-            alt="{{ review.user?.fname }}"
-            class="w-12 h-12 rounded-full object-cover border border-blue-200"
+            [src]="review.userProfilePicUrl || defaultAvatar "
+            alt="{{ review.userFullName }}"
+            class="w-12 h-12 rounded-full object-cover border border-blue-200 cursor-pointer hover:ring-2 ring-blue-500"
           />
           <div>
-            <p class="font-semibold text-gray-900">{{ review.user?.fname }}</p>
-            <p class="text-sm text-gray-600">{{ review.user?.location }}</p>
+            <p class="font-semibold text-gray-900">{{ review.userFullName }}</p>
+            <p class="text-sm text-gray-600">{{ userLocation}}</p>
           </div>
         </div>
 
         <!-- Rating & Date -->
         <div class="flex items-center text-sm text-gray-700 gap-2">
           <span class="text-yellow-400 text-lg">★★★★★</span>
-          <span class="text-gray-500">· {{ review.date | date: 'MMMM y' }}</span>
+          <span class="text-gray-500">· {{ review.createdAt | date: 'MMMM y' }}</span>
         </div>
 
         <!-- Review Text -->
-        <p class="text-sm text-gray-800">
-          {{ review.review.length > 140 ? (review.review | slice: 0:140) + '...' : review.review }}
+       <p class="text-sm text-gray-800">
+          {{ review.reviewText }}
         </p>
       </div>
     </div>

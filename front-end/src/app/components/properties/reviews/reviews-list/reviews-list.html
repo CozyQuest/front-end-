@@ -2,25 +2,25 @@
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
     <ng-container *ngFor="let review of reviews.slice(0, 6)">
       <div class="space-y-2">
-        <div class="flex items-center gap-4">
-          <img [src]="review.user?.profilePicUrl" alt="{{ review.user?.fname }}" class="w-12 h-12 rounded-full object-cover">
+        <div class="flex items-center gap-4" (click)="goToPublicProfile(review.userId)">
+          <img [src]="review.userProfilePicUrl || defaultAvatar" alt="{{ review.userFullName }}" 
+          class="w-12 h-12 rounded-full object-cover cursor-pointer"
+          >
           <div>
-            <p class="font-semibold">{{ review.user?.fname }}</p>
-            <p class="text-sm text-gray-600">{{ review.user?.location}}</p>
+            <p class="font-semibold">{{ review.userFullName }}</p>
+            <p class="text-sm text-gray-600">{{ userLocation}}</p>
           </div>
         </div>
-        <p class="text-sm text-gray-700">★★★★★ <span class="font-medium text-black">· {{ review.date | date: 'MMMM y' }}</span></p>
-        <p class="text-sm text-gray-700">{{ review.review | slice:0:140 }}...</p>
+        <p class="text-sm text-gray-700">★★★★★ <span class="font-medium text-black">· {{ review.createdAt | date: 'MMMM y' }}</span></p>
+        <p class="text-sm text-gray-700">{{ review.reviewText | slice:0:140 }}...</p>
         <a class="text-black cursor-pointer underline" (click)="openDialog()">Show more</a>
       </div>
     </ng-container>
   </div>
-
   <!-- Modal -->
   @if (showAddReviewModal()) {
     <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-lg w-full relative animate-modalIn">
-
         <!-- Close Button -->
         <button
           (click)="closeModal()"
@@ -28,19 +28,17 @@
         >
           &times;
         </button>
-
-        <!-- AddReview Component -->
-        <app-add-review
-          (reviewSubmitted)="handleReviewSubmitted($event)">
-        </app-add-review>
+         @if (showAddReviewModal()) {
+         <app-add-review
+           [propertyId]="propertyId.toString()"
+         />
+        }
       </div>
     </div>
   }
-
   <!-- Footer with stylish buttons -->
 <div class="mt-10 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
   <div class="flex gap-4">
-
     <!-- Show All Reviews Button -->
     <button
       (click)="openDialog()"
@@ -49,18 +47,20 @@
       <i class="mdi mdi-eye-outline text-lg group-hover:animate-pulse"></i>
       <span>Show All Reviews</span>
     </button>
-
     <!-- Leave a Review Button -->
     <button
-      (click)="openModal()"
+      (click)="openReviewModal()"
       class="group px-6 py-2 bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold rounded-full shadow-md hover:from-blue-600 hover:to-sky-600 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center gap-2"
     >
       <i class="mdi mdi-pencil-outline text-lg group-hover:animate-pulse"></i>
       <span>Leave a Review</span>
     </button>
-
+    @if (showLoginMessage()) {
+  <div class="mt-2 text-red-600 text-sm font-medium animate-fade-in">
+    You must be logged in to leave a review.
   </div>
-
+ }
+  </div>
   <!-- Learn how reviews work link -->
   <a href="#" class="text-sm text-gray-600 underline hover:text-gray-800 transition-all">
     Learn how reviews work

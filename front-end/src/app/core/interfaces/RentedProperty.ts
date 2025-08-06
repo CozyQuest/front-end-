@@ -1,9 +1,9 @@
 export interface RentedProperty {
   id: number;
   title: string;
-  imageUrl: string;
-  userRating: number;
-  checkinDate: string;
-  checkoutDate: string;
+  mainImageUrl: string;
+  rate: number;
+  checkIn: Date;
+  checkOut: Date;
   totalPrice: number;
 }

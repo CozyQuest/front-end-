@@ -1,9 +1,8 @@
-export interface User {
-  id: number;
+export interface UserPrivateProfile {
+  id: string;
   fname: string;
   lname: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   profilePicUrl: string;
-  location: string;
 }

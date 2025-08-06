@@ -85,7 +85,16 @@
 
         <!-- Dropdown Menu -->
         <div *ngIf="dropdownOpen" class="absolute right-0 bg-white shadow-lg rounded mt-2 w-48 z-50">
-          <a routerLink="/profile/1" class="block px-4 py-2 hover:bg-gray-100" (click)="closeDropdown()">Profile</a>
+         <a
+           *ngIf="(currentUser$ | async) as currentUser"
+           [routerLink]="['/profile', currentUser.nameidentifier]"
+           class="block px-4 py-2 hover:bg-gray-100"
+           (click)="closeDropdown()"
+          >
+           Profile
+          </a>
+          <a routerLink="/edit-profile" class="block px-4 py-2 hover:bg-gray-100">Edit Profile</a>
+          <a *ngIf="isHost()" routerLink="/add-property" class="block px-4 py-2 hover:bg-gray-100">Add Property</a>
           <a routerLink="/edit-profile" class="block px-4 py-2 hover:bg-gray-100" (click)="closeDropdown()">Edit Profile</a>
           <hr class="my-1">
           <button (click)="logout()" class="w-full text-left px-4 py-2 hover:bg-gray-100 text-red-600">

@@ -112,7 +112,9 @@
         </div>
 
         <!-- Reviews -->
-        <app-reviews-list [reviews]="reviews"></app-reviews-list>
+       @if (property) {
+        <app-reviews-list [propertyId]="property.id"></app-reviews-list>
+       }
 
         <!-- Map -->
         <div class="w-full mt-6 rounded-xl overflow-hidden shadow-md ml-0 md:ml-5">

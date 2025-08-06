@@ -1,12 +1,30 @@
-<div class="max-w-xl w-full mx-auto bg-white rounded-3xl shadow-2xl p-8 space-y-8 animate-fadeInUp border border-gray-100">
+<!-- Error Message (Always Visible) -->
+@if (errorMessage()) {
+  <div class="text-red-600 text-sm mt-6 font-medium animate-fade-in text-center">
+    {{ errorMessage() }}
+  </div>
+}
+
+<!-- Success Message (Always Visible) -->
+@if (successMessage()) {
+  <div class="text-green-600 text-center text-sm mt-6 font-medium animate-fade-in">
+    {{ successMessage() }}
+  </div>
+}
+
+<!-- Review Form Section -->
+<div
+  *ngIf="isFormVisible"
+  class="max-w-xl w-full mx-auto bg-white rounded-3xl shadow-2xl p-8 space-y-8 animate-fadeInUp border border-gray-100"
+>
   <!-- Title -->
   <div class="text-center space-y-1">
     <h2 class="text-3xl font-bold text-neutral-800 tracking-tight">How was your stay?</h2>
     <p class="text-gray-500 text-sm">Your feedback helps others feel at home</p>
   </div>
 
-  <!-- Star Rating -->
-  <div class="flex justify-center gap-2">
+  <!-- Rating Stars -->
+  <div class="flex justify-center space-x-2">
     @for (i of [1, 2, 3, 4, 5]; track i) {
       <button
         type="button"
@@ -26,43 +44,33 @@
     }
   </div>
 
-  <!-- Toggle Review -->
-  <div class="flex items-center justify-center gap-3">
+  <!-- Checkbox -->
+  <div class="flex items-center justify-center space-x-3">
     <input
-      id="withReview"
       type="checkbox"
-      class="accent-blue-500 w-5 h-5 border-gray-300 rounded focus:ring-blue-400"
-      [checked]="withReview()"
+      id="writeReview"
+      class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
       (change)="onToggleWithReview($event)"
     />
-    <label for="withReview" class="text-sm text-gray-600 select-none">Add written review</label>
+    <label for="writeReview" class="text-sm text-gray-600">Add written review</label>
   </div>
 
-  <!-- Review Field -->
-  @if (withReview()) {
-    <div class="relative">
+  <!-- Form -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+    @if (showReview) {
       <textarea
-        id="review"
+        formControlName="reviewText"
         rows="4"
-        formControlName="review"
-        class="peer w-full p-4 pt-6 text-sm border border-gray-300 rounded-xl resize-none text-gray-800 placeholder-transparent focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent"
-        placeholder="Write your experience..."
+        placeholder="Write your review..."
+        class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
       ></textarea>
-      <label
-        for="review"
-        class="absolute top-3 left-4 text-gray-400 text-sm transition-all peer-placeholder-shown:top-4 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:top-2 peer-focus:text-sm peer-focus:text-blue-500"
-      >
-        Share your experience
-      </label>
-    </div>
-  }
+    }
 
-  <!-- Submit -->
-  <button
-    (click)="onSubmit()"
-    [disabled]="!selectedRating"
-    class="w-full py-3 text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-  >
-    Submit Review
-  </button>
+    <button
+      type="submit"
+      class="w-full bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 transition"
+    >
+      Submit
+    </button>
+  </form>
 </div>

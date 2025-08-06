@@ -1,6 +1,5 @@
-import { User } from "./User";
-// This interface is no longer used in the codebase,
-//  but it is kept because it is a dependency for the owned properties.
+import { User } from "./User.model";
+
 export interface Property {
   id: number;
   title: string;

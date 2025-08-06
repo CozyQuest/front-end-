@@ -94,6 +94,11 @@ export const routes: Routes = [
     path: 'properties/:id',
     loadComponent: () => import('./components/properties/property-details/property-details').then(m => m.PropertyDetails)
   },
+  
+  {
+    path: 'public/:id',
+    loadComponent: () => import('./components/profile/public-profile/public-profile').then(m => m.PublicProfile),
+  },
 
   // Protected route - requires login
   {

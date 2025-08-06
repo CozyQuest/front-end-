@@ -15,7 +15,7 @@ export class ReviewService {
         review: 'Amazing stay! Everything was clean and well-organized.',
         date: '2025-07-10',
         user: {
-          id: 1,
+          id: "1",
           fname: 'Sarah',
           lname: 'Connor',
           email: 'sarah@example.com',
@@ -32,7 +32,7 @@ export class ReviewService {
         review: 'Good experience overall but a bit noisy at night.',
         date: '2025-07-12',
         user: {
-          id: 2,
+          id: "2",
           fname: 'John',
           lname: 'Doe',
           email: 'john@example.com',
@@ -49,7 +49,7 @@ export class ReviewService {
         review: 'Absolutely perfect. Host was super helpful!',
         date: '2025-07-13',
         user: {
-          id: 3,
+          id: "3",
           fname: 'Emma',
           lname: 'Brown',
           email: 'emma@example.com',
@@ -66,7 +66,7 @@ export class ReviewService {
         review: 'Nice apartment with great views!',
         date: '2025-07-14',
         user: {
-          id: 4,
+          id: "4",
           fname: 'Mike',
           lname: 'Wilson',
           email: 'mike@example.com',
@@ -83,7 +83,7 @@ export class ReviewService {
         review: 'Decent stay, but could use better Wi-Fi.',
         date: '2025-07-15',
         user: {
-          id: 5,
+          id: "5",
           fname: 'Lisa',
           lname: 'White',
           email: 'lisa@example.com',
@@ -100,7 +100,7 @@ export class ReviewService {
         review: 'Host was amazing and very responsive!',
         date: '2025-07-16',
         user: {
-          id: 1,
+          id: "1",
           fname: 'Sarah',
           lname: 'Connor',
           email: 'sarah@example.com',
@@ -117,7 +117,7 @@ export class ReviewService {
         review: 'Clean and cozy but small bathroom.',
         date: '2025-07-17',
         user: {
-          id: 2,
+          id: "2",
           fname: 'John',
           lname: 'Doe',
           email: 'john@example.com',
@@ -134,7 +134,7 @@ export class ReviewService {
         review: 'Felt like a luxury stay, beautiful interior.',
         date: '2025-07-18',
         user: {
-          id: 3,
+          id: "3",
           fname: 'Emma',
           lname: 'Brown',
           email: 'emma@example.com',
@@ -151,7 +151,7 @@ export class ReviewService {
         review: 'Too noisy at night, hard to sleep.',
         date: '2025-07-19',
         user: {
-          id: 4,
+          id: "4",
           fname: 'Mike',
           lname: 'Wilson',
           email: 'mike@example.com',
@@ -168,7 +168,7 @@ export class ReviewService {
         review: 'Best experience ever, highly recommended!',
         date: '2025-07-20',
         user: {
-          id: 5,
+          id: "5",
           fname: 'Lisa',
           lname: 'White',
           email: 'lisa@example.com',
@@ -186,7 +186,7 @@ export class ReviewService {
         review: 'Good location, friendly host.',
         date: '2025-07-21',
         user: {
-          id: 1,
+          id: "1",
           fname: 'Sarah',
           lname: 'Connor',
           email: 'sarah@example.com',
@@ -203,7 +203,7 @@ export class ReviewService {
         review: 'Could improve on amenities.',
         date: '2025-07-22',
         user: {
-          id: 2,
+          id: "2",
           fname: 'John',
           lname: 'Doe',
           email: 'john@example.com',
@@ -220,7 +220,7 @@ export class ReviewService {
         review: 'Enjoyed the balcony view!',
         date: '2025-07-23',
         user: {
-          id: 3,
+          id: "3",
           fname: 'Emma',
           lname: 'Brown',
           email: 'emma@example.com',
@@ -237,7 +237,7 @@ export class ReviewService {
         review: 'Clean, quiet and well-furnished.',
         date: '2025-07-24',
         user: {
-          id: 4,
+          id: "4",
           fname: 'Mike',
           lname: 'Wilson',
           email: 'mike@example.com',
@@ -254,7 +254,7 @@ export class ReviewService {
         review: 'Host went above and beyond!',
         date: '2025-07-25',
         user: {
-          id: 5,
+          id: "5",
           fname: 'Lisa',
           lname: 'White',
           email: 'lisa@example.com',
@@ -271,7 +271,7 @@ export class ReviewService {
         review: 'Very comfortable stay.',
         date: '2025-07-26',
         user: {
-          id: 1,
+          id: "1",
           fname: 'Sarah',
           lname: 'Connor',
           email: 'sarah@example.com',
@@ -288,7 +288,7 @@ export class ReviewService {
         review: 'Could be cleaner.',
         date: '2025-07-27',
         user: {
-          id: 2,
+          id: "2",
           fname: 'John',
           lname: 'Doe',
           email: 'john@example.com',
@@ -305,7 +305,7 @@ export class ReviewService {
         review: 'Spacious and modern!',
         date: '2025-07-28',
         user: {
-          id: 3,
+          id: "3",
           fname: 'Emma',
           lname: 'Brown',
           email: 'emma@example.com',
@@ -322,7 +322,7 @@ export class ReviewService {
         review: 'Loved the kitchen setup!',
         date: '2025-07-29',
         user: {
-          id: 4,
+          id: "4",
           fname: 'Mike',
           lname: 'Wilson',
           email: 'mike@example.com',
@@ -339,7 +339,7 @@ export class ReviewService {
         review: 'Would book again for sure!',
         date: '2025-07-30',
         user: {
-          id: 5,
+          id:" 5",
           fname: 'Lisa',
           lname: 'White',
           email: 'lisa@example.com',
@@ -356,7 +356,7 @@ export class ReviewService {
         review: 'Peaceful stay overall.',
         date: '2025-07-31',
         user: {
-          id: 1,
+          id: "1",
           fname: 'Sarah',
           lname: 'Connor',
           email: 'sarah@example.com',
@@ -373,7 +373,7 @@ export class ReviewService {
         review: 'Basic amenities were missing.',
         date: '2025-08-01',
         user: {
-          id: 2,
+          id: "2",
           fname: 'John',
           lname: 'Doe',
           email: 'john@example.com',
@@ -390,7 +390,7 @@ export class ReviewService {
         review: 'Great for families!',
         date: '2025-08-02',
         user: {
-          id: 3,
+          id: "3",
           fname: 'Emma',
           lname: 'Brown',
           email: 'emma@example.com',
@@ -407,7 +407,7 @@ export class ReviewService {
         review: 'Stylish and comfortable.',
         date: '2025-08-03',
         user: {
-          id: 4,
+          id: "4",
           fname: 'Mike',
           lname: 'Wilson',
           email: 'mike@example.com',
@@ -424,7 +424,7 @@ export class ReviewService {
         review: 'My new favorite place to stay.',
         date: '2025-08-04',
         user: {
-          id: 5,
+          id:" 5",
           fname: 'Lisa',
           lname: 'White',
           email: 'lisa@example.com',

@@ -9,25 +9,26 @@ import { CarouselModule } from 'primeng/carousel';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ReviewsList } from '../reviews/reviews-list/reviews-list';
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-property-details',
-  imports: [CommonModule, DatePickerModule, CarouselModule, FormsModule, ButtonModule, ReviewsList],
+  imports: [CommonModule, DatePickerModule,CarouselModule, FormsModule, ButtonModule,ReviewsList,RouterModule],
   templateUrl: './property-details.html',
   styleUrl: './property-details.css'
 })
 export class PropertyDetails implements OnInit {
   property?: properties;
   mapUrl?: SafeResourceUrl;
-  averageRating: number = 4.2; // Example value until reviews are hooked up
-  ratingCount: number = 12; // Example value until reviews are hooked up
-  reviews: any[] = []; // Placeholder
+  loadingImages = true;
+  averageRating: number = 0;
+  ratingCount: number = 0;
 
-  constructor(
-    private route: ActivatedRoute,
-    private propertyService: PropertyService,
-    private sanitizer: DomSanitizer
-  ) { }
+  private route = inject(ActivatedRoute);
+  private propertyService = inject(PropertyService);
+  private sanitizer = inject(DomSanitizer);
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
@@ -55,14 +56,7 @@ export class PropertyDetails implements OnInit {
     return Array(5 - Math.floor(this.averageRating)).fill(0);
   }
 
-  getRatingText() {
-    if (this.averageRating >= 4.5) return 'Excellent stay!';
-    if (this.averageRating >= 3.5) return 'Very good experience.';
-    return 'Decent but could improve.';
-  }
-
   reserveProperty() {
     console.log('Reserve clicked');
-
   }
 }

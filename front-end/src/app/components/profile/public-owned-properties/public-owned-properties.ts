@@ -1,21 +1,18 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { OwnedPropertiesService } from '../../../core/services/owned-properties.service';
+import { OwnedProperty } from '../../../core/interfaces/ownedProperty.model';
+import { RouterModule } from '@angular/router';
 import { CarouselModule } from 'primeng/carousel';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { RouterLink } from '@angular/router';
-import { OwnedPropertiesService } from '../../../core/services/owned-properties.service';
-import { OwnedProperty } from '../../../core/interfaces/ownedProperty.model';
 
 @Component({
-  selector: 'app-owned-properties',
-  standalone: true,
-  imports: [CarouselModule,CommonModule,RouterModule,RouterLink,CardModule],
-  templateUrl: './owned-properties.html',
-  styleUrl: './owned-properties.css'
+  selector: 'app-public-owned-properties',
+  imports: [RouterModule,CarouselModule,CardModule,CommonModule],
+  templateUrl: './public-owned-properties.html',
+  styleUrl: './public-owned-properties.css'
 })
-
-export class OwnedProperties  {
+export class PublicOwnedProperties {
   @Input() userId: string = '';
 
  myProperties: OwnedProperty[] = [];
@@ -41,4 +38,4 @@ export class OwnedProperties  {
       });
     }
   }
-} 
+}

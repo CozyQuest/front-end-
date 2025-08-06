@@ -1,7 +1,7 @@
 export interface UserPublicProfile {
-  id: number;
+  id: string;
   fname: string;
   lname: string;
   profilePicUrl: string;
-  location: string;
+  role: string; 
 }
