@@ -33,6 +33,8 @@ throw new Error('Method not implemented.');
   private propertyService = inject(PropertyService);
   private sanitizer = inject(DomSanitizer);
 
+  constructor(private router: Router){}
+
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     if (id) {
@@ -59,7 +61,9 @@ throw new Error('Method not implemented.');
     return Array(5 - Math.floor(this.averageRating)).fill(0);
   }
 
-  reserveProperty() {
-    console.log('Reserve clicked');
+  reserveProperty(id: number | undefined) {
+    if (id) {
+      this.router.navigate(['/checkout', id]);
+    }
   }
 }
