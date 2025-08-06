@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserHostRequestsService } from '../../../core/services/dashboard/user-host-requests.service';
 import { UserHostRequest } from '../../../core/interfaces/dashboard/user-host-request.model';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-host-requests',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './user-host-requests.html',
   styleUrl: './user-host-requests.css'
 })

@@ -25,7 +25,10 @@
                                 class="object-cover size-12 min-w-[48px] rounded-md shadow-sm" alt="">
                         </th>
                         <td class="text-start border-t border-gray-100 px-4 py-3 font-semibold">
-                            {{ user.fname }} {{ user.lname }}
+                            <a [routerLink]="['/profile', user.id]"
+                                class="hover:text-primary text-lg font-semibold block">
+                                {{ user.fname }} {{ user.lname }}
+                            </a>
                         </td>
                         <td class="text-start border-t border-gray-100 px-4 py-3 text-slate-500">
                             {{ user.email }}
@@ -45,12 +48,12 @@
                         <td class="text-end border-t border-gray-100 px-4 py-3">
                             <div class="flex flex-col sm:flex-row sm:justify-end gap-2">
                                 <button
-                                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto"
+                                    class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto cursor-pointer"
                                     (click)="approve(user)">
                                     Approve
                                 </button>
                                 <button
-                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto"
+                                    class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 text-sm rounded w-full sm:w-auto cursor-pointer"
                                     (click)="reject(user)">
                                     Reject
                                 </button>
