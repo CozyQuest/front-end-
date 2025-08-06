@@ -10,43 +10,50 @@ import { CommonModule } from '@angular/common';
 })
 export class Amenities {
 
-  @Output() selectedAmenitiesChange = new EventEmitter<string[]>();
+   @Output() selectedAmenitiesChange = new EventEmitter<number[]>();
 
   amenities: Amenity[] = [
-    { name: 'Wi-Fi', icon: 'fa-solid fa-wifi' },
-    { name: 'Air Conditioning', icon: 'fa-solid fa-snowflake' },
-    { name: 'Heating', icon: 'fa-solid fa-temperature-high' },
-    { name: 'Kitchen', icon: 'fa-solid fa-utensils' },
-    { name: 'Washer', icon: 'fa-solid fa-soap' },
-    { name: 'Dryer', icon: 'fa-solid fa-tshirt' },
-    { name: 'TV', icon: 'fa-solid fa-tv' },
-    { name: 'Parking', icon: 'fa-solid fa-square-parking' },
-    { name: 'Swimming Pool', icon: 'fa-solid fa-water-ladder' },
-    { name: 'Gym', icon: 'fa-solid fa-dumbbell' },
-    { name: 'Balcony', icon: 'fa-solid fa-chair' },
-    { name: 'Elevator', icon: 'fa-solid fa-arrow-up' },
-    { name: 'Pet Friendly', icon: 'fa-solid fa-paw' },
-    { name: 'Smoking Allowed', icon: 'fa-solid fa-smoking' },
-    { name: 'BBQ Grill', icon: 'fa-solid fa-fire' },
-    { name: 'Security', icon: 'fa-solid fa-shield-halved' },
-    { name: 'Wheelchair Accessible', icon: 'fa-solid fa-wheelchair' },
-    { name: 'Garden', icon: 'fa-solid fa-tree' },
-    { name: 'Fireplace', icon: 'fa-solid fa-fire-flame-curved' },
-    { name: 'Hot Tub', icon: 'fa-solid fa-hot-tub' }
+    { id: 1, name: 'Wi-Fi', icon: 'fa-solid fa-wifi' },
+    { id: 2, name: 'Air Conditioning', icon: 'fa-solid fa-snowflake' },
+    { id: 3, name: 'Heating', icon: 'fa-solid fa-temperature-high' },
+    { id: 4, name: 'Kitchen', icon: 'fa-solid fa-utensils' },
+    { id: 5, name: 'Washer', icon: 'fa-solid fa-soap' },
+    { id: 6, name: 'Dryer', icon: 'fa-solid fa-tshirt' },
+    { id: 7, name: 'TV', icon: 'fa-solid fa-tv' },
+    { id: 8, name: 'Parking', icon: 'fa-solid fa-square-parking' },
+    { id: 9, name: 'Swimming Pool', icon: 'fa-solid fa-water-ladder' },
+    { id: 10, name: 'Gym', icon: 'fa-solid fa-dumbbell' },
+    { id: 11, name: 'Balcony', icon: 'fa-solid fa-chair' },
+    { id: 12, name: 'Elevator', icon: 'fa-solid fa-arrow-up' },
+    { id: 13, name: 'Pet Friendly', icon: 'fa-solid fa-paw' },
+    { id: 14, name: 'Smoking Allowed', icon: 'fa-solid fa-smoking' },
+    { id: 15, name: 'BBQ Grill', icon: 'fa-solid fa-fire' },
+    { id: 16, name: 'Security', icon: 'fa-solid fa-shield-halved' },
+    { id: 17, name: 'Wheelchair Accessible', icon: 'fa-solid fa-wheelchair' },
+    { id: 18, name: 'Garden', icon: 'fa-solid fa-tree' },
+    { id: 19, name: 'Fireplace', icon: 'fa-solid fa-fire-flame-curved' },
+    { id: 20, name: 'Hot Tub', icon: 'fa-solid fa-hot-tub' }
   ];
 
-  selectedAmenities: string[] = [];
+  selectedAmenityIds: number[] = [];
 
-  toggleAmenity(amenity: string) {
-    if (this.selectedAmenities.includes(amenity)) {
-      this.selectedAmenities = this.selectedAmenities.filter(a => a !== amenity);
+  toggleAmenity(id: number) {
+    const index = this.selectedAmenityIds.indexOf(id);
+    if (index > -1) {
+      this.selectedAmenityIds.splice(index, 1);
     } else {
-      this.selectedAmenities.push(amenity);
+      this.selectedAmenityIds.push(id);
     }
-    this.selectedAmenitiesChange.emit(this.selectedAmenities); // emit whenever changed
+    this.selectedAmenitiesChange.emit(this.selectedAmenityIds);
   }
 
-  isSelected(amenity: string) {
-    return this.selectedAmenities.includes(amenity);
+  isSelected(id: number): boolean {
+    return this.selectedAmenityIds.includes(id);
+  }
+
+  get selectedAmenityNames(): string[] {
+    return this.amenities
+      .filter(a => this.selectedAmenityIds.includes(a.id))
+      .map(a => a.name);
   }
 }

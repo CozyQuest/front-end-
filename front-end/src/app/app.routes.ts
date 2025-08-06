@@ -12,6 +12,8 @@ import { changePassword } from './components/profile/change-pass/change-pass';
 import { ForgotPasswordComponent } from './components/Auth Components/forgot-pass/forget-pass';
 import { PaymentSuccess } from './components/payment-success/payment-success';
 import { PaymentCancel } from './components/payment-cancel/payment-cancel';
+import { UpdateProperty } from './components/update-properties/update-properties';
+
 
 export const routes: Routes = [
   // Protected route - requires login
@@ -84,7 +86,7 @@ export const routes: Routes = [
     path: 'add-property',
     loadComponent: () => import('./components/add-property/add-property').then(m => m.AddProperty),
     canActivate: [AuthGuard, RoleGuard],
-    data: { role: 'Host' }
+    data: { role: ['Host',"User"] }
   },
 
   // Public route
@@ -118,6 +120,12 @@ export const routes: Routes = [
   {
     path: 'submission-under-review',
     loadComponent: () => import('./components/submission-under-review/submission-under-review').then(m => m.SubmissionUnderReview)
+  },
+  {
+    path: 'properties/edit/:id',
+    component: UpdateProperty,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { role: 'Host' }
   },
   {
     path: 'test',

@@ -1,31 +1,18 @@
 <section class="relative pt-24 pb-16 md:py-24 bg-white text-gray-800 transition-all duration-500 mb-35">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
-      
+
       <!-- Main Content -->
       <div class="md:col-span-7 lg:col-span-8">
 
         <!-- Image Slider -->
         <div class="relative w-full mx-auto">
-          <p-carousel
-            *ngIf="property?.images?.length"
-            [value]="property?.images ?? []"
-            [numVisible]="1"
-            [numScroll]="1"
-            [circular]="true"
-            [autoplayInterval]="4000"
-            [showIndicators]="false"
-            [showNavigators]="true"
-            [responsiveOptions]="[]"
-            class="custom-carousel"
-          >
+          <p-carousel *ngIf="property?.images?.length" [value]="property?.images ?? []" [numVisible]="1" [numScroll]="1"
+            [circular]="true" [autoplayInterval]="4000" [showIndicators]="false" [showNavigators]="true"
+            [responsiveOptions]="[]" class="custom-carousel">
             <ng-template pTemplate="item" let-image>
               <div class="relative w-full h-[300px] md:h-[550px]">
-                <img
-                  [src]="image.url"
-                  alt="Property image"
-                  class="absolute top-0 left-0 w-full h-full object-cover"
-                />
+                <img [src]="image" alt="Property image" class="absolute top-0 left-0 w-full h-full object-cover" />
               </div>
             </ng-template>
           </p-carousel>
@@ -40,31 +27,33 @@
 
         <!-- Property Features -->
         <ul class="py-6 flex flex-wrap items-center gap-x-6 gap-y-4 ml-0 md:ml-10">
-       <li class="flex items-center">
-        <i class="uil uil-compress-arrows text-2xl md:text-3xl text-blue-500 mr-2"></i>
-        <span class="text-lg md:text-xl">{{ property?.Area }} m²</span>
-       </li>
-       <li class="flex items-center">
-        <i class="uil uil-bed-double text-2xl md:text-3xl text-blue-500 mr-2"></i> 
-        <span class="text-lg md:text-xl">{{ property?.roomCount }} Beds</span>
-       </li>
-       <li class="flex items-center">
-        <i class="uil uil-bath text-2xl md:text-3xl text-blue-500 mr-2"></i>
-        <span class="text-lg md:text-xl">{{ property?.bathroomCount }} Baths</span>
-       </li>
-       <li class="flex items-center">
-        <i class="uil uil-users-alt text-2xl md:text-3xl text-blue-500 mr-2"></i>
-        <span class="text-lg md:text-xl">{{ property?.Guests }} Guests</span>
-      </li>
-     </ul>
+          <li class="flex items-center">
+            <i class="uil uil-compress-arrows text-2xl md:text-3xl text-blue-500 mr-2"></i>
+            <span class="text-lg md:text-xl">{{ property?.space }} m²</span>
+          </li>
+          <li class="flex items-center">
+            <i class="uil uil-bed-double text-2xl md:text-3xl text-blue-500 mr-2"></i>
+            <span class="text-lg md:text-xl">{{ property?.roomCount }} Beds</span>
+          </li>
+          <li class="flex items-center">
+            <i class="uil uil-bath text-2xl md:text-3xl text-blue-500 mr-2"></i>
+            <span class="text-lg md:text-xl">{{ property?.bathroomCount }} Baths</span>
+          </li>
+          <li class="flex items-center">
+            <i class="uil uil-users-alt text-2xl md:text-3xl text-blue-500 mr-2"></i>
+            <span class="text-lg md:text-xl">{{ property?.peopleCapacity }} Guests</span>
+          </li>
+        </ul>
         <!-- Owner Info -->
-        <div class="flex items-start gap-4 ml-0 md:ml-10 mt-4">
-          <img [src]="property?.owner?.profilePicUrl" class="w-14 h-14 md:w-16 md:h-16 rounded-full" />
+         <div *ngIf="property?.user" class="flex items-start gap-4 ml-0 md:ml-10 mt-4">
+          <img [src]="property?.user?.urlProfilePicture" alt = "{{property?.user?.urlProfilePicture}}" class="w-14 h-14 md:w-16 md:h-16 rounded-full" />
           <div>
-            <p class="font-semibold text-base md:text-lg">Hosted by {{ property?.owner?.fname }} {{ property?.owner?.lname }}</p>
-             <p class="text-gray-600 dark:text-gray-400 text-sm">{{ property?.owner?.location }}</p>
+            <p class="font-semibold text-base md:text-lg">
+              Hosted by {{ property?.user?.firstName }} {{ property?.user?.lastName }}
+            </p>
           </div>
         </div>
+
 
         <!-- Description -->
         <div class="text-gray-600 space-y-4 mt-6 ml-0 md:ml-10">
@@ -75,12 +64,10 @@
         <div *ngIf="property?.services?.length" class="mt-10 mb-10 ml-0 md:ml-10">
           <h2 class="text-2xl font-semibold mb-6 text-black">What This Place Offers</h2>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div
-              *ngFor="let service of property?.services"
-              class="flex items-center gap-4 bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-blue-500 transition duration-300"
-            >
+            <div *ngFor="let service of property?.services"
+              class="flex items-center gap-4 bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:shadow-md hover:border-blue-500 transition duration-300">
               <div class="text-blue-500 dark:text-pink-400 text-xl flex-shrink-0">
-                <i [ngClass]="getServiceIcon(service.name)"></i>
+                <i [ngClass]="getServiceIcon(service.icon)"></i>
               </div>
               <span class="text-sm text-black font-medium">{{ service.name }}</span>
             </div>
@@ -89,10 +76,11 @@
 
         <!-- Rating Overview -->
         <div *ngIf="averageRating > 0"
-             class="bg-white shadow-xl border border-gray-200 rounded-2xl p-6 w-full mx-auto mt-10 transition-all duration-500 animate-fade-in mb-6">
+          class="bg-white shadow-xl border border-gray-200 rounded-2xl p-6 w-full mx-auto mt-10 transition-all duration-500 animate-fade-in mb-6">
           <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div class="flex items-center gap-6">
-              <div class="bg-yellow-400 text-white w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-2xl md:text-3xl font-bold shadow-md">
+              <div
+                class="bg-yellow-400 text-white w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center text-2xl md:text-3xl font-bold shadow-md">
                 {{ averageRating.toFixed(1) }}
               </div>
               <div>
@@ -115,7 +103,7 @@
               <div class="mt-4">
                 <div class="h-3 w-full bg-gray-200 rounded-full overflow-hidden">
                   <div class="h-full bg-yellow-400 transition-all duration-500"
-                       [style.width.%]="(averageRating / 5) * 100">
+                    [style.width.%]="(averageRating / 5) * 100">
                   </div>
                 </div>
               </div>
@@ -128,61 +116,46 @@
 
         <!-- Map -->
         <div class="w-full mt-6 rounded-xl overflow-hidden shadow-md ml-0 md:ml-5">
-          <iframe
-           *ngIf="mapUrl"
-            class="w-full h-[300px] md:h-[500px] border-0"
-            [src]="mapUrl"
-            allowfullscreen
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-       ></iframe>
-       </div>
+          <iframe *ngIf="mapUrl" class="w-full h-[300px] md:h-[500px] border-0" [src]="mapUrl" allowfullscreen
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
       </div>
 
       <!-- Sidebar -->
       <div class="md:col-span-5 lg:col-span-4 ml-0 md:ml-5">
         <div class="sticky top-20 space-y-12">
           <!-- Booking Card -->
-          <div class="relative mt-12 p-8 rounded-3xl shadow-xl bg-gradient-to-br from-[#f0f8ff] via-[#ffffffcc] to-[#e0f2ff] border border-blue-200 max-w-md mx-auto backdrop-blur-md animate-fade-in hover:scale-[1.02] transition-transform duration-500">
+          <div
+            class="relative mt-12 p-8 rounded-3xl shadow-xl bg-gradient-to-br from-[#f0f8ff] via-[#ffffffcc] to-[#e0f2ff] border border-blue-200 max-w-md mx-auto backdrop-blur-md animate-fade-in hover:scale-[1.02] transition-transform duration-500">
 
-           <!--  Icon Container -->
-           <!-- <div class="flex justify-center">
-             <div class="w-16 h-16 bg-white/60 backdrop-blur-md rounded-full flex items-center justify-center shadow-xl border border-white animate-bounce-slow"> -->
-             <!-- Icon -->
-             <!-- <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3 10l9-7 9 7v10a2 2 0 01-2 2h-4a1 1 0 01-1-1v-4H9v4a1 1 0 01-1 1H4a2 2 0 01-2-2V10z" />
-             </svg>
-           </div>
-          </div> -->
+            <!-- Booking Heading -->
+            <div class="text-center mt-4">
+              <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">Your Stay Starts Here</h2>
+              <p class="text-md text-gray-500 mt-2 leading-relaxed">Book premium properties with comfort, convenience,
+                and confidence.</p>
+            </div>
 
-         <!-- Booking Heading -->
-         <div class="text-center mt-4">
-          <h2 class="text-3xl font-extrabold text-gray-800 tracking-tight">Your Stay Starts Here</h2>
-          <p class="text-md text-gray-500 mt-2 leading-relaxed">Book premium properties with comfort, convenience, and confidence.</p>
-         </div>
+            <!-- Price Display -->
+            <div class="text-center mt-6">
+              <p class="text-4xl font-bold text-blue-600 drop-shadow-sm">${{ property?.price }}<span
+                  class="text-base font-medium text-gray-500"> / night</span></p>
+            </div>
 
-         <!-- Price Display -->
-         <div class="text-center mt-6">
-          <p class="text-4xl font-bold text-blue-600 drop-shadow-sm">${{ property?.rentPerDay }}<span class="text-base font-medium text-gray-500"> / night</span></p>
-        </div>
+            <!-- CTA Button -->
+            <div class="mt-6">
+              <button (click)="reserveProperty()"
+                class="w-full py-3 px-5 text-white text-lg font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 shadow-lg transition duration-300 transform hover:scale-105 active:scale-95">
+                Reserve Now
+              </button>
+            </div>
+          </div>
 
-         <!-- CTA Button -->
-         <div class="mt-6">
-          <button
-            (click)="reserveProperty()"
-            class="w-full py-3 px-5 text-white text-lg font-semibold rounded-xl bg-gradient-to-r from-blue-600 to-blue-400 hover:from-blue-700 hover:to-blue-500 shadow-lg transition duration-300 transform hover:scale-105 active:scale-95"
-         >
-            Reserve Now
-         </button>
-        </div>
-      </div>
-
-             <!-- Contact Section -->
+          <!-- Contact Section -->
           <div class="text-center mt-8">
             <h3 class="mb-4 text-xl font-semibold text-black">Have Questions? Get in touch!</h3>
             <a href="/contact"
-             class="inline-flex items-center justify-center px-5 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-medium rounded-md transition-colors duration-300">
-             <i class="pi pi-phone mr-2"></i> Contact Us
+              class="inline-flex items-center justify-center px-5 py-2 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white font-medium rounded-md transition-colors duration-300">
+              <i class="pi pi-phone mr-2"></i> Contact Us
             </a>
           </div>
         </div>

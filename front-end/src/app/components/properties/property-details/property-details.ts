@@ -1,114 +1,68 @@
-import { Component, inject} from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PropertyService } from '../../../core/services/property.service';
+import { PropertyService } from '../../../core/services/propertyDetails.service';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ReviewService } from '../../../core/services/review.service';
-import { Property } from '../../../core/interfaces/Property';
-import { Review } from '../../../core/interfaces/Review';
+import { properties } from '../../../core/interfaces/propertyDetails';
 import { CommonModule } from '@angular/common';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CarouselModule } from 'primeng/carousel';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { ReviewsList } from '../reviews/reviews-list/reviews-list';
-import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-property-details',
-  imports: [CommonModule, DatePickerModule,CarouselModule, FormsModule, ButtonModule,ReviewsList],
+  imports: [CommonModule, DatePickerModule, CarouselModule, FormsModule, ButtonModule, ReviewsList],
   templateUrl: './property-details.html',
   styleUrl: './property-details.css'
 })
-export class PropertyDetails {
-  route = inject(ActivatedRoute);
-  router = inject(Router);
-  propertyService = inject(PropertyService);
-  sanitizer = inject(DomSanitizer);
-  reviewService = inject(ReviewService);
-
-  property?: Property;
-  reviews: Review[] = [];
+export class PropertyDetails implements OnInit {
+  property?: properties;
   mapUrl?: SafeResourceUrl;
-  loadingImages = true;
+  averageRating: number = 4.2; // Example value until reviews are hooked up
+  ratingCount: number = 12; // Example value until reviews are hooked up
+  reviews: any[] = []; // Placeholder
 
-  // checkInDate: Date | null = null;
-  // checkOutDate: Date | null = null;
-  // minDate: Date = new Date();
-  averageRating: number = 0;
-  ratingCount: number = 0;
+  constructor(
+    private route: ActivatedRoute,
+    private propertyService: PropertyService,
+    private sanitizer: DomSanitizer
+  ) { }
 
-  getRatingText(): string {
-    if (this.averageRating >= 4.5) {
-      return 'Outstanding stay! Guests loved it.';
-    } else if (this.averageRating >= 4.0) {
-      return 'Great experience. Highly recommended.';
-    } else if (this.averageRating >= 3.0) {
-      return 'Decent property. Some room for improvement.';
-    } else if (this.averageRating >= 2.0) {
-      return 'Below average. Consider checking reviews.';
-    } else if (this.averageRating > 0) {
-      return 'Poor experience. Not recommended.';
-    }
-    return 'No ratings yet.';
-  }
-
- reserveProperty() {
-    if (this.property?.id) {
-      this.router.navigate(['/checkout', this.property.id], {
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    if (id) {
+      this.propertyService.getPropertyById(id).subscribe({
+        next: (data) => {
+          this.property = data;
+          const rawUrl = `https://www.google.com/maps/embed/v1/view?key=ADD-API-KEY&center=${data.latitude},${data.longitude}&zoom=14`;
+          this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
+        },
+        error: (err) => console.error(err)
       });
     }
   }
 
-  getServiceIcon(serviceName: string): string {
-    const iconMap: { [key: string]: string } = {
-      'Wi-Fi': 'pi pi-wifi',
-      'WiFi': 'pi pi-wifi',
-      'TV': 'pi pi-video',
-      'Kitchen': 'pi pi-home',
-      'Air Conditioning': 'pi pi-sun',
-      'Heating': 'pi pi-fire',
-      'Washer': 'pi pi-refresh',
-      'Parking': 'pi pi-car',
-      'Pool': 'pi pi-globe',
-      'Gym': 'pi pi-bolt',
-      'Elevator': 'pi pi-arrow-up',
-      'Workspace': 'pi pi-briefcase',
-      'Default': 'pi pi-check-circle'
-    };
-
-    return iconMap[serviceName] || iconMap['Default'];
+  getServiceIcon(icon: string) {
+    return icon; // Backend sends "fa-solid fa-snowflake" etc.
   }
 
-  getFilledStars(): number[] {
+  getFilledStars() {
     return Array(Math.floor(this.averageRating)).fill(0);
   }
 
-  getEmptyStars(): number[] {
+  getEmptyStars() {
     return Array(5 - Math.floor(this.averageRating)).fill(0);
   }
 
-  ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.propertyService.getPropertyById(id).subscribe((res) => {
-      this.property = res;
-      this.loadingImages = false;
+  getRatingText() {
+    if (this.averageRating >= 4.5) return 'Excellent stay!';
+    if (this.averageRating >= 3.5) return 'Very good experience.';
+    return 'Decent but could improve.';
+  }
 
-      const location = `${res.latitude},${res.longitude}`;
-      this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-        `https://maps.google.com/maps?q=${location}&output=embed`
-      );
+  reserveProperty() {
+    console.log('Reserve clicked');
 
-      this.reviews = this.reviewService.getReviewsByPropertyId(id);
-
-      if (this.property?.ratings?.length) {
-        const rated = this.property.ratings.filter(r => r.rating > 0);
-        this.ratingCount = rated.length;
-        if (this.ratingCount > 0) {
-          const total = rated.reduce((sum, r) => sum + r.rating, 0);
-          this.averageRating = +(total / this.ratingCount).toFixed(1);
-        }
-      }
-    });
   }
 }

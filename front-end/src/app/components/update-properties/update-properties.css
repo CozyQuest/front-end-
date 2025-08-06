@@ -1,0 +1,206 @@
+/* Update Property Component Styles */
+
+/* Inherit all styles from add-property.css */
+@import './add-property.css';
+
+/* Additional styles specific to update component */
+
+/* Unsaved changes indicator animation */
+.bg-amber-50 {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+/* Existing images grid styling */
+.grid {
+  transition: all 0.3s ease;
+}
+
+/* Existing image hover effects */
+.group img {
+  filter: grayscale(0.1);
+  transition: all 0.3s ease;
+}
+
+.group:hover img {
+  filter: grayscale(0) brightness(1.1);
+  transform: scale(1.05);
+}
+
+/* Current vs new images distinction */
+.existing-images {
+  border: 2px dashed #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #f9fafb;
+}
+
+.new-images {
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  padding: 1rem;
+  background: #eff6ff;
+}
+
+/* Form dirty state indicators */
+.form-group input.dirty,
+.form-group textarea.dirty,
+.form-group select.dirty {
+  border-left: 4px solid #f59e0b;
+  background-color: #fffbeb;
+}
+
+/* Loading button state */
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Reset button styling */
+button[type="button"] {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+button[type="button"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigation breadcrumb styling */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.breadcrumb a {
+  color: #6b7280;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  color: #3b82f6;
+}
+
+.breadcrumb .separator {
+  margin: 0 0.5rem;
+  color: #9ca3af;
+}
+
+/* Status badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.status-badge.warning {
+  background-color: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fbbf24;
+}
+
+.status-badge.success {
+  background-color: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+}
+
+/* Image comparison styling */
+.image-comparison {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.image-section {
+  flex: 1;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.image-section.current {
+  background-color: #f3f4f6;
+}
+
+.image-section.new {
+  background-color: #eff6ff;
+  border-color: #3b82f6;
+}
+
+/* Mobile responsiveness for update form */
+@media (max-width: 768px) {
+  .flex.items-center.justify-between {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .status-badge {
+    align-self: flex-start;
+  }
+  
+  .flex.flex-col.sm\\:flex-row {
+    flex-direction: column;
+  }
+  
+  .flex.flex-col.sm\\:flex-row button {
+    width: 100%;
+  }
+}
+
+/* Enhanced focus states for accessibility */
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition-property: color, background-color, border-color, transform, box-shadow;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
