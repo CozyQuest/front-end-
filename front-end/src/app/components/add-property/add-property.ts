@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Carousel } from 'primeng/carousel';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,16 +8,16 @@ import { Map } from '../map/map';
 import { Amenities } from '../amenities/amenities';
 import { AddPropertyRequest } from '../../core/interfaces/AddPropertyDTO';
 import { PropertyService } from '../../core/services/addproperty.service';
-import { FilePreviewPipe } from '../../core/Pipes/file-preview.pipe';
+
 import { Amenity } from '../../core/interfaces/Amenity';
 
 @Component({
   selector: 'app-add-property',
-  imports: [Carousel, CommonModule, FormsModule, DialogModule, Map, Amenities, FilePreviewPipe],
+  imports: [Carousel, CommonModule, FormsModule, DialogModule, Map, Amenities],
   templateUrl: './add-property.html',
   styleUrl: './add-property.css'
 })
-export class AddProperty {
+export class AddProperty implements OnDestroy {
 
   property: AddPropertyRequest = {
     Title: '',
@@ -52,8 +52,54 @@ export class AddProperty {
   mapVisible: boolean = false;
   amenitiesVisible: boolean = false;
   selectedLocationSummary: string = '';
+  
+  // Image preview handling
+  private objectUrls: string[] = [];
+  private imageUrlCache: { [key: string]: string } = {};
 
   constructor(private propertyService: PropertyService) { }
+
+  ngOnDestroy(): void {
+    // Clean up object URLs to prevent memory leaks
+    this.cleanupObjectUrls();
+  }
+
+  private cleanupObjectUrls(): void {
+    this.objectUrls.forEach(url => {
+      try {
+        URL.revokeObjectURL(url);
+      } catch (error) {
+        console.warn('Error revoking object URL:', error);
+      }
+    });
+    this.objectUrls = [];
+    this.imageUrlCache = {};
+  }
+
+  getImagePreview(file: File): string {
+    if (!file || !(file instanceof File)) {
+      console.warn('getImagePreview: Invalid file object:', file);
+      return '';
+    }
+    
+    // Create a unique key for the file
+    const fileKey = `${file.name}_${file.size}_${file.lastModified}`;
+    
+    // Check if we already have a cached URL for this file
+    if (this.imageUrlCache[fileKey]) {
+      return this.imageUrlCache[fileKey];
+    }
+    
+    try {
+      const objectUrl = URL.createObjectURL(file);
+      this.objectUrls.push(objectUrl);
+      this.imageUrlCache[fileKey] = objectUrl;
+      return objectUrl;
+    } catch (error) {
+      console.error('Error creating object URL for file:', file.name, error);
+      return '';
+    }
+  }
 
   // Fix: This method now correctly sets the main image from the carousel
   setMainImage(image: File): void {
@@ -209,7 +255,7 @@ export class AddProperty {
 
   getSelectedAmenityNames(): string[] {
     return this.amenities
-      .filter(a => this.property.ServiceIds.includes(a.id))
+      .filter(a => this.property.ServiceIds?.includes(a.id) ?? false)
       .map(a => a.name);
   }
 

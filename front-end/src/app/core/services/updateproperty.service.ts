@@ -28,17 +28,25 @@ export class UpdatePropertyService {
     const formData = new FormData();
 
     Object.entries(property).forEach(([key, value]) => {
-      if (key === 'Images') {
+      if (key === 'Images' && value && Array.isArray(value)) {
         // Handle multiple images
-        (value as File[]).forEach(img => formData.append('Images', img));
-      } else if (key === 'ServiceIds') {
+        console.log('📤 Adding Images to FormData:', (value as File[]).length, 'files');
+        (value as File[]).forEach(img => {
+          formData.append('Images', img);
+        });
+      } else if (key === 'ServiceIds' && value && Array.isArray(value)) {
         // Handle service IDs array
         (value as number[]).forEach(id => formData.append('ServiceIds', id.toString()));
+      } else if (key === 'ImageUrlsToRemove' && value && Array.isArray(value)) {
+        // Handle image URLs to remove
+        (value as string[]).forEach(url => formData.append('ImageUrlsToRemove', url));
       } else if (key === 'MainImage' && value) {
         // Handle main image file
+        console.log('📤 Adding MainImage to FormData:', (value as File).name);
         formData.append('MainImage', value as File);
-      } else if (value !== null && value !== undefined) {
-        // Handle all other properties
+      } else if (value !== null && value !== undefined && 
+                 key !== 'Images' && key !== 'ServiceIds' && key !== 'MainImage' && key !== 'ImageUrlsToRemove') {
+        // Handle all other properties (including MainImageUrl)
         formData.append(key, value.toString());
       }
     });

@@ -24,15 +24,9 @@
   transition: all 0.3s ease;
 }
 
-/* Existing image hover effects */
+/* Existing image styling */
 .group img {
   filter: grayscale(0.1);
-  transition: all 0.3s ease;
-}
-
-.group:hover img {
-  filter: grayscale(0) brightness(1.1);
-  transform: scale(1.05);
 }
 
 /* Current vs new images distinction */
@@ -203,4 +197,68 @@ button[type="button"]:hover {
   transition-property: color, background-color, border-color, transform, box-shadow;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* Custom carousel styles for proper image display */
+.custom-carousel {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Override add-property.css styles that hide images */
+.custom-carousel ::ng-deep .p-carousel-content {
+  overflow: visible !important;
+  border-radius: 12px;
+}
+
+.custom-carousel ::ng-deep .p-carousel-container {
+  overflow: visible !important;
+}
+
+.custom-carousel ::ng-deep .p-carousel-items-content {
+  overflow: visible !important;
+}
+
+.custom-carousel ::ng-deep .p-carousel-items-container {
+  overflow: visible !important;
+}
+
+/* Ensure carousel navigation is visible and functional */
+.custom-carousel ::ng-deep .p-carousel-prev,
+.custom-carousel ::ng-deep .p-carousel-next {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.9) !important;
+  color: #374151 !important;
+  border: none !important;
+  border-radius: 50% !important;
+  width: 40px !important;
+  height: 40px !important;
+  z-index: 10 !important;
+  cursor: pointer !important;
+}
+
+.custom-carousel ::ng-deep .p-carousel-prev:hover,
+.custom-carousel ::ng-deep .p-carousel-next:hover {
+  background: rgba(255, 255, 255, 1) !important;
+}
+
+/* Ensure all carousel items are properly displayed */
+.custom-carousel ::ng-deep .p-carousel-item {
+  display: block !important;
+}
+
+.custom-carousel img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Ensure image containers have proper dimensions */
+.custom-carousel .relative {
+  min-height: 300px;
+  max-height: 300px;
 }
