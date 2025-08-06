@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { Apartment as Property } from '../../../../core/interfaces/apartment.model';
 
 @Component({
   selector: 'app-property-card',
+  standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './property-card.html'
 })
 export class PropertyCard {
   @Input()
-  property!: Property;
+  property!: any; // Changed from Property interface to any to handle API response
 
   constructor(private router: Router) {}
 

@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FilterComponent } from "./filter-card/filter-card";
 import { PropertyCard } from "./property-card/property-card";
-import { Apartment as Property } from '../../../core/interfaces/apartment.model';
 import { CommonModule } from '@angular/common';
+import { PropertyListService } from '../../../core/services/PropertyListService/PropertyList';
 
 @Component({
   selector: 'app-property-list',
@@ -10,105 +10,69 @@ import { CommonModule } from '@angular/common';
   imports: [FilterComponent, PropertyCard, CommonModule],
   templateUrl: './property-list.html'
 })
-export class PropertyList {
+export class PropertyList implements OnInit {
   heroBackgroundImage = 'url(assets/images/bg/01.jpg)';
-  properties: Property[] = [
-    {
-      id: 1,
-      title: 'Modern Studio in Zamalek',
-      price: 7500,
-      location: 'Zamalek, Cairo',
-      area: 45,
-      beds: 1,
-      baths: 1,
-      imageUrl: 'https://shreethemes.in/hously/landing/assets/images/property/1.jpg',
-      rating: 4.2,
-      reviewCount: 23
-    },
-    {
-      id: 2,
-      title: 'Luxury Apartment in New Cairo',
-      price: 15000,
-      location: 'New Cairo',
-      area: 120,
-      beds: 3,
-      baths: 2,
-      imageUrl: 'https://shreethemes.in/hously/landing/assets/images/property/2.jpg',
-      rating: 4.7,
-      reviewCount: 58
-    },
-    {
-      id: 3,
-      title: 'Cozy Flat in Alexandria',
-      price: 5500,
-      location: 'Smouha, Alexandria',
-      area: 70,
-      beds: 2,
-      baths: 1,
-      imageUrl: 'https://shreethemes.in/hously/landing/assets/images/property/3.jpg',
-      rating: 3.9,
-      reviewCount: 12
-    },
-        {
-      id: 4,
-      title: 'Cozy Flat in Alexandria',
-      price: 5500,
-      location: 'Smouha, Alexandria',
-      area: 70,
-      beds: 2,
-      baths: 1,
-      imageUrl: 'https://shreethemes.in/hously/landing/assets/images/property/3.jpg',
-      rating: 3.9,
-      reviewCount: 12
-    },
-        {
-      id: 5,
-      title: 'Cozy Flat in Alexandria',
-      price: 5500,
-      location: 'Smouha, Alexandria',
-      area: 70,
-      beds: 2,
-      baths: 1,
-      imageUrl: 'https://shreethemes.in/hously/landing/assets/images/property/3.jpg',
-      rating: 3.9,
-      reviewCount: 12
-    },
-        {
-      id: 6,
-      title: 'Cozy Flat in Alexandria',
-      price: 5500,
-      location: 'Smouha, Alexandria',
-      area: 70,
-      beds: 2,
-      baths: 1,
-      imageUrl: 'https://shreethemes.in/hously/landing/assets/images/property/3.jpg',
-      rating: 3.9,
-      reviewCount: 12
-    },
-        {
-      id: 7,
-      title: 'Cozy Flat in Alexandria',
-      price: 5500,
-      location: 'Smouha, Alexandria',
-      area: 70,
-      beds: 2,
-      baths: 1,
-      imageUrl: 'https://shreethemes.in/hously/landing/assets/images/property/3.jpg',
-      rating: 3.9,
-      reviewCount: 12
-    }
-  ];
+  properties: any[] = [];
 
   // Pagination
   pageSize = 3; // apartments per page
   currentPage = 1;
-  totalPages = 5;
+  totalPages = 1;
 
-  // get totalPages(): number {
-  //   return Math.ceil(this.apartments.length / this.pageSize);
-  // }
+  constructor(private propertyListService: PropertyListService) {}
 
-  get pagedApartments(): Property[] {
+  ngOnInit() {
+    this.loadProperties();
+  }
+
+  loadProperties() {
+    this.propertyListService.getAllProperties().subscribe(properties => {
+      this.properties = properties;
+      this.totalPages = Math.ceil(this.properties.length / this.pageSize);
+      this.currentPage = 1; // Reset to first page when loading new data
+    });
+  }
+
+  onFilterApplied(filterParams: any) {
+    console.log('Filter applied with params:', filterParams);
+    
+    // Prepare filter parameters for API
+    const apiFilterParams = {
+      propertyTypeIds: filterParams.typeId ? [filterParams.typeId] : [],
+      serviceIds: filterParams.serviceId ? [filterParams.serviceId] : [],
+      country: filterParams.country || '',
+      city: filterParams.city || '',
+      district: filterParams.district || '',
+      search: filterParams.search || '', // Add search parameter
+      minPeople: filterParams.minPeople || 0,
+      minSpace: filterParams.minSpace || 0,
+      minPrice: filterParams.minPrice || 0,
+      maxPrice: filterParams.maxPrice || 0,
+      orderBy: filterParams.orderBy || ''
+    };
+
+    console.log('Sending filter request with params:', apiFilterParams);
+
+    this.propertyListService.filterProperties(apiFilterParams).subscribe(filteredProperties => {
+      console.log('Filtered properties received:', filteredProperties);
+      
+      // Debug image data
+      filteredProperties.forEach((property, index) => {
+        console.log(`Property ${index + 1} image data:`, {
+          title: property.title,
+          mainImageUrl: property.mainImageUrl,
+          images: property.images,
+          imageUrls: property.imageUrls
+        });
+      });
+      
+      this.properties = filteredProperties;
+      this.totalPages = Math.ceil(this.properties.length / this.pageSize);
+      this.currentPage = 1; // Reset to first page when filtering
+    });
+  }
+
+  get pagedApartments(): any[] {
     const start = (this.currentPage - 1) * this.pageSize;
     return this.properties.slice(start, start + this.pageSize);
   }
@@ -118,5 +82,4 @@ export class PropertyList {
       this.currentPage = page;
     }
   }
-
 }
