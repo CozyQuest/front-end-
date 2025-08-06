@@ -1,51 +1,89 @@
-<p-carousel
-  [value]="rentedProperties"
-  [circular]="true"
-  [numVisible]="2"
-  [numScroll]="1"
-  [responsiveOptions]="carouselResponsiveOptions"
-  [autoplayInterval]="3000"
-  [showIndicators]="false"
-  [showNavigators]="true"
->
-  <ng-template let-rent pTemplate="item">
-    <div class="p-4">
-      <div class="rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition-shadow duration-300">
-        <img
-          [src]="rent.mainImageUrl"
-          alt="Rented Property Image"
-          class="w-full h-56 object-cover"
-        />
-        <div class="p-4 space-y-2">
-          <h6 class="text-lg font-medium">{{ rent.title }}</h6>
-          <div class="text-sm text-gray-600 space-y-1">
-            <ul class="py-6 border-y border-slate-100 flex items-center list-none">
-              <li class="flex items-center me-4">
-                <i class="uil uil-star lg:text-3xl text-2xl me-2 text-blue-500"></i>
-                <span><span class="font-medium">Rating:</span> {{ rent.rate }}/5</span>
-              </li>
-              <li class="flex items-center me-4">
-                <i class="uil uil-calendar-alt lg:text-3xl text-2xl me-2 text-blue-500"></i>
-                <span><span class="font-medium">Check-in:</span> {{rent.checkIn | date: 'M/d/yyyy' }}</span>
-              </li>
-              <li class="flex items-center">
-                <i class="uil uil-calendar-alt lg:text-3xl text-2xl me-2 text-blue-500"></i>
-                <span><span class="font-medium">Check-out:</span> {{ rent.checkOut | date: 'M/d/yyyy' }}</span>
-              </li>
+@if (rentedProperties.length === 0) {
+<div class="text-center py-20 px-4 mt-8 animate-fade-in-up">
+  <div class="floating-element inline-block mb-6">
+    <svg class="suitcase-icon h-20 w-20 text-gray-400 dark:text-gray-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10m-8-4l8 4m-8-4V7"></path>
+    </svg>
+  </div>
+
+  <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-2">
+    Your Next Adventure Awaits!
+  </h2>
+
+  <p class="text-lg text-gray-600 dark:text-gray-400 max-w-md mx-auto leading-relaxed mb-6">
+    It looks like your travel history is a blank page. Let's fill it with unforgettable experiences! Discover amazing properties around the world and book your dream getaway today.
+  </p>
+
+  <button class="animated-button px-8 py-3 bg-blue-600 text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition-colors duration-300" routerLink="/rent">
+    Start Exploring Properties
+  </button>
+</div>
+}
+
+  @else if(rentedProperties.length > 0) {
+  <p-carousel
+    [value]="rentedProperties"
+    [numVisible]="2"
+    [numScroll]="1"
+    [circular]="true"
+    [numVisible]="2"
+    [numScroll]="1"
+    [responsiveOptions]="carouselResponsiveOptions"
+    [autoplayInterval]="3000"
+    [showIndicators]="false"
+    [showNavigators]="true"
+  >
+    <ng-template let-rent pTemplate="item">
+      <div class="p-4 w-full sm:w-[420px]">
+        <div
+          class="rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition-shadow duration-300"
+        >
+          <img
+            [src]="rent.mainImageUrl"
+            alt="Rented Property Image"
+            class="w-full h-56 object-cover"
+          />
+          <div class="p-4 space-y-2">
+            <h6 class="text-lg font-medium">{{ rent.title }}</h6>
+            <div class="text-sm text-gray-600 space-y-1">
+              <ul
+                class="py-6 border-y border-slate-100 flex items-center list-none"
+              >
+                <li class="flex items-center me-4">
+                  <i
+                    class="uil uil-star lg:text-3xl text-2xl me-2 text-blue-500"
+                  ></i>
+                  <span><span class="font-medium">Rating:</span> {{ rent.rate }}/5</span>
+                </li>
+                <li class="flex items-center me-4">
+                  <i
+                    class="uil uil-calendar-alt lg:text-3xl text-2xl me-2 text-blue-500"
+                  ></i>
+                  <span
+                    ><span class="font-medium">Check-in:</span>
+                    {{ rent.checkIn | date: 'M/d/yyyy' }}</span
+                  >
+                </li>
+                <li class="flex items-center">
+                  <i
+                    class="uil uil-calendar-alt lg:text-3xl text-2xl me-2 text-blue-500"
+                  ></i>
+                  <span
+                    ><span class="font-medium">Check-out:</span>
+                    {{ rent.checkOut | date: 'M/d/yyyy' }}</span
+                  >
+                </li>
               </ul>
-            <ul class="pt-6 flex justify-between items-center list-none">
-              <li>
-                <span class="text-slate-400">Total Paid</span>
-                <p class="text-lg font-medium">${{ rent.totalPrice }}</p>
-              </li>
+              <ul class="pt-6 flex justify-between items-center list-none">
+                <li>
+                  <span class="text-slate-400">Total Paid</span>
+                  <p class="text-lg font-medium">${{ rent.totalPrice }}</p>
+                </li>
               </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </ng-template>
-</p-carousel>
-
-<div *ngIf="rentedProperties.length === 0" class="text-center text-gray-500 mt-4">
-  No rented properties found.
-</div>
+    </ng-template>
+  </p-carousel>
+}

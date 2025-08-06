@@ -42,8 +42,13 @@ export class ProfileDetails {
   }
 
   get fullName(): string {
-    return this.user ? `${this.user.fname} ${this.user.lname}` : '';
+  if (this.user) {
+    const capitalizedFname = this.capitalizeName(this.user.fname);
+    const capitalizedLname = this.capitalizeName(this.user.lname);
+    return `${capitalizedFname} ${capitalizedLname}`;
   }
+  return '';
+}
 
   get userId(): string {
     return this.user?.id || '';
@@ -60,4 +65,8 @@ export class ProfileDetails {
   showRentingHistory() {
     this.activeTab.set('history');
   }
+
+  private capitalizeName(name: string): string {
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
 }

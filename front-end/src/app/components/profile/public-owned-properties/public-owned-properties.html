@@ -1,23 +1,24 @@
 @if (myProperties.length === 0) {
-  <div class="flex flex-col items-center justify-center p-8 space-y-6 bg-gray-50 dark:bg-gray-800 rounded-xl m-4">
-    <div class="relative w-48 h-48 flex items-center justify-center">
-      <div class="absolute w-1 h-full bg-gray-300 dark:bg-gray-600"></div>
-      <div class="relative w-12 h-12 bg-white dark:bg-gray-700 border-4 border-blue-500 rounded-full flex items-center justify-center z-10">
-        <i class="uil uil-home text-blue-500 text-2xl"></i>
+ <div class="flex items-center justify-center min-h-[500px] p-8 bg-gray-50 dark:bg-gray-900 rounded-2xl animate-fade-in transition-all duration-500">
+  <div class="max-w-xl text-center space-y-6">
+    <div class="relative w-48 h-48 mx-auto">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="w-full h-full border-4 border-dashed border-gray-300 dark:border-gray-600 rounded-full animate-pulse-slow"></div>
+      </div>
+      <div class="relative w-full h-full flex items-center justify-center z-10">
+        <i class="uil uil-search text-gray-400 dark:text-gray-500 text-7xl animate-move-up-down"></i>
       </div>
     </div>
-    <div class="text-center">
-      <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Your property timeline is empty</h2>
-      <p class="mt-2 text-gray-500 dark:text-gray-400">Add your first property to start your history.</p>
+    <div class="space-y-4">
+      <h2 class="text-4xl font-extrabold text-gray-800 dark:text-white leading-tight tracking-wider animate-slide-in-down">
+        Waiting for New Listings
+      </h2>
+      <p class="mt-4 text-lg text-gray-500 dark:text-gray-400 font-light animate-slide-in-up">
+        It looks like there are no properties to display right now. Check back soon, as new listings are on the way!
+      </p>
     </div>
-    <a
-      routerLink="/add-property"
-      class="inline-flex items-center px-6 py-3 font-medium text-white bg-blue-600 rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors duration-300"
-    >
-      <i class="uil uil-plus-circle text-lg me-2"></i>
-      Add Property
-    </a>
   </div>
+</div>
 }
 
 @else if (myProperties.length > 0) {

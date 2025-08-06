@@ -1,13 +1,14 @@
-import { Component, inject, Input, SimpleChanges } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { RentingHistoryItem } from '../../../core/interfaces/rentingHistoryItem.model';
 import { DatePipe } from '@angular/common';
 import { NgClass } from '@angular/common';
 import { RentingHistoryService } from '../../../core/services/renting-history.service';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-renting-history',
-  imports: [DatePipe,NgClass],
+  imports: [DatePipe,NgClass,RouterModule],
   templateUrl: './renting-history.html',
   styleUrl: './renting-history.css'
 })
@@ -20,7 +21,6 @@ export class RentingHistory {
   constructor(private service: RentingHistoryService) {}
 
   ngOnInit(): void {
-    console.log('RentingHistoryComponent init, hostId =', this.hostId); // DEBUG
     if (this.hostId) {
       this.loadData();
     }

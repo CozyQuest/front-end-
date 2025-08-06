@@ -3,11 +3,12 @@ import { RentedProperty } from '../../../core/interfaces/RentedProperty';
 import { CarouselModule } from 'primeng/carousel';
 import { RentedPropertiesService } from '../../../core/services/rented-properties.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-rented-properties',
-  imports: [CarouselModule,CommonModule],
+  imports: [CarouselModule,CommonModule,RouterModule],
   templateUrl: './rented-properties.html',
   styleUrl: './rented-properties.css'
 })

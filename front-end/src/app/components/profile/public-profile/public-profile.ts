@@ -3,12 +3,12 @@ import { UserService } from '../../../core/services/user.service';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { UserPublicProfile } from '../../../core/interfaces/UserPublicProfile';
-import { OwnedProperties } from '../owned-properties/owned-properties';
 import { RouterModule } from '@angular/router';
+import { PublicOwnedProperties } from '../public-owned-properties/public-owned-properties';
 
 @Component({
   selector: 'app-public-profile',
-  imports: [CommonModule,OwnedProperties,RouterModule],
+  imports: [CommonModule,RouterModule,PublicOwnedProperties],
   templateUrl: './public-profile.html',
   styleUrl: './public-profile.css'
 })
@@ -31,13 +31,16 @@ private route = inject(ActivatedRoute);
         this.userService.getPublicProfile(userId).subscribe({
           next: (data) => {
             this.user = data;
-            this.fullName = `${data.fname} ${data.lname}`;
+            this.fullName = `${this.capitalizeName(data.fname)} ${this.capitalizeName(data.lname)}`;
             this.userRole = data.role; 
           },
         });
       }
     });
   }
+  private capitalizeName(name: string): string {
+  return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+}
 }
 
 
