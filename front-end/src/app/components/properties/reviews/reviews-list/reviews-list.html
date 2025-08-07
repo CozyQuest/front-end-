@@ -1,6 +1,6 @@
 <div class="max-w-7xl mx-auto p-6 ml-7">
   <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-    <ng-container *ngFor="let review of reviews.slice(0, 6)">
+    <ng-container *ngFor="let review of reviews.slice(0, 6); let i = index">
       <div class="space-y-2">
         <div class="flex items-center gap-4" (click)="goToPublicProfile(review.userId)">
           <img [src]="review.userProfilePicUrl || defaultAvatar" alt="{{ review.userFullName }}" 
@@ -8,7 +8,7 @@
           >
           <div>
             <p class="font-semibold">{{ review.userFullName }}</p>
-            <p class="text-sm text-gray-600">{{ userLocation}}</p>
+            <p class="text-sm text-gray-600">{{ reviewLocations[i] }}</p>
           </div>
         </div>
         <p class="text-sm text-gray-700">★★★★★ <span class="font-medium text-black">· {{ review.createdAt | date: 'MMMM y' }}</span></p>

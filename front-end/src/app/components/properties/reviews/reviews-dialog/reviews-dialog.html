@@ -38,7 +38,7 @@
     <!-- Reviews List -->
     <div class="overflow-y-auto flex-1 space-y-6 custom-scrollbar pr-4">
       <div
-        *ngFor="let review of filteredReviews"
+        *ngFor="let review of filteredReviews;  let i = index"
         class="border border-blue-100 bg-white/80 rounded-xl p-4 space-y-3 transition-all duration-300 hover:shadow-md"
       >
         <!-- Reviewer Info -->
@@ -50,7 +50,7 @@
           />
           <div>
             <p class="font-semibold text-gray-900">{{ review.userFullName }}</p>
-            <p class="text-sm text-gray-600">{{ userLocation}}</p>
+            <p class="text-sm text-gray-600">{{ reviewLocations[i] }}</p>
           </div>
         </div>
 

@@ -18,8 +18,61 @@ import { RouterModule,Router } from '@angular/router';
 export class ReviewsList {
 @Input() propertyId!: number;
 
+private sampleLocations: string[] = [
+  'New York, USA',
+  'Los Angeles, USA',
+  'Toronto, Canada',
+  'Vancouver, Canada',
+  'London, UK',
+  'Manchester, UK',
+  'Paris, France',
+  'Berlin, Germany',
+  'Madrid, Spain',
+  'Rome, Italy',
+  'Lisbon, Portugal',
+  'Amsterdam, Netherlands',
+  'Zurich, Switzerland',
+  'Vienna, Austria',
+  'Oslo, Norway',
+  'Stockholm, Sweden',
+  'Copenhagen, Denmark',
+  'Helsinki, Finland',
+  'Dublin, Ireland',
+  'Warsaw, Poland',
+  'Prague, Czech Republic',
+  'Budapest, Hungary',
+  'Athens, Greece',
+  'Istanbul, Turkey',
+  'Cairo, Egypt',
+  'Alexandria, Egypt',
+  'Nairobi, Kenya',
+  'Lagos, Nigeria',
+  'Cape Town, South Africa',
+  'Dubai, UAE',
+  'Doha, Qatar',
+  'Riyadh, Saudi Arabia',
+  'Amman, Jordan',
+  'Beirut, Lebanon',
+  'Mumbai, India',
+  'Delhi, India',
+  'Bangalore, India',
+  'Karachi, Pakistan',
+  'Lahore, Pakistan',
+  'Dhaka, Bangladesh',
+  'Jakarta, Indonesia',
+  'Kuala Lumpur, Malaysia',
+  'Singapore, Singapore',
+  'Bangkok, Thailand',
+  'Seoul, South Korea',
+  'Tokyo, Japan',
+  'Beijing, China',
+  'Shanghai, China',
+  'Sydney, Australia',
+  'Melbourne, Australia'
+];
+
   reviews: ViewReview[] = [];
-  userLocation: string = "Alexandria, Egypt";
+  reviewLocations: string[] = [];
 
   showAddReviewModal = signal(false);
   showLoginMessage = signal(false);
@@ -61,9 +114,15 @@ export class ReviewsList {
           userFullName: r.userFullName,
           userProfilePicUrl: r.userProfilePicUrl
         }));
+        this.reviewLocations = data.map(() => this.getRandomLocation());
       }
     });
   }
+
+  private getRandomLocation(): string {
+  const index = Math.floor(Math.random() * this.sampleLocations.length);
+  return this.sampleLocations[index];
+}
 
   openDialog(): void {
     this.dialog.open(ReviewsDialog, {

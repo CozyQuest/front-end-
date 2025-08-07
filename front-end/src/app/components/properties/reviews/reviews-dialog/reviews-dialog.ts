@@ -15,10 +15,63 @@ import { RouterModule,Router } from '@angular/router';
 })
 
 export class ReviewsDialog {
+  private sampleLocations: string[] = [
+  'New York, USA',
+  'Los Angeles, USA',
+  'Toronto, Canada',
+  'Vancouver, Canada',
+  'London, UK',
+  'Manchester, UK',
+  'Paris, France',
+  'Berlin, Germany',
+  'Madrid, Spain',
+  'Rome, Italy',
+  'Lisbon, Portugal',
+  'Amsterdam, Netherlands',
+  'Zurich, Switzerland',
+  'Vienna, Austria',
+  'Oslo, Norway',
+  'Stockholm, Sweden',
+  'Copenhagen, Denmark',
+  'Helsinki, Finland',
+  'Dublin, Ireland',
+  'Warsaw, Poland',
+  'Prague, Czech Republic',
+  'Budapest, Hungary',
+  'Athens, Greece',
+  'Istanbul, Turkey',
+  'Cairo, Egypt',
+  'Alexandria, Egypt',
+  'Nairobi, Kenya',
+  'Lagos, Nigeria',
+  'Cape Town, South Africa',
+  'Dubai, UAE',
+  'Doha, Qatar',
+  'Riyadh, Saudi Arabia',
+  'Amman, Jordan',
+  'Beirut, Lebanon',
+  'Mumbai, India',
+  'Delhi, India',
+  'Bangalore, India',
+  'Karachi, Pakistan',
+  'Lahore, Pakistan',
+  'Dhaka, Bangladesh',
+  'Jakarta, Indonesia',
+  'Kuala Lumpur, Malaysia',
+  'Singapore, Singapore',
+  'Bangkok, Thailand',
+  'Seoul, South Korea',
+  'Tokyo, Japan',
+  'Beijing, China',
+  'Shanghai, China',
+  'Sydney, Australia',
+  'Melbourne, Australia'
+];
+
   searchText: string = '';
   reviews: ViewReview[] = [];
+  reviewLocations: string[] = [];
 
-  userLocation: string = "Alexandria,Egypt";
   private router = inject(Router);
    defaultAvatar : string = "https://i.pinimg.com/736x/82/85/96/828596ef925a10e8c1a76d3a3be1d3e5.jpg";
 
@@ -27,6 +80,7 @@ export class ReviewsDialog {
     private dialogRef: MatDialogRef<ReviewsDialog>,
   ) {
     this.reviews = data.reviews;
+    this.reviewLocations = this.reviews.map(() => this.getRandomLocation());
   }
 
   get filteredReviews(): ViewReview[] {
@@ -45,6 +99,11 @@ export class ReviewsDialog {
   this.router.navigate(['/public', userId]).then(() => {
     this.closeDialog(); 
   });
+}
+
+ private getRandomLocation(): string {
+  const index = Math.floor(Math.random() * this.sampleLocations.length);
+  return this.sampleLocations[index];
 }
 
 }
