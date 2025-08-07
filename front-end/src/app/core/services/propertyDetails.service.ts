@@ -15,4 +15,8 @@ export class PropertyService {
   getPropertyById(id: number): Observable<properties> {
     return this.http.get<properties>(`${this.baseUrl}/${id}`);
   }
+
+  getAverageRating(propertyId: number) {
+  return this.http.get<{ averageRating: number }>(`https://localhost:7279/average-rating/${propertyId}`);
+}
 }

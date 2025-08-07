@@ -20,9 +20,6 @@ import { RouterModule } from '@angular/router';
   styleUrl: './property-details.css'
 })
 export class PropertyDetails implements OnInit {
-getRatingText() {
-throw new Error('Method not implemented.');
-}
   property?: properties;
   mapUrl?: SafeResourceUrl;
   loadingImages = true;
@@ -45,6 +42,13 @@ throw new Error('Method not implemented.');
           this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
         },
         error: (err) => console.error(err)
+      });
+
+      this.propertyService.getAverageRating(id).subscribe({
+        next: (response) => {
+          this.averageRating = response.averageRating;
+        },
+        error: (err) => console.error(err),
       });
     }
   }
@@ -69,5 +73,20 @@ throw new Error('Method not implemented.');
 
   goToPublicProfile(id: string | undefined) {
     this.router.navigate(['/public', id]);
+  }
+
+  getRatingText(): string {
+    if (this.averageRating >= 4.5) {
+      return 'Outstanding stay! Guests loved it.';
+    } else if (this.averageRating >= 4.0) {
+      return 'Great experience. Highly recommended.';
+    } else if (this.averageRating >= 3.0) {
+      return 'Decent property. Some room for improvement.';
+    } else if (this.averageRating >= 2.0) {
+      return 'Below average. Consider checking reviews.';
+    } else if (this.averageRating > 0) {
+      return 'Poor experience. Not recommended.';
+    }
+    return 'No ratings yet.';
   }
 }
