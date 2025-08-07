@@ -1,10 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { OwnedPropertiesService } from '../../../core/services/owned-properties.service';
 import { OwnedProperty } from '../../../core/interfaces/ownedProperty.model';
 import { RouterModule } from '@angular/router';
 import { CarouselModule } from 'primeng/carousel';
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-public-owned-properties',
@@ -14,6 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PublicOwnedProperties {
   @Input() userId: string = '';
+  private router = inject(Router)
 
  myProperties: OwnedProperty[] = [];
 
@@ -37,5 +39,9 @@ export class PublicOwnedProperties {
         }
       });
     }
+  }
+
+  goToPropertyDetails(propertyId: number) {
+    this.router.navigate(['/properties', propertyId]);
   }
 }

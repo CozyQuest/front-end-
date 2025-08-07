@@ -1,5 +1,5 @@
 export interface RentedProperty {
-  id: number;
+  propertyId: number;
   title: string;
   mainImageUrl: string;
   rate: number;

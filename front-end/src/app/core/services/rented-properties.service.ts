@@ -12,7 +12,7 @@ export class RentedPropertiesService {
   getRentedPropertiesByUser(userId: string): Observable<RentedProperty[]> {
   return this.http.get<any[]>(`${this.baseUrl}/RentedProperties/${userId}`).pipe(
     map(data => data.map(item => ({
-      id: item.id,
+      propertyId: item.propertyId,
       title: item.title,
       mainImageUrl: item.mainImageUrl,
       rate: item.rate,

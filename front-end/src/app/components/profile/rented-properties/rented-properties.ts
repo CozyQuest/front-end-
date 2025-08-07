@@ -1,9 +1,10 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, SimpleChanges } from '@angular/core';
 import { RentedProperty } from '../../../core/interfaces/RentedProperty';
 import { CarouselModule } from 'primeng/carousel';
 import { RentedPropertiesService } from '../../../core/services/rented-properties.service';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,7 +14,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './rented-properties.css'
 })
 export class RentedProperties {
-@Input() userId!: string;
+ @Input() userId!: string;
+ private router = inject(Router)
+
   rentedProperties: RentedProperty[] = [];
   carouselResponsiveOptions: any[] = [
     {
@@ -46,5 +49,9 @@ export class RentedProperties {
         console.error('Error fetching rented properties:', err);
       }
     });
+  }
+
+   goToPropertyDetails(propertyId: number) {
+    this.router.navigate(['/properties', propertyId]);
   }
 }

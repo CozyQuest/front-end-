@@ -34,7 +34,9 @@
 >
   <ng-template let-prop pTemplate="item">
     <div class="p-4 space-y-2 min-h-[200px]">
-      <div class="rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition-shadow duration-300">
+      <div class="rounded-xl overflow-hidden bg-white shadow hover:shadow-xl transition-shadow duration-300"
+          (click)="goToPropertyDetails(prop.id)"
+       >
         <img
           [src]="prop.mainImageUrl"
           alt="Property Image"

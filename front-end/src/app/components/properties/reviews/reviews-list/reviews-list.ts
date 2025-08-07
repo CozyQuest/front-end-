@@ -23,7 +23,7 @@ export class ReviewsList {
 
   showAddReviewModal = signal(false);
   showLoginMessage = signal(false);
-   private router = inject(Router)
+  private router = inject(Router)
 
   isLoggedIn: boolean;
    defaultAvatar : string = "https://i.pinimg.com/736x/82/85/96/828596ef925a10e8c1a76d3a3be1d3e5.jpg";
