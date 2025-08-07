@@ -66,4 +66,8 @@ throw new Error('Method not implemented.');
       this.router.navigate(['/checkout', id]);
     }
   }
+
+  goToPublicProfile(id: string | undefined) {
+    this.router.navigate(['/public', id]);
+  }
 }

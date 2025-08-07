@@ -45,14 +45,14 @@
           </li>
         </ul>
         <!-- Owner Info -->
-         <div *ngIf="property?.user" class="flex items-start gap-4 ml-0 md:ml-10 mt-4">
-          <img [src]="property?.user?.urlProfilePicture" alt = "{{property?.user?.urlProfilePicture}}" class="w-14 h-14 md:w-16 md:h-16 rounded-full" />
-          <div>
-            <p class="font-semibold text-base md:text-lg">
-              Hosted by {{ property?.user?.firstName }} {{ property?.user?.lastName }}
-            </p>
-          </div>
-        </div>
+        <div *ngIf="property?.user" class="flex items-center gap-4 ml-0 md:ml-10 mt-4" (click)="goToPublicProfile(property?.user?.id)">
+          <img [src]="property?.user?.urlProfilePicture" alt = "{{property?.user?.urlProfilePicture}}" class="w-14 h-14 md:w-16 md:h-16 rounded-full cursor-pointer" />
+        <div>
+         <p class="font-semibold text-base md:text-lg">
+            Hosted by {{ property?.user?.firstName }} {{ property?.user?.lastName }}
+        </p>
+      </div>
+    </div>
 
 
         <!-- Description -->

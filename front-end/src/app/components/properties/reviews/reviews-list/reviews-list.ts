@@ -93,7 +93,6 @@ export class ReviewsList {
   }
 
   goToPublicProfile(userId: string) {
-    console.log('Navigating to user:', userId); 
     this.router.navigate(['/public', userId]);
   }
 
