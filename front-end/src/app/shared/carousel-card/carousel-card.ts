@@ -6,6 +6,8 @@ import { ButtonModule } from 'primeng/button';
 import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { Rating } from 'primeng/rating';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-prop-card-cer',
   imports: [CarouselModule, ButtonModule, CommonModule, RatingModule, FormsModule, Rating],
@@ -14,7 +16,16 @@ import { Rating } from 'primeng/rating';
 })
 export class PropCardCer {
   @Input() Property!: IPropertyCard;
-    toggleFavorite(product: IPropertyCard) {
-    product.isFavorite = !product.isFavorite;
+  
+  constructor(private router: Router) {}
+
+  toggleFavorite(property: IPropertyCard, event: MouseEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    property.isFavorite = !property.isFavorite;
+  }
+
+  goToPropertyDetails(): void {
+    this.router.navigate(['/properties', this.Property.id]);
   }
 }
