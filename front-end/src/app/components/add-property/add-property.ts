@@ -237,6 +237,7 @@ export class AddProperty implements OnDestroy {
         },
         error: err => {
           console.error('Error adding property', err);
+          alert('Failed to add property' + err.error[0]);
           // Handle error - show error message to user
         }
       });
