@@ -38,7 +38,7 @@ export class PropertyDetails implements OnInit {
       this.propertyService.getPropertyById(id).subscribe({
         next: (data) => {
           this.property = data;
-          const rawUrl = `https://www.google.com/maps/embed/v1/view?key=ADD-API-KEY&center=${data.latitude},${data.longitude}&zoom=14`;
+          const rawUrl = `https://www.google.com/maps/embed/v1/place?key=ADD-API-KEY&q=${data.latitude},${data.longitude}&zoom=17`;
           this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
         },
         error: (err) => console.error(err)
