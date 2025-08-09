@@ -11,7 +11,12 @@
             <p class="text-sm text-gray-600">{{ reviewLocations[i] }}</p>
           </div>
         </div>
-        <p class="text-sm text-gray-700">★★★★★ <span class="font-medium text-black">· {{ review.createdAt | date: 'MMMM y' }}</span></p>
+        <p class="text-sm text-gray-700">
+          <span *ngFor="let star of [1,2,3,4,5]">
+            {{ star <= review.rate ? '★' : '☆' }}
+          </span>
+          <span class="font-medium text-black">· {{ review.createdAt | date: 'MMMM y' }}</span>
+        </p>
         <p class="text-sm text-gray-700">{{ review.reviewText | slice:0:140 }}...</p>
         <a class="text-black cursor-pointer underline" (click)="openDialog()">Show more</a>
       </div>
