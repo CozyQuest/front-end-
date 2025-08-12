@@ -40,14 +40,14 @@ export const routes: Routes = [
     component: EditProfile,
     canActivate: [AuthGuard]
   },
-  { 
-    path: 'payment-success', 
+  {
+    path: 'payment-success',
     component: PaymentSuccess,
     canActivate: [AuthGuard, RoleGuard],
       data: { role: ['User','Host'] }
   },
-  { 
-    path: 'payment-cancel', 
+  {
+    path: 'payment-cancel',
     component: PaymentCancel ,
     canActivate: [AuthGuard, RoleGuard],
     data: { role: ['User','Host'] }
@@ -83,7 +83,7 @@ export const routes: Routes = [
 
   // Protected route - requires login AND Host role
   {
-    path: 'add-property',
+    path: 'property/add',
     loadComponent: () => import('./components/add-property/add-property').then(m => m.AddProperty),
     canActivate: [AuthGuard, RoleGuard],
     data: { role: ['Host',"User"] }
@@ -94,7 +94,7 @@ export const routes: Routes = [
     path: 'properties/:id',
     loadComponent: () => import('./components/properties/property-details/property-details').then(m => m.PropertyDetails)
   },
-  
+
   {
     path: 'public/:id',
     loadComponent: () => import('./components/profile/public-profile/public-profile').then(m => m.PublicProfile),

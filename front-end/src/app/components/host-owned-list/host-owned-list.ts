@@ -13,12 +13,12 @@ import { OwnedPropertyService } from '../../core/services/owned-property.service
   styleUrl: './host-owned-list.css'
 })
 export class HostOwnedList implements OnInit{
-  
+
   constructor(
     private router: Router,
     private ownedPropertyService: OwnedPropertyService
   ) {}
-  
+
   ngOnInit(): void {
     this.loadOwnedProperties();
   }
@@ -94,7 +94,7 @@ export class HostOwnedList implements OnInit{
   }
 
   navigateToAddProperty() {
-    this.router.navigate(['/add-property']);
+    this.router.navigate(['/property/add']);
   }
   // constructor(private apartmentService: ApartmentService) {
   //   this.apartmentService.getApartments().subscribe((apartments) => {
