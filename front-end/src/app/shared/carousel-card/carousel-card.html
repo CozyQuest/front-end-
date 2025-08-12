@@ -1,5 +1,5 @@
 <div
-        class="dark:border-surface-700 rounded-xl m-2 overflow-clip border border-gray-300 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer"
+        class="dark:border-surface-700 rounded-xl m-2 overflow-clip border border-gray-300 shadow-xl hover:shadow-2xl transition-shadow cursor-pointer min-h-140"
         (click)="goToPropertyDetails()"
       >
         <div class="relative">
@@ -8,7 +8,8 @@
               Property.image
             }}"
             alt="{{ Property.name }}"
-            class="w-full rounded-border -z-10"
+            class="w-full rounded-border -z-10 h-65 md:h-70"
+            onerror="this.onerror=null; this.src='https://developers.elementor.com/docs/assets/img/elementor-placeholder-image.png';"
           />
           <!-- <a
             class="p-3 rounded-full absolute top-3 right-3 bg-white dark:bg-surface-800 hover:bg-surface-200 dark:hover:bg-surface-700 transition-colors"
