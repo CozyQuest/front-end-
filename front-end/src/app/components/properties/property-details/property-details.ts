@@ -1,3 +1,4 @@
+import { AuthService } from './../../../core/services/auth.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PropertyService } from '../../../core/services/propertyDetails.service';
@@ -11,6 +12,7 @@ import { ButtonModule } from 'primeng/button';
 import { ReviewsList } from '../reviews/reviews-list/reviews-list';
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 
 
 @Component({
@@ -29,7 +31,7 @@ export class PropertyDetails implements OnInit {
   private route = inject(ActivatedRoute);
   private propertyService = inject(PropertyService);
   private sanitizer = inject(DomSanitizer);
-
+  AuthService = inject(AuthService);
   constructor(private router: Router){}
 
   ngOnInit(): void {
@@ -38,7 +40,7 @@ export class PropertyDetails implements OnInit {
       this.propertyService.getPropertyById(id).subscribe({
         next: (data) => {
           this.property = data;
-          const rawUrl = `https://www.google.com/maps/embed/v1/place?key=ADD-API-KEY&q=${data.latitude},${data.longitude}&zoom=17`;
+          const rawUrl = `https://www.google.com/maps/embed/v1/place?key=${environment.GoogleMapsApiKey}&q=${data.latitude},${data.longitude}&zoom=17`;
           this.mapUrl = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
         },
         error: (err) => console.error(err)
@@ -74,7 +76,9 @@ export class PropertyDetails implements OnInit {
   goToPublicProfile(id: string | undefined) {
     this.router.navigate(['/public', id]);
   }
-
+editProperty(id : number |undefined){
+  this.router.navigate(['properties/edit/', id]);
+}
   getRatingText(): string {
     if (this.averageRating >= 4.5) {
       return 'Outstanding stay! Guests loved it.';

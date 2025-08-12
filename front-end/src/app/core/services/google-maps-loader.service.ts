@@ -1,11 +1,12 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GoogleMapsLoaderService {
-  private apiKey = '';
+  private apiKey = environment.GoogleMapsApiKey;
   private mapsLoaded = false;
   private loadPromise: Promise<void> | null = null;
 
@@ -40,12 +41,12 @@ export class GoogleMapsLoaderService {
       script.src = `https://maps.googleapis.com/maps/api/js?key=${this.apiKey}&libraries=places`;
       script.async = true;
       script.defer = true;
-      
+
       script.onload = () => {
         this.mapsLoaded = true;
         resolve();
       };
-      
+
       script.onerror = (error) => {
         console.error('Failed to load Google Maps script:', error);
         this.loadPromise = null; // Reset promise so it can be retried

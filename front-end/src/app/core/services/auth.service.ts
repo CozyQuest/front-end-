@@ -294,9 +294,18 @@ export class AuthService {
     const user = this.getCurrentUser();
     return user?.role || null;
   }
-
   hasRole(role: string[]|string): boolean {
     const userRole = this.getUserRole();
     return Array.isArray(role) ? role.includes(userRole!) : userRole === role;
+  }
+
+  // Get the user ID from the decoded token
+  getUserId(): string | null {
+    const user = this.getCurrentUser();
+    return user?.nameidentifier || null;
+  }
+  checkUserId(id: string | undefined ): boolean {
+    const userId = this.getUserId();
+    return userId ? userId === id : false;
   }
 }
