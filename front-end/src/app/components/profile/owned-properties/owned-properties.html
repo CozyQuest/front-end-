@@ -1,14 +1,14 @@
 @if (myProperties.length === 0) {
-  <div class="flex flex-col items-center justify-center p-8 space-y-6 bg-gray-50 dark:bg-gray-800 rounded-xl m-4">
+  <div class="flex flex-col items-center justify-center p-8 space-y-6 bg-gray-50 rounded-xl m-4">
     <div class="relative w-48 h-48 flex items-center justify-center">
-      <div class="absolute w-1 h-full bg-gray-300 dark:bg-gray-600"></div>
-      <div class="relative w-12 h-12 bg-white dark:bg-gray-700 border-4 border-blue-500 rounded-full flex items-center justify-center z-10">
+      <div class="absolute w-1 h-full bg-gray-300"></div>
+      <div class="relative w-12 h-12 bg-white border-4 border-blue-500 rounded-full flex items-center justify-center z-10">
         <i class="uil uil-home text-blue-500 text-2xl"></i>
       </div>
     </div>
     <div class="text-center">
-      <h2 class="text-2xl font-bold text-gray-800 dark:text-white">Your property timeline is empty</h2>
-      <p class="mt-2 text-gray-500 dark:text-gray-400">Add your first property to start your history.</p>
+      <h2 class="text-2xl font-bold text-gray-800">Your property timeline is empty</h2>
+      <p class="mt-2 text-gray-500">Add your first property to start your history.</p>
     </div>
     <a
       routerLink="/add-property"

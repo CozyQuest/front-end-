@@ -1,16 +1,16 @@
-<div class="animate-fade-in-up px-6 py-8 bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-auto">
+<div class="animate-fade-in-up px-6 py-8 bg-white rounded-xl shadow-xl overflow-auto">
   @if (history.length === 0) {
     <div class="text-center py-20 px-4">
       <div class="flex flex-col items-center justify-center">
-        <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-full inline-flex mb-6">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400 dark:text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <div class="p-4 bg-gray-100 rounded-full inline-flex mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l-2-2m0 0l-7-7-7 7m12 0v10a1 1 0 01-1 1h-3m-6 0v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2m-6 0h12" />
           </svg>
         </div>
-        <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">
           Start Your Hosting Journey
         </h2>
-        <p class="text-lg text-gray-600 dark:text-gray-400 max-w-md mx-auto mb-6">
+        <p class="text-lg text-gray-600 max-w-md mx-auto mb-6">
           It looks like you don't have any rental history yet. List your first property to start earning and tracking your rentals here.
         </p>
         <button class="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition-colors duration-300" routerLink="/add-property">
@@ -22,7 +22,7 @@
   @if (history.length > 0) {
     <table class="w-full table-auto text-left border-separate border-spacing-y-3">
       <thead>
-        <tr class="text-sm text-gray-700 dark:text-gray-200 uppercase">
+        <tr class="text-sm text-gray-700 uppercase">
           <th class="px-4 py-2 min-w-[200px]">Property</th>
           <th class="px-4 py-2 min-w-[120px]">Renter</th>
           <th class="px-4 py-2 min-w-[150px]">Dates</th>
@@ -33,33 +33,33 @@
       </thead>
       <tbody>
         @for (rent of history; track rent) {
-          <tr class="bg-gray-50 dark:bg-slate-800 shadow-md rounded-lg transition hover:scale-[1.01] duration-300">
+          <tr class="bg-gray-50 shadow-md rounded-lg transition hover:scale-[1.01] duration-300">
             <td class="px-4 py-3">
               <div class="flex items-center gap-4">
                 <img [src]="rent.propertyImageUrl" class="w-16 h-16 object-cover rounded-lg shadow-sm" alt="Property Image">
                 <div class="flex flex-col space-y-1 overflow-hidden">
-                  <span class="font-medium text-gray-800 dark:text-white whitespace-nowrap overflow-hidden text-ellipsis">{{ rent.propertyTitle }}</span>
+                  <span class="font-medium text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis">{{ rent.propertyTitle }}</span>
                 </div>
               </div>
             </td>
 
-            <td class="px-4 py-3 text-gray-700 dark:text-gray-300 whitespace-nowrap overflow-hidden text-ellipsis">
+            <td class="px-4 py-3 text-gray-700 whitespace-nowrap overflow-hidden text-ellipsis">
               {{ rent.renterFullName }}
             </td>
 
-            <td class="px-4 py-3 text-gray-600 dark:text-gray-400 whitespace-nowrap">
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">
               <div class="flex items-center gap-2">
                 <span>{{ rent.checkIn | date:'shortDate' }}</span>
-                <span class="font-bold text-gray-400 dark:text-gray-600">—</span>
+                <span class="font-bold text-gray-400">—</span>
                 <span>{{ rent.checkOut | date:'shortDate' }}</span>
               </div>
             </td>
 
-            <td class="px-4 py-3 text-gray-600 dark:text-gray-400 whitespace-nowrap">
+            <td class="px-4 py-3 text-gray-600 whitespace-nowrap">
               {{ rent.transactionDate | date:'mediumDate' }}
             </td>
 
-            <td class="px-4 py-3 text-blue-700 dark:text-blue-300 font-semibold whitespace-nowrap">
+            <td class="px-4 py-3 text-blue-700 font-semibold whitespace-nowrap">
               ${{ rent.totalPrice }}
             </td>
 
@@ -70,7 +70,7 @@
                     <i class="mdi"
                       [ngClass]="{
                         'mdi-star text-yellow-400': star <= rent.rating,
-                        'mdi-star-outline text-gray-300 dark:text-gray-600': star > rent.rating
+                        'mdi-star-outline text-gray-300': star > rent.rating
                       }">
                     </i>
                   }
@@ -85,7 +85,7 @@
     </table>
 
     <div class="relative mt-10 flex justify-center perspective">
-    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 max-w-md w-full shadow-2xl transition-transform transform-gpu duration-500 hover:rotate-x-3 hover:-rotate-y-6 hover:scale-105 animate-fade-in-up">
+    <div class="bg-white border border-gray-200 rounded-2xl p-6 max-w-md w-full shadow-2xl transition-transform transform-gpu duration-500 hover:rotate-x-3 hover:-rotate-y-6 hover:scale-105 animate-fade-in-up">
       <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
         <div class="absolute left-4 top-2 text-2xl animate-drop-slow">💸</div>
         <div class="absolute right-5 top-0 text-xl animate-drop delay-100">🪙</div>
@@ -93,9 +93,9 @@
       </div>
 
       <div class="relative z-10 text-center space-y-2">
-        <p class="text-sm uppercase text-gray-500 dark:text-gray-400 tracking-wider">Total Profit</p>
-        <h2 class="text-5xl font-black text-green-600 dark:text-green-300 tracking-tight">$ {{ totalProfit }}</h2>
-        <p class="text-xs italic text-gray-400 dark:text-gray-500">Cha-ching! 💰</p>
+        <p class="text-sm uppercase text-gray-500 tracking-wider">Total Profit</p>
+        <h2 class="text-5xl font-black text-green-600 tracking-tight">$ {{ totalProfit }}</h2>
+        <p class="text-xs italic text-gray-400">Cha-ching! 💰</p>
       </div>
     </div>
   </div>
