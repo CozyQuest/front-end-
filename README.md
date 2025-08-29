@@ -223,6 +223,15 @@ The design of **Sakenny** follows modern UI/UX practices to ensure a clean, acce
 
 - **Modern UI Libraries**  
   Leveraging **PrimeNG** selectively for advanced components while keeping Tailwind as the core styling system.
+  
+---
+
+## 🛠️ Backend Repository  
+
+The **Sakenny Backend** is developed with **.NET 8.0**, following **N-Tier Architecture** and **Clean Code principles**.  
+It provides all the core functionalities of the platform including **authentication & authorization**, **payment integration with Stripe**, **image storage via Azure Blob (Azurite)**, **Google Maps integration**, and a robust **booking system**.  
+
+👉 Check it out here: [Sakenny Backend Repository](https://github.com/CozyQuest/sakenny.git)
 
 ---
 
