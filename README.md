@@ -41,7 +41,7 @@ The frontend enables:
 ## 🎥 Demo  
 
 Check out the demo of **Sakenny** here:  
-👉 [Watch on Google Drive](YOUR_GOOGLE_DRIVE_LINK_HERE)  
+👉 [Watch on Google Drive](https://drive.google.com/file/d/11fuxYuJosbBAPWGHLppTfDMLN1UKH55X/view?usp=sharing)  
 
 ---
 
